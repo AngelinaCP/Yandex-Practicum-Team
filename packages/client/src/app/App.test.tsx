@@ -17,5 +17,5 @@ test('Example test', async () => {
       </Routes>
     </BrowserRouter>
   )
-  expect(screen.getAllByRole('link')).toHaveLength(1)
+  expect(screen.getAllByRole('link')).toHaveLength(2)
 })

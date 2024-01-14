@@ -1,10 +1,15 @@
 import GameStartPage from '@/pages/GameStart'
+import GameEndPage from '@/pages/GameEnd'
 import { ReactElement } from 'react'
 
 const routesData = {
   'game-start': {
     label: 'Игра: начало',
     element: <GameStartPage />,
+  },
+  'game-end': {
+    label: 'Игра: конец',
+    element: <GameEndPage />,
   },
 }
 
