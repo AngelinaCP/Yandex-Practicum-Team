@@ -16,11 +16,14 @@
     "minireset.css": "^0.0.7",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.2",
     "styled-components": "^6"
   },
   "devDependencies": {
     "@testing-library/react": "^13.3.0",
-    "@types/jest": "^28.1.8",
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.11.0",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
