@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default ({
   label = 'Побежали',
-  to = '/game-end',
+  to = '/',
   $primary = true,
   ...props
 }) => (

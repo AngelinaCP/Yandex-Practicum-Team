@@ -1,0 +1,6 @@
+@import url(https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap);
+
+:root {
+  font-family: Figtree, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  cursor: default;
+}
