@@ -2,9 +2,11 @@ import * as React from 'react'
 import { AuthService } from '@/services/auth.service'
 import { LocalStorageService } from '@/services/localStorage.service'
 import useAuth from '@/hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 function LoginPage() {
   const { setAuth } = useAuth()
+  const navigate = useNavigate()
 
   function handleSubmitf(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -19,6 +21,7 @@ function LoginPage() {
     authService.login({ login, password }).then(() => {
       storage.setItem('isAuth', 'true')
       setAuth(true)
+      navigate('/game')
     })
   }
 
