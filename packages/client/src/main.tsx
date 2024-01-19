@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import App from './App'
 import './index.css'
 
@@ -22,7 +22,7 @@ const Global = createGlobalStyle`
         line-height: 24px;
         font-weight: normal;
         font-style: normal;
-        color: #2d323d;
+        color: #36395A;
         height: 100%;
         background-color: white;
         overflow-x: hidden;
@@ -34,9 +34,30 @@ const Global = createGlobalStyle`
     }
 `
 
+const GlobalWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${props => props.theme.backgroundColor};
+
+  @media (prefers-color-scheme: dark) {
+    background-color: ${props => props.theme.dark.backgroundColor};
+  }
+`
+
+GlobalWrapper.defaultProps = {
+  theme: {
+    dark: {
+      backgroundColor: '#37363F',
+    },
+    backgroundColor: '#FFFFFF',
+  },
+}
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Global />
-    <App />
+    <GlobalWrapper>
+      <App />
+    </GlobalWrapper>
   </React.StrictMode>
 )
