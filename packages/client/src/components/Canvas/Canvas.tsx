@@ -6,18 +6,21 @@ export const Canvas = () => {
 
   useEffect(() => {
     const canvas: HTMLCanvasElement | null = canvasRef.current
-    const context: CanvasRenderingContext2D = canvas.getContext('2d')
+    const context: CanvasRenderingContext2D | null = canvas!.getContext('2d')
     let animationFrameId: number
-    const game = new Game(context)
 
-    game.initGame()
+    if (context) {
+      const game = new Game(context)
 
-    const render = () => {
-      game.start(context)
-      animationFrameId = window.requestAnimationFrame(render)
+      game.initGame()
+
+      const render = () => {
+        game.start(context)
+        animationFrameId = window.requestAnimationFrame(render)
+      }
+
+      render()
     }
-
-    render()
 
     return () => {
       window.cancelAnimationFrame(animationFrameId)
