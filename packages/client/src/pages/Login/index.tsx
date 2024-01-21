@@ -28,8 +28,7 @@ const LogIn = () => {
         <Input name={'Логин'} required={true} />
         <Input type={'password'} name={'Пароль'} required={true} />
         <Button type={'submit'} $primary={true}>
-          {' '}
-          войти{' '}
+          войти
         </Button>
         <Link to={'/signup'}> регистрация </Link>
       </StyledForm>
