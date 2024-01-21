@@ -11,14 +11,6 @@ const LogIn = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    // TODO:
-
-    console.log(
-      'login: ', // @ts-ignore
-      event.currentTarget[0].value,
-      '     password: ', // @ts-ignore
-      event.currentTarget[1].value
-    )
     navigate('/')
   }
 
