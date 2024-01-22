@@ -7,8 +7,9 @@ export const InputWrapperStyle = styled.div`
   margin-bottom: 20px;
   width: 200px;
   font-family: inherit;
+
   &:last-of-type {
-    margin-bottom: 60px;
+    margin-bottom: 40px;
   }
 `
 
@@ -44,6 +45,7 @@ export const InputStyle = styled.input`
       display: block;
       font-size: 22px;
       font-weight: 700;
+      letter-spacing: 3px;
       color: #81ecec;
       transition: 0.2s;
     }
