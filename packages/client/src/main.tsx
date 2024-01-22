@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import styled, { createGlobalStyle } from 'styled-components'
 import App from './App'
 import './index.css'
+import { AuthProvider } from '@/context/AuthProvider'
 
 const Global = createGlobalStyle`
     * {
@@ -57,7 +58,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Global />
     <GlobalWrapper>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </GlobalWrapper>
   </React.StrictMode>
 )

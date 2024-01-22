@@ -11,6 +11,8 @@ import ForumPage from './pages/forum.page'
 import TopicPage from './pages/topic.page'
 import Page404 from './pages/404.page'
 import Navigation from './components/navigation'
+import interceptorsProvider from '@/providers/interceptors.provider'
+import { PrivateRoute } from '@/components/PrivateRoute'
 
 function App() {
   useEffect(() => {
@@ -22,20 +24,24 @@ function App() {
     }
 
     fetchServerData()
+    interceptorsProvider()
   }, [])
+
   return (
     <>
       <BrowserRouter>
         <Navigation />
         <Routes>
+          <Route element={<PrivateRoute />}>
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="game" element={<GamePage />} />
+            <Route path="leaderboard" element={<LeaderboardPage />} />
+            <Route path="forum" element={<ForumPage />} />
+            <Route path="topic" element={<TopicPage />} />
+          </Route>
           <Route path="/" element={<MainPage />} index />
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignupPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="game" element={<GamePage />} />
-          <Route path="leaderboard" element={<LeaderboardPage />} />
-          <Route path="forum" element={<ForumPage />} />
-          <Route path="topic" element={<TopicPage />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
       </BrowserRouter>
