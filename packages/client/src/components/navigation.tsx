@@ -1,9 +1,29 @@
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+
+const StyledNav = styled.nav`
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 50%;
+  transform: translate(-50%, 0);
+
+  & ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style-type: none;
+  }
+
+  & a {
+    color: red;
+  }
+`
 
 function Navigation() {
   return (
     <>
-      <nav>
+      <StyledNav>
         <ul>
           <li>
             <Link to="/">Главная</Link>
@@ -30,7 +50,7 @@ function Navigation() {
             <Link to="/topic">Топик</Link>
           </li>
         </ul>
-      </nav>
+      </StyledNav>
     </>
   )
 }

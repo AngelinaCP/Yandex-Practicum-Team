@@ -1,13 +1,14 @@
-import React, { FC, ReactNode } from 'react'
+import React, { FC } from 'react'
 import { InputLabelStyle, InputStyle, InputWrapperStyle } from './style'
 
 interface InputProps {
   name: string
+  label: string
   required: boolean
   type?: string
 }
 
-const Input: FC<InputProps> = ({ name, required, type = undefined }) => (
+const Input: FC<InputProps> = ({ label, name, required, type = undefined }) => (
   <InputWrapperStyle>
     <InputStyle
       type={type || 'input'}
@@ -16,7 +17,7 @@ const Input: FC<InputProps> = ({ name, required, type = undefined }) => (
       id={name}
       required={required}
     />
-    <InputLabelStyle htmlFor="name">{name}</InputLabelStyle>
+    <InputLabelStyle htmlFor="name">{label}</InputLabelStyle>
   </InputWrapperStyle>
 )
 
