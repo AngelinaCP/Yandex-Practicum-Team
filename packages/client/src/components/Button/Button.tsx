@@ -27,6 +27,7 @@ const Button = styled.button.attrs<{ $primary?: boolean; type?: string }>(
   touch-action: manipulation;
   border-radius: 4px;
   border-width: 0;
+  font-family: 'horror', monospace;
   font-size: 18px;
   white-space: nowrap;
   line-height: 1;
