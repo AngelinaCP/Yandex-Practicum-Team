@@ -7,8 +7,9 @@ export const InputWrapperStyle = styled.div`
   margin-bottom: 20px;
   width: 200px;
   font-family: inherit;
+
   &:last-of-type {
-    margin-bottom: 60px;
+    margin-bottom: 40px;
   }
 `
 
