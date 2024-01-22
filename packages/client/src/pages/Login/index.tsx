@@ -15,10 +15,15 @@ const LogIn = () => {
   }
 
   return (
-    <Card height={'400px'} width={'400px'}>
+    <Card width={'300px'} height={'340px'}>
       <StyledForm onSubmit={handleSubmit}>
-        <Input name={'Логин'} required={true} />
-        <Input type={'password'} name={'Пароль'} required={true} />
+        <Input label={'Логин'} name={'login'} required={true} />
+        <Input
+          label={'Пароль'}
+          name={'password'}
+          type={'password'}
+          required={true}
+        />
         <Button type={'submit'} $primary={true}>
           войти
         </Button>
