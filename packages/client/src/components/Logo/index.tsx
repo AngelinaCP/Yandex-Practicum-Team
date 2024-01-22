@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import { FC, HTMLAttributes } from 'react'
 import { LogoStyle } from './style'
 
-const Logo: FC = () => (
-  <LogoStyle>
+const Logo: FC<HTMLAttributes<HTMLDivElement>> = ({ className = '' }) => (
+  <LogoStyle className={className}>
     <span>Silent Hill</span>
     <span>runner</span>
   </LogoStyle>
