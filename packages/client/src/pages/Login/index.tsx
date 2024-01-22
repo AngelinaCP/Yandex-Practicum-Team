@@ -27,7 +27,7 @@ const LogIn = () => {
         <Button type={'submit'} $primary={true}>
           войти
         </Button>
-        <Link to={'/signup'}> регистрация </Link>
+        <Link to={'/signup'}>регистрация</Link>
       </StyledForm>
     </Card>
   )
