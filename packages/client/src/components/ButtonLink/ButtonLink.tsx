@@ -4,7 +4,6 @@ import { Link, type LinkProps } from 'react-router-dom'
 import styled from 'styled-components'
 
 const LinkStyled = styled(Link)`
-  display: block;
   text-decoration: none;
 `
 
