@@ -10,7 +10,7 @@ export const CardStyle = styled.div<Props>`
   flex-direction: column;
   align-items: center;
   width: ${props => props.width || '70vw'};
-  height: ${props => props.width || '70vh'};
+  height: ${props => props.height || '70vh'};
   margin: 40px auto;
   padding: 10px;
   border-radius: 6px;
