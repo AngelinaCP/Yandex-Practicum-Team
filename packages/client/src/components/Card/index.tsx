@@ -5,10 +5,11 @@ interface CardProps {
   children: ReactNode
   width?: string
   height?: string
+  className?: string
 }
 
-const Card: FC<CardProps> = ({ children, width, height }) => (
-  <CardStyle width={width} height={height}>
+const Card: FC<CardProps> = ({ children, width, height, className = '' }) => (
+  <CardStyle width={width} height={height} className={className}>
     {children}
   </CardStyle>
 )
