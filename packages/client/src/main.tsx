@@ -2,6 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import styled, { createGlobalStyle } from 'styled-components'
 import App from './App'
+import SLNTHLC from './assets/fonts/SLNTHLC.ttf'
+import SLNTHLE from './assets/fonts/SLNTHLE.ttf'
+import SLNTHLN from './assets/fonts/SLNTHLN.ttf'
+import horror from './assets/fonts/horror.ttf'
 import './index.css'
 
 const Global = createGlobalStyle`
@@ -15,9 +19,19 @@ const Global = createGlobalStyle`
     *:after {
         box-sizing: border-box;
     }
+    
+    @font-face {
+        font-family: "Silent Hill";
+        src: url(${SLNTHLC}) format('truetype'), url(${SLNTHLE}) format('truetype'), url(${SLNTHLN}) format('truetype');
+    }
+    
+    @font-face {
+        font-family: "horror";
+        src: url(${horror}) format('truetype');
+    }
 
     body {
-        font-family: "JetBrains Mono", monospace;
+        font-family: "horror", monospace;
         font-size: 18px;
         line-height: 24px;
         font-weight: normal;
@@ -35,8 +49,12 @@ const Global = createGlobalStyle`
 `
 
 const GlobalWrapper = styled.div`
+  display: flex;
   width: 100%;
   height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: ${props => props.theme.backgroundColor};
 
   @media (prefers-color-scheme: dark) {

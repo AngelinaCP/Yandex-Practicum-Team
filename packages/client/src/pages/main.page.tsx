@@ -1,5 +1,7 @@
+import Logo from '@/components/Logo'
+
 function MainPage() {
-  return <h1>Main</h1>
+  return <Logo />
 }
 
 export default MainPage
