@@ -29,6 +29,7 @@ const Button = styled.button.attrs<{ $primary?: boolean; type?: string }>(
   border-width: 0;
   font-family: 'horror', monospace;
   font-size: 18px;
+  letter-spacing: 2px;
   white-space: nowrap;
   line-height: 1;
   text-align: left;
