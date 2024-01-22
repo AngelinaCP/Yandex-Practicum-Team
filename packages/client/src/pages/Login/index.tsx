@@ -1,5 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AuthService } from '@/services/auth.service'
+import { LocalStorageService } from '@/services/localStorage.service'
+import useAuth from '@/hooks/useAuth'
 import Card from '@/components/Card'
 import Input from '@/components/Input'
 import Button from '@/components/Button/index'
@@ -7,11 +10,24 @@ import Link from '@/components/Link'
 import { StyledForm } from '@/pages/Login/style'
 
 const LogIn = () => {
+  const { setAuth } = useAuth()
   const navigate = useNavigate()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    navigate('/')
+    const target = event.target as typeof event.target & {
+      login: { value: string }
+      password: { value: string }
+    }
+    const login = target.login.value
+    const password = target.password.value
+    const authService = new AuthService()
+    const storage = new LocalStorageService()
+    authService.login({ login, password }).then(() => {
+      storage.setItem('isAuth', 'true')
+      setAuth(true)
+      navigate('/game')
+    })
   }
 
   return (
