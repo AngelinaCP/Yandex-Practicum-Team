@@ -7,6 +7,7 @@ import SLNTHLE from './assets/fonts/SLNTHLE.ttf'
 import SLNTHLN from './assets/fonts/SLNTHLN.ttf'
 import horror from './assets/fonts/horror.ttf'
 import './index.css'
+import { AuthProvider } from '@/context/AuthProvider'
 
 const Global = createGlobalStyle`
     * {
@@ -75,7 +76,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Global />
     <GlobalWrapper>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </GlobalWrapper>
   </React.StrictMode>
 )
