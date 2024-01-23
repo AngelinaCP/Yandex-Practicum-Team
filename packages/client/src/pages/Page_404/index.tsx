@@ -6,6 +6,6 @@ export const Page404 = () => (
   <StyledError>
     <span>404</span>
     <span>не туда попали</span>
-    <Link to={'/'}>вернуться на главную</Link>
+    <Link to="/">вернуться на главную</Link>
   </StyledError>
 )
