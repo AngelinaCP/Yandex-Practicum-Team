@@ -35,4 +35,5 @@ export const CurrentSelection = styled(CurrentSelection_)`
   place-items: center;
   justify-content: space-between;
   overflow: hidden;
+  margin: 0 auto;
 `

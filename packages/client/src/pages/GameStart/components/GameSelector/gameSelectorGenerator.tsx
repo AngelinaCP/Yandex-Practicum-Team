@@ -20,12 +20,13 @@ const CurrentSelectionWithControls = styled.div`
 
 export function gameSelectorGenerator(selector: GameSelectorProps) {
   const { title, content } = selector
+  const enableArrows = content.length > 1
 
   return function () {
     const [selection, setSelection] = useState(0)
 
     const handleChange = useCallback(
-      (toLeft = true) => {
+      (toLeft = false) => {
         const next = nextItem(toLeft, content.length, selection)
         return setSelection(next)
       },
@@ -36,12 +37,14 @@ export function gameSelectorGenerator(selector: GameSelectorProps) {
       <Layout>
         <Header>{title}</Header>
         <CurrentSelectionWithControls>
-          <ArrowControl toLeft={true} onClick={() => handleChange(true)} />
+          {enableArrows && (
+            <ArrowControl toLeft={true} onClick={() => handleChange(true)} />
+          )}
           <CurrentSelection
             name={content[selection].name}
             image={content[selection].image}
           />
-          <ArrowControl onClick={() => handleChange()} />
+          {enableArrows && <ArrowControl onClick={() => handleChange()} />}
         </CurrentSelectionWithControls>
       </Layout>
     )
