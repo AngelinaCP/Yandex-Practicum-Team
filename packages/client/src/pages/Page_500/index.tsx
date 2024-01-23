@@ -6,6 +6,6 @@ export const Page500 = () => (
   <StyledError>
     <span>500</span>
     <span>мы уже фиксим</span>
-    <Link to={'/'}>вернуться на главную</Link>
+    <Link to="/">вернуться на главную</Link>
   </StyledError>
 )
