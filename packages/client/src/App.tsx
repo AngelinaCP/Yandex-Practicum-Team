@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import LoginPage from './pages/login.page'
+import { LoginPage } from './pages/Login'
 import MainPage from './pages/Main'
 import { SignupPage } from './pages/Signup'
 import ProfilePage from './pages/profile.page'
