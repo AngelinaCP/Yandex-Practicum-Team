@@ -5,34 +5,32 @@ import Button from '@/components/Button'
 import Link from '@/components/Link'
 import { StyledForm, StyledFormGroup } from '@/pages/Signup/style'
 
-const SignUp = () => {
+export const SignupPage = () => {
   return (
-    <Card width={'580px'} height={'440px'}>
+    <Card width="580px" height="440px">
       <StyledForm>
         <StyledFormGroup>
-          <Input name={'first_name'} label={'Имя'} required={true} />
-          <Input name={'second_name'} label={'Фамилия'} required={true} />
+          <Input name="first_name" label="Имя" required={true} />
+          <Input name="second_name" label="Фамилия" required={true} />
         </StyledFormGroup>
         <StyledFormGroup>
-          <Input name={'email'} label={'E-mail'} required={true} />
-          <Input name={'phone'} label={'Телефон'} required={true} />
+          <Input name="email" label="E-mail" required={true} />
+          <Input name="phone" label="Телефон" required={true} />
         </StyledFormGroup>
         <StyledFormGroup>
-          <Input name={'login'} label={'Логин'} required={true} />
+          <Input name="login" label="Логин" required={true} />
           <Input
-            name={'password'}
-            label={'Пароль'}
-            type={'password'}
+            name="password"
+            label="Пароль"
+            type="password"
             required={true}
           />
         </StyledFormGroup>
         <Button type="submit" $primary={true}>
           зарегистрироваться
         </Button>
-        <Link to={'/login'}>авторизация</Link>
+        <Link to="/login">авторизация</Link>
       </StyledForm>
     </Card>
   )
 }
-
-export default SignUp
