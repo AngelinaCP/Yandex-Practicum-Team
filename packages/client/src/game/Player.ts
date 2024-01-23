@@ -1,3 +1,5 @@
+import { Game } from './Game'
+
 export class Player {
   x = 0
   y = 0
@@ -9,17 +11,18 @@ export class Player {
   jumpUp = true
   ctx: CanvasRenderingContext2D
   image: CanvasImageSource
+  game: Game
 
   constructor(
     ctx: CanvasRenderingContext2D,
-    x: number,
-    y: number,
+    game: Game,
     size: number,
     color: string
   ) {
-    this.x = x
-    this.y = y
+    this.game = game
+    this.x = 50
     this.size = size
+    this.y = this.game.height - this.size - this.game.groundMargin
     this.color = color
     this.jumpHeight = 12
     this.shouldJump = false

@@ -1,5 +1,8 @@
 import { Player } from '@/game/Player'
 import { Block } from '@/game/Block'
+// import { BackgroundForest as Background} from './backgrounds/BackgroundForest'
+import { BackgroundCity as Background } from './backgrounds/BackgroundCity'
+import { UI } from './UI'
 
 export class Game {
   player: Player
@@ -10,9 +13,18 @@ export class Game {
   canScore: boolean
   presetTime: number
   ctx: CanvasRenderingContext2D
+  speed: number
+  background_: Background
+  height: number
+  width: number
+  groundMargin: number
+  ui: UI
 
-  constructor(context: CanvasRenderingContext2D) {
-    this.player = new Player(context, 150, 350, 50, 'black')
+  constructor(
+    context: CanvasRenderingContext2D,
+    width: number,
+    height: number
+  ) {
     this.arrayBlocks = []
     this.score = 0
     this.scoreIncrement = 0
@@ -20,6 +32,13 @@ export class Game {
     this.canScore = true
     this.presetTime = 1000
     this.ctx = context
+    this.speed = 3
+    this.background_ = new Background(this)
+    this.ui = new UI(this)
+    this.width = width
+    this.height = height
+    this.groundMargin = 0
+    this.player = new Player(context, this, 50, 'black')
   }
 
   addListener() {
@@ -123,6 +142,10 @@ export class Game {
 
   start(ctx: CanvasRenderingContext2D) {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
+    this.background_.update()
+    this.background_.draw(ctx)
+    this.ui.draw(ctx)
 
     this.drawBackgroundLine()
     this.drawScore()
