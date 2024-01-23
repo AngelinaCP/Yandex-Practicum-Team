@@ -6,7 +6,7 @@ import Button from '@/components/Button/index'
 import Link from '@/components/Link'
 import { StyledForm } from '@/pages/Login/style'
 
-const LogIn = () => {
+export const LoginPage = () => {
   const navigate = useNavigate()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -15,22 +15,15 @@ const LogIn = () => {
   }
 
   return (
-    <Card width={'300px'} height={'340px'}>
+    <Card width="300px" height="340px">
       <StyledForm onSubmit={handleSubmit}>
-        <Input label={'Логин'} name={'login'} required={true} />
-        <Input
-          label={'Пароль'}
-          name={'password'}
-          type={'password'}
-          required={true}
-        />
-        <Button type={'submit'} $primary={true}>
+        <Input label="Логин" name="login" required={true} />
+        <Input label="Пароль" name="password" type="password" required={true} />
+        <Button type="submit" $primary={true}>
           войти
         </Button>
-        <Link to={'/signup'}>регистрация</Link>
+        <Link to="/signup">регистрация</Link>
       </StyledForm>
     </Card>
   )
 }
-
-export default LogIn
