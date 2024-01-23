@@ -10,7 +10,7 @@ export const Canvas = () => {
     let animationFrameId: number
 
     if (context) {
-      const game = new Game(context, 800, 400)
+      const game = new Game(context, 800, 600)
 
       game.initGame()
 
@@ -27,5 +27,5 @@ export const Canvas = () => {
     }
   }, [])
 
-  return <canvas ref={canvasRef} id="canvas" width="800" height="400" />
+  return <canvas ref={canvasRef} id="canvas" width="800" height="600" />
 }

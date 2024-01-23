@@ -18,5 +18,6 @@ const images = {
 export class BackgroundForest extends Background {
   constructor(game: Game) {
     super(game, 1667, 500, images)
+    this.game.groundMargin = 0.08 * this.game.height
   }
 }

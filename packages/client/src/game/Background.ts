@@ -8,6 +8,10 @@ class Layer {
   height: number
   x: number
   y: number
+  ratio: number
+  scaledHeight: number
+  scaledWidth: number
+
   constructor(
     game: Game,
     width: number,
@@ -22,10 +26,16 @@ class Layer {
     this.speedModifier = speedModifier
     this.x = 0
     this.y = 0
+    this.ratio = this.width / this.height
+    this.scaledHeight = this.game.height
+    this.scaledWidth = this.scaledHeight * this.ratio
   }
 
   update() {
-    if (this.x < -this.width) {
+    if (
+      this.x <
+      -this.scaledWidth + this.game.speed * this.speedModifier + 10
+    ) {
       this.x = 0
     } else {
       this.x -= this.game.speed * this.speedModifier
@@ -33,13 +43,27 @@ class Layer {
   }
 
   draw(context: CanvasRenderingContext2D) {
-    context.drawImage(this.image, this.x, this.y, this.width, this.height)
     context.drawImage(
       this.image,
-      this.x + this.width,
-      this.y,
+      0,
+      0,
       this.width,
-      this.height
+      this.height,
+      this.x,
+      this.y,
+      this.scaledWidth,
+      this.scaledHeight
+    )
+    context.drawImage(
+      this.image,
+      0,
+      0,
+      this.width,
+      this.height,
+      this.x + this.scaledWidth - this.game.speed * this.speedModifier,
+      this.y,
+      this.scaledWidth,
+      this.scaledHeight
     )
   }
 }

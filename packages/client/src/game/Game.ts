@@ -1,7 +1,9 @@
 import { Player } from '@/game/Player'
 import { Block } from '@/game/Block'
-// import { BackgroundForest as Background} from './backgrounds/BackgroundForest'
-import { BackgroundCity as Background } from './backgrounds/BackgroundCity'
+import { BackgroundCountry as Background } from './backgrounds/BackgroundCountry'
+// import { BackgroundForest as Background } from './backgrounds/BackgroundForest'
+// import { BackgroundCity as Background } from './backgrounds/BackgroundCity'
+// import { BackgroundNightForest as Background } from './backgrounds/BackgroundNightForest'
 import { UI } from './UI'
 
 export class Game {
@@ -33,11 +35,11 @@ export class Game {
     this.presetTime = 1000
     this.ctx = context
     this.speed = 3
-    this.background_ = new Background(this)
     this.ui = new UI(this)
     this.width = width
     this.height = height
     this.groundMargin = 0
+    this.background_ = new Background(this)
     this.player = new Player(context, this, 50, 'black')
   }
 
@@ -55,8 +57,8 @@ export class Game {
 
   drawBackgroundLine() {
     this.ctx.beginPath()
-    this.ctx.moveTo(0, 400)
-    this.ctx.lineTo(600, 400)
+    this.ctx.moveTo(0, this.height - this.groundMargin)
+    this.ctx.lineTo(this.width, this.height - this.groundMargin)
     this.ctx.lineWidth = 1.9
     this.ctx.strokeStyle = 'black'
     this.ctx.stroke()
@@ -80,7 +82,7 @@ export class Game {
 
   generateBlocks() {
     const timeDelay = this.randomInterval(this.presetTime)
-    this.arrayBlocks?.push(new Block(50, this.enemySpeed, this.ctx))
+    this.arrayBlocks?.push(new Block(50, this))
 
     setTimeout(() => this.generateBlocks(), timeDelay)
   }
