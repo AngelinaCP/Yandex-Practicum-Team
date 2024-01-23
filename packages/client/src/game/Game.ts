@@ -1,6 +1,7 @@
 import { Player } from '@/game/Player'
 import { Block } from '@/game/Block'
-import { BackgroundCountry as Background } from './backgrounds/BackgroundCountry'
+import { BackgroundGrunge as Background } from './backgrounds/BackgroundGrunge'
+// import { BackgroundCountry as Background } from './backgrounds/BackgroundCountry'
 // import { BackgroundForest as Background } from './backgrounds/BackgroundForest'
 // import { BackgroundCity as Background } from './backgrounds/BackgroundCity'
 // import { BackgroundNightForest as Background } from './backgrounds/BackgroundNightForest'
