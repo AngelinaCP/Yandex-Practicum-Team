@@ -1,5 +1,7 @@
+import { Canvas } from '@/components/Canvas'
+
 function GamePage() {
-  return <h1>Game</h1>
+  return <Canvas />
 }
 
 export default GamePage
