@@ -7,6 +7,7 @@ import {
   StyledInnerWrapper,
   StyledMainWrapper,
 } from '@/pages/Main/style'
+import { ButtonsListGameEnd } from '../GameEnd/components/ButtonsList'
 
 const MainPage: FC = () => {
   return (
@@ -14,12 +15,13 @@ const MainPage: FC = () => {
       <Logo />
       <StyledInnerWrapper>
         <Card height={'300px'} width={'300px'}>
-          <ButtonLink to={'/game'} $primary={true}>
+          {/* <ButtonLink to={'/game'} $primary={true}>
             играть
           </ButtonLink>
           <ButtonLink to={'/profile'}>профиль</ButtonLink>
           <ButtonLink to={'/leaderboard'}>лидеры</ButtonLink>
-          <ButtonLink to={'/forum'}>форум</ButtonLink>
+          <ButtonLink to={'/forum'}>форум</ButtonLink> */}
+          <ButtonsListGameEnd />
         </Card>
         <StyledBG />
         <p>

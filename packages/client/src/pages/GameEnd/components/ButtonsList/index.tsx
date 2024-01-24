@@ -31,6 +31,6 @@ export const ButtonsListGameEnd = styled.ul.attrs<ButtonsProps>(
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  gap: 1em;
+  /* gap: 1em; */
   text-align: center;
 `
