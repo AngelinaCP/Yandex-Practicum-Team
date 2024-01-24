@@ -13,6 +13,8 @@ import { Page404 } from './pages/Page_404'
 import Navigation from './components/navigation'
 import interceptorsProvider from '@/providers/interceptors.provider'
 import { PrivateRoute } from '@/components/PrivateRoute'
+import { GameStartPage } from './pages/GameStart'
+import { GameEndPage } from './pages/GameEnd'
 
 function App() {
   useEffect(() => {
@@ -38,6 +40,8 @@ function App() {
             <Route path="leaderboard" element={<LeaderboardPage />} />
             <Route path="forum" element={<ForumPage />} />
             <Route path="topic" element={<TopicPage />} />
+            <Route path="game-start" element={<GameStartPage />} />
+            <Route path="game-end" element={<GameEndPage />} />
           </Route>
           <Route path="/" element={<MainPage />} index />
           <Route path="login" element={<LoginPage />} />

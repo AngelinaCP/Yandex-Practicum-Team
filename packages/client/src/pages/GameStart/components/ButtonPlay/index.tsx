@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const data = {
   label: 'Побежали',
-  to: '/game-end',
+  to: '/game',
   $primary: true,
 }
 
