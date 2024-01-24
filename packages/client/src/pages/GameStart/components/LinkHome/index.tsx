@@ -1,11 +1,16 @@
-import { LinkStyled } from './LinkStyled'
+import Link from '@/components/Link'
+import { LinkProps } from 'react-router-dom'
+import styled from 'styled-components'
 
-type LinkHomeProps = {
-  link?: string
-  label?: React.ReactNode
-}
-
-export const LinkHome = ({
-  link = '/',
-  label = 'На главную',
-}: LinkHomeProps) => <LinkStyled to={link}>{label}</LinkStyled>
+export const LinkHome = styled(Link).attrs<Partial<LinkProps>>(
+  ({ to = '/', children = 'На главную' }) => ({
+    to,
+    children,
+  })
+)`
+  display: inline-block;
+  text-decoration: none;
+  max-width: fit-content;
+  padding: 0.5em 1.5em;
+  margin: 0 auto;
+`
