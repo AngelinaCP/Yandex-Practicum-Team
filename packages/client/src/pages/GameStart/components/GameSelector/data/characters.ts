@@ -1,3 +1,3 @@
 import char from './characters/char.png'
 
-export const characters = [{ name: 'Char', image: char }]
+export const characters: GameCharacter[] = [{ name: 'Char', image: char }]
