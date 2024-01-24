@@ -11,9 +11,9 @@ const header = ([headerTag]: TemplateStringsArray) => styled(headerTag)`
 `
 const defaultTheme = {
   dark: {
-    color: '#fff',
+    color: '#ffffff',
   },
-  color: '#000',
+  color: '#37363F',
 }
 const Header1 = header`h1`
 Header1.defaultProps = { theme: defaultTheme }
