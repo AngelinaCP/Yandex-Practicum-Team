@@ -2,7 +2,7 @@ import Logo from '@/components/Logo'
 import styled from 'styled-components'
 
 const LogoGameStart = styled(Logo)`
-  margin-bottom: 1em;
+  padding-top: 0.5em;
   font-size: 50px;
 
   & span {

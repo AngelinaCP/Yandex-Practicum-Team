@@ -9,7 +9,7 @@ const selectors = {
     content: characters,
   },
   theme: {
-    title: 'Тема',
+    title: 'Локация',
     content: themes,
   },
 }

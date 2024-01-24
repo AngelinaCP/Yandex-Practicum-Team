@@ -6,12 +6,14 @@ import { LinkHome } from './components/LinkHome'
 
 export const GameStartPage = () => {
   return (
-    <Layout>
+    <>
       <Logo />
-      <CharacterSelector />
-      <ThemeSelector />
-      <ButtonPlay />
-      <LinkHome />
-    </Layout>
+      <Layout>
+        <CharacterSelector />
+        <ThemeSelector />
+        <ButtonPlay />
+        <LinkHome />
+      </Layout>
+    </>
   )
 }
