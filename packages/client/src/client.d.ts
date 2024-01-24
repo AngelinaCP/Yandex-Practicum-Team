@@ -1,9 +1,9 @@
 declare const __SERVER_PORT__: number
 
-type Skin = {
-  name: string
-  image: string
+declare type GameSkin = {
+  title: string
+  thumbnail: string
 }
 
-declare type GameTheme = Skin
-declare type GameCharacter = Skin
+declare type GameTheme = GameSkin
+declare type GameCharacter = GameSkin
