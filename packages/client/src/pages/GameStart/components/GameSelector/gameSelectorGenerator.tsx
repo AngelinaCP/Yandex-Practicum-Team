@@ -38,7 +38,7 @@ export function gameSelectorGenerator(selector: GameSelectorProps) {
         <Header>{title}</Header>
         <CurrentSelectionWithControls>
           {enableArrows && (
-            <ArrowControl toLeft={true} onClick={() => handleChange(true)} />
+            <ArrowControl $toLeft={true} onClick={() => handleChange(true)} />
           )}
           <CurrentSelection
             name={content[selection].name}
