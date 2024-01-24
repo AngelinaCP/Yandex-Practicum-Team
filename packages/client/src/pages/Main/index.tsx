@@ -14,7 +14,7 @@ const MainPage: FC = () => {
     <StyledMainWrapper>
       <Logo />
       <StyledInnerWrapper>
-        <Card height={'300px'} width={'300px'}>
+        <Card height={'auto'} width={'300px'}>
           {/* <ButtonLink to={'/game'} $primary={true}>
             играть
           </ButtonLink>
