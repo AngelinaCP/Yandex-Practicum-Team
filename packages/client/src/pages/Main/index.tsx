@@ -7,19 +7,21 @@ import {
   StyledInnerWrapper,
   StyledMainWrapper,
 } from '@/pages/Main/style'
+import { ButtonsListGameEnd } from '../GameEnd/components/ButtonsList'
 
-export const MainPage: FC = () => {
+const MainPage: FC = () => {
   return (
     <StyledMainWrapper>
       <Logo />
       <StyledInnerWrapper>
-        <Card height="300px" width="300px">
-          <ButtonLink to="/game" $primary={true}>
+        <Card height={'300px'} width={'300px'}>
+          {/* <ButtonLink to={'/game'} $primary={true}>
             играть
           </ButtonLink>
-          <ButtonLink to="/profile">профиль</ButtonLink>
-          <ButtonLink to="/leaderboard">лидеры</ButtonLink>
-          <ButtonLink to="/forum">форум</ButtonLink>
+          <ButtonLink to={'/profile'}>профиль</ButtonLink>
+          <ButtonLink to={'/leaderboard'}>лидеры</ButtonLink>
+          <ButtonLink to={'/forum'}>форум</ButtonLink> */}
+          <ButtonsListGameEnd />
         </Card>
         <StyledBG />
         <p>
@@ -30,3 +32,5 @@ export const MainPage: FC = () => {
     </StyledMainWrapper>
   )
 }
+
+export default MainPage
