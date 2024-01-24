@@ -4,14 +4,14 @@ import { CharacterSelector, ThemeSelector } from './components/GameSelector'
 import { ButtonPlay } from './components/ButtonPlay'
 import { LinkHome } from './components/LinkHome'
 
-export const GameStartPage = () => {
-  return (
+export const GameStartPage: React.FC = () => (
+  <>
+    <Logo />
     <Layout>
-      <Logo />
       <CharacterSelector />
       <ThemeSelector />
       <ButtonPlay />
       <LinkHome />
     </Layout>
-  )
-}
+  </>
+)

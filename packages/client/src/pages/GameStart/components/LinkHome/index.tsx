@@ -1,5 +1,11 @@
 import { LinkStyled } from './LinkStyled'
 
-export const LinkHome = ({ link = '/', label = 'На главную' }) => (
-  <LinkStyled to={link}>{label}</LinkStyled>
-)
+type LinkHomeProps = {
+  link?: string
+  label?: React.ReactNode
+}
+
+export const LinkHome = ({
+  link = '/',
+  label = 'На главную',
+}: LinkHomeProps) => <LinkStyled to={link}>{label}</LinkStyled>

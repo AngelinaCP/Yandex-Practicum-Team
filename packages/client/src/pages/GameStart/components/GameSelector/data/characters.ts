@@ -1,7 +1,5 @@
-import dummy from './characters/dummy.jpg'
-import muddy from './characters/muddy.jpg'
+import char from './characters/char.png'
 
-export const characters = [
-  { name: 'Dummy', image: dummy },
-  { name: 'Muddy', image: muddy },
-]
+export const characters: Record<string, GameCharacter> = {
+  char: { title: 'Char', thumbnail: char },
+}
