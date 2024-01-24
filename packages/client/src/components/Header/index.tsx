@@ -2,7 +2,9 @@ import styled from 'styled-components'
 
 // type THeaders = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 
-const header = ([headerTag]: TemplateStringsArray) => styled(headerTag)`
+const header = ([headerTag]: TemplateStringsArray) => styled(headerTag)<
+  React.HTMLAttributes<HTMLHeadingElement>
+>`
   color: ${props => props.theme.color};
 
   @media (prefers-color-scheme: dark) {

@@ -8,5 +8,5 @@ global.fetch = jest.fn(() =>
 
 test('it has 12 routes', async () => {
   render(<App />)
-  expect(screen.getAllByRole('link')).toHaveLength(12)
+  expect(screen.getAllByRole('link')).toHaveLength(14)
 })

@@ -49,6 +49,12 @@ function Navigation() {
           <li>
             <Link to="/topic">Топик</Link>
           </li>
+          <li>
+            <Link to="/game-start">Начало игры</Link>
+          </li>
+          <li>
+            <Link to="/game-end">Конец игры</Link>
+          </li>
         </ul>
       </StyledNav>
     </>
