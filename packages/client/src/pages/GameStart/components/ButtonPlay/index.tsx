@@ -1,18 +1,22 @@
-import { ButtonStyled } from './ButtonStyled'
 import { Link } from 'react-router-dom'
+import Button from '@/components/Button'
+import styled from 'styled-components'
 
-const data = {
-  label: 'Побежали',
-  to: '/game-end',
-  $primary: true,
+type ButtonPlayProps = {
+  to?: string
+  primary?: boolean
 }
 
-export const ButtonPlay = ({
-  to = data.to,
-  $primary = data.$primary,
-  label = data.label,
-}) => (
-  <ButtonStyled as={Link} to={to} $primary={$primary}>
-    {label}
-  </ButtonStyled>
-)
+export const ButtonPlay = styled(Button).attrs<ButtonPlayProps>(
+  ({ to = '/game-end', primary = true, children = 'Побежали' }) => ({
+    as: Link,
+    to,
+    $primary: primary,
+    children,
+  })
+)`
+  text-decoration: none;
+  margin: 0 auto 3em;
+  max-width: 10em;
+  margin-bottom: 1.5em;
+`
