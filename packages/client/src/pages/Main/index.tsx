@@ -8,18 +8,18 @@ import {
   StyledMainWrapper,
 } from '@/pages/Main/style'
 
-const MainPage: FC = () => {
+export const MainPage: FC = () => {
   return (
     <StyledMainWrapper>
       <Logo />
       <StyledInnerWrapper>
-        <Card height={'300px'} width={'300px'}>
-          <ButtonLink to={'/game'} $primary={true}>
+        <Card height="300px" width="300px">
+          <ButtonLink to="/game" $primary={true}>
             играть
           </ButtonLink>
-          <ButtonLink to={'/profile'}>профиль</ButtonLink>
-          <ButtonLink to={'/leaderboard'}>лидеры</ButtonLink>
-          <ButtonLink to={'/forum'}>форум</ButtonLink>
+          <ButtonLink to="/profile">профиль</ButtonLink>
+          <ButtonLink to="/leaderboard">лидеры</ButtonLink>
+          <ButtonLink to="/forum">форум</ButtonLink>
         </Card>
         <StyledBG />
         <p>
@@ -30,5 +30,3 @@ const MainPage: FC = () => {
     </StyledMainWrapper>
   )
 }
-
-export default MainPage
