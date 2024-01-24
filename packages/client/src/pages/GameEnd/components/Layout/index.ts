@@ -3,9 +3,10 @@ import Card from '@/components/Card'
 
 export const Layout = styled(Card)`
   cursor: default;
-  width: auto;
+  max-width: 400px;
+  margin-top: 20px;
   height: auto;
-  padding: 3em;
+  padding: 2em;
   text-align: center;
 `
 

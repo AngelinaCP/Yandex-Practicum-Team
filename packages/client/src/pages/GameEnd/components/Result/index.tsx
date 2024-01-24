@@ -1,7 +1,31 @@
-import { ResultStyled } from './ResultStyled'
+import { Header2 } from '@/components/Header'
+import styled from 'styled-components'
 
-const result_ = '00:00:34'
+type ResultProps = { result: string }
 
-export const Result = ({ result = result_ }) => (
-  <ResultStyled>{result}</ResultStyled>
-)
+const data: ResultProps = {
+  result: '13:00:34',
+}
+
+export const Result = styled(Header2).attrs<Partial<ResultProps>>(
+  ({ children = data.result }) => ({
+    children,
+  })
+)`
+  margin-bottom: 1.5em;
+  font-size: 2em;
+  color: ${props => props.theme.color};
+
+  @media (prefers-color-scheme: dark) {
+    color: ${props => props.theme.dark.color};
+  }
+`
+
+Result.defaultProps = {
+  theme: {
+    dark: {
+      color: '#ffffff',
+    },
+    color: '#37363F',
+  },
+}

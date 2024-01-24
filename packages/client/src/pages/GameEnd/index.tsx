@@ -1,14 +1,18 @@
 import { Layout } from './components/Layout'
 import { Logo } from './components/Logo'
+import { Heading } from './components/Heading'
 import { Result } from './components/Result'
 import { ButtonsListGameEnd } from './components/ButtonsList'
 
-export const GameEndPage = () => {
+export const GameEndPage: React.FC = () => {
   return (
-    <Layout>
+    <>
       <Logo />
-      <Result />
-      <ButtonsListGameEnd />
-    </Layout>
+      <Layout>
+        <Heading />
+        <Result />
+        <ButtonsListGameEnd />
+      </Layout>
+    </>
   )
 }

@@ -2,7 +2,7 @@ import Logo from '@/components/Logo'
 import styled from 'styled-components'
 
 const LogoGameEnd = styled(Logo)`
-  margin-bottom: 2rem;
+  margin: 3rem auto 0;
 `
 
 export { LogoGameEnd as Logo }
