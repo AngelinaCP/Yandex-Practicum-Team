@@ -1,3 +1,5 @@
+![Alt](https://repobeats.axiom.co/api/embed/1145203cf757e188dbb21cb1a2d845870701cfbc.svg "Repobeats analytics image")
+
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`
