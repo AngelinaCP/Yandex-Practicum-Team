@@ -4,8 +4,9 @@ import Button from '@/components/Button/Button'
 import { useToggle } from '@/hooks'
 import { createPortal } from 'react-dom'
 import { Modal } from '@/components/Modal'
+import Input from '@/components/Input'
 
-export const StyledForum = styled.div`
+export const StyledWrapper = styled.div`
   display: flex;
   height: 100%;
   margin: 5rem 0;
@@ -13,7 +14,7 @@ export const StyledForum = styled.div`
   align-items: center;
 `
 
-const Card = styled.div`
+const StyledPost = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -36,17 +37,34 @@ const Text = styled.p`
 `
 
 const Title = styled.h2`
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font: 20px Arial sans-serif;
+`
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 50rem;
+  height: 7rem;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: cornflowerblue;
 `
 
 export const ForumPage = () => {
   const [showModal, toggleShowModal] = useToggle(false)
 
   return (
-    <StyledForum>
+    <StyledWrapper>
       <Button onClick={toggleShowModal}>Новый пост</Button>
-      <Card>
-        <Title>First topic</Title>
+      <StyledPost>
+        <Title>First post</Title>
         <Text>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -56,9 +74,9 @@ export const ForumPage = () => {
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
         </Text>
-      </Card>
-      <Card>
-        <Title>Second topic</Title>
+      </StyledPost>
+      <StyledPost>
+        <Title>Second post</Title>
         <Text>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -68,12 +86,25 @@ export const ForumPage = () => {
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
         </Text>
-      </Card>
+      </StyledPost>
       {showModal &&
         createPortal(
-          <Modal onClick={toggleShowModal}>COIOIO</Modal>,
+          <Modal>
+            <Form>
+              <Input label="Название" name="name" required={true} />
+              <Input
+                label="Пароль"
+                name="password"
+                type="password"
+                required={true}
+              />
+              <Button type="submit" $primary={true}>
+                войти
+              </Button>
+            </Form>
+          </Modal>,
           document.body
         )}
-    </StyledForum>
+    </StyledWrapper>
   )
 }
