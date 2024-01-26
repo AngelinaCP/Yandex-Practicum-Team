@@ -13,6 +13,7 @@ import { Page404 } from './pages/Page_404'
 import Navigation from './components/navigation'
 import interceptorsProvider from '@/providers/interceptors.provider'
 import { PrivateRoute } from '@/components/PrivateRoute'
+import { GlobalWrapper } from './components/GlobalWrapper'
 
 function App() {
   useEffect(() => {
@@ -28,7 +29,7 @@ function App() {
   }, [])
 
   return (
-    <>
+    <GlobalWrapper>
       <BrowserRouter>
         <Navigation />
         <Routes>
@@ -45,7 +46,7 @@ function App() {
           <Route path="*" element={<Page404 />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </GlobalWrapper>
   )
 }
 
