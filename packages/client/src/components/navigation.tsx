@@ -5,7 +5,6 @@ const StyledNav = styled.nav`
   position: absolute;
   top: 10px;
   left: 50%;
-  /* width: 50%; */
   transform: translate(-50%, 0);
 
   & ul {
