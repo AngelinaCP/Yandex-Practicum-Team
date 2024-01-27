@@ -3,11 +3,9 @@ import styled from 'styled-components'
 const Button = styled.button.attrs<{
   $primary?: boolean
   type?: string
-  onClick?: (event?: any) => void
 }>(props => ({
   type: props.type || 'button',
   $primary: props.$primary ?? false,
-  onClick: props.onClick,
 }))`
   background-color: ${props =>
     props.$primary

@@ -1,10 +1,8 @@
 import styled from 'styled-components'
 
-export const ModalStyled = styled.div.attrs<{
+export const ModalStyled = styled.div<{
   block: string
-}>(props => ({
-  block: props.block,
-}))`
+}>`
   display: ${props => props.block && props.block};
   position: fixed;
   top: 0;
