@@ -28,11 +28,6 @@ function App() {
     }
 
     fetchServerData()
-
-    // authService
-    //   .getUser()
-    //   .catch(() => setAuth(false))
-    //   .then(() => setAuth(true))
   }, [])
 
   return (
