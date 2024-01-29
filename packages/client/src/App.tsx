@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 import { LoginPage } from './pages/Login'
 import { MainPage } from './pages/Main'
 import { SignupPage } from './pages/Signup'
@@ -12,12 +12,13 @@ import TopicPage from './pages/topic.page'
 import { Page404 } from './pages/Page_404'
 import Navigation from './components/navigation'
 import { PrivateRoute } from '@/components/PrivateRoute'
-import { AuthService } from '@/services'
+import { authService } from '@/services'
 import useAuth from '@/hooks/useAuth'
 import { ForumPostPage } from '@/pages/ForumPost'
+import globalRouter from '@/global-router'
+import { Auth } from '@/components/Auth'
 
 function App() {
-  const { setAuth } = useAuth()
   useEffect(() => {
     const fetchServerData = async () => {
       const url = `http://localhost:${__SERVER_PORT__}`
@@ -28,15 +29,16 @@ function App() {
 
     fetchServerData()
 
-    new AuthService()
-      .getUser()
-      .catch(() => setAuth(false))
-      .then(() => setAuth(true))
+    // authService
+    //   .getUser()
+    //   .catch(() => setAuth(false))
+    //   .then(() => setAuth(true))
   }, [])
 
   return (
     <>
       <BrowserRouter>
+        <Auth />
         <Navigation />
         <Routes>
           <Route element={<PrivateRoute />}>

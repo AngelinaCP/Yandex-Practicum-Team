@@ -5,7 +5,7 @@ import Input from '@/components/Input'
 import Button from '@/components/Button/index'
 import Link from '@/components/Link'
 import { StyledForm } from '@/pages/Login/style'
-import { AuthService } from '@/services'
+import { authService } from '@/services'
 import useAuth from '@/hooks/useAuth'
 
 export const LoginPage = () => {
@@ -20,8 +20,7 @@ export const LoginPage = () => {
     }
     const login = target.login.value
     const password = target.password.value
-    const auth = new AuthService()
-    auth.login({ login, password }).then(() => {
+    authService.login({ login, password }).then(() => {
       setAuth(true)
       navigate('/')
     })
