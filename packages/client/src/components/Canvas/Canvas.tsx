@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 import { Game } from '@/game'
+import { useNavigate } from 'react-router-dom'
 
 export const Canvas = () => {
   const canvasRef = useRef(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const canvas: HTMLCanvasElement | null = canvasRef.current
@@ -10,7 +12,7 @@ export const Canvas = () => {
     let animationFrameId: number
 
     if (context) {
-      const game = new Game(context, 800, 400)
+      const game = new Game(context, 800, 400, navigate)
 
       game.initGame()
 

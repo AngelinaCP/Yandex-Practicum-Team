@@ -21,13 +21,15 @@ export class Game {
   width: number
   groundMargin: number
   ui: UI
+  navigate: (s: string) => void
   lives: number
   gameEnd: boolean
 
   constructor(
     context: CanvasRenderingContext2D,
     width: number,
-    height: number
+    height: number,
+    navigate: (path: string) => void
   ) {
     this.arrayBlocks = []
     this.powerUps = []
@@ -46,6 +48,7 @@ export class Game {
     this.player = new Player(context, this, 50, 'black')
     this.lives = 2
     this.gameEnd = false
+    this.navigate = navigate.bind(this) || undefined
   }
 
   addListener() {
@@ -127,8 +130,8 @@ export class Game {
     const s2 = Object.assign(Object.create(Object.getPrototypeOf(block)), block)
     //Don't need pixel perfect collision detection
     s2.size = s2.size - 10
-    s2.x = s2.x + 10
-    s2.y = s2.y + 10
+    s2.x = s2.x + 20
+    s2.y = s2.y + 20
     return !(
       (
         s1.x > s2.x + s2.size || //R1 is to the right of R2
@@ -139,7 +142,7 @@ export class Game {
     )
   }
 
-  start(ctx: CanvasRenderingContext2D) {
+  start = (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     this.background_.update()
@@ -174,6 +177,7 @@ export class Game {
       arrayBlock.slide()
       //End game as player and enemy have collided
       if (this.squaresColliding(this.player, arrayBlock)) {
+        this.navigate('/game-end')
         this.lives -= 1
         arrayBlock.markedToDelete = true
       }
@@ -208,3 +212,5 @@ export class Game {
     )
   }
 }
+
+// export default withRouter(Game);
