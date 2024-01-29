@@ -19,11 +19,13 @@ export class Game {
   width: number
   groundMargin: number
   ui: UI
+  navigate: (s: string) => void
 
   constructor(
     context: CanvasRenderingContext2D,
     width: number,
-    height: number
+    height: number,
+    navigate: (path: string) => void
   ) {
     this.arrayBlocks = []
     this.score = 0
@@ -39,6 +41,7 @@ export class Game {
     this.height = height
     this.groundMargin = 0
     this.player = new Player(context, this, 50, 'black')
+    this.navigate = navigate.bind(this) || undefined
   }
 
   addListener() {
@@ -128,8 +131,8 @@ export class Game {
     const s2 = Object.assign(Object.create(Object.getPrototypeOf(block)), block)
     //Don't need pixel perfect collision detection
     s2.size = s2.size - 10
-    s2.x = s2.x + 10
-    s2.y = s2.y + 10
+    s2.x = s2.x + 20
+    s2.y = s2.y + 20
     return !(
       (
         s1.x > s2.x + s2.size || //R1 is to the right of R2
@@ -140,7 +143,7 @@ export class Game {
     )
   }
 
-  start(ctx: CanvasRenderingContext2D) {
+  start = (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     this.background_.update()
@@ -159,9 +162,7 @@ export class Game {
       arrayBlock.slide()
       //End game as player and enemy have collided
       if (this.squaresColliding(this.player, arrayBlock)) {
-        // cardScore.textContent = score;
-        // card.style.display = "block";
-        // cancelAnimationFrame(animationId);
+        this.navigate('/game-end')
       }
       //User should score a point if this is the case
       if (this.isPastBlock(arrayBlock) && this.canScore) {
@@ -186,3 +187,5 @@ export class Game {
     )
   }
 }
+
+// export default withRouter(Game);
