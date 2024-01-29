@@ -13,7 +13,7 @@ export const InputWrapperStyle = styled.div`
   }
 `
 
-export const InputStyle = styled.input<{ register?: any }>`
+export const InputStyle = styled.input`
   padding: 7px 0;
   width: 100%;
   border: 0;
