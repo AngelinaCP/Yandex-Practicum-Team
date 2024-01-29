@@ -11,10 +11,12 @@ import ForumPage from './pages/forum.page'
 import TopicPage from './pages/topic.page'
 import { Page404 } from './pages/Page_404'
 import Navigation from './components/navigation'
-import interceptorsProvider from '@/providers/interceptors.provider'
 import { PrivateRoute } from '@/components/PrivateRoute'
+import { AuthService } from '@/services'
+import useAuth from '@/hooks/useAuth'
 
 function App() {
+  const { setAuth } = useAuth()
   useEffect(() => {
     const fetchServerData = async () => {
       const url = `http://localhost:${__SERVER_PORT__}`
@@ -24,7 +26,11 @@ function App() {
     }
 
     fetchServerData()
-    interceptorsProvider()
+
+    new AuthService()
+      .getUser()
+      .catch(() => setAuth(false))
+      .then(() => setAuth(true))
   }, [])
 
   return (

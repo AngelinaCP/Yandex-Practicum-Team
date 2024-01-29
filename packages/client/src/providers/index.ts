@@ -1,1 +1,1 @@
-export * from './interceptors.provider'
+export * from './http.provider'
