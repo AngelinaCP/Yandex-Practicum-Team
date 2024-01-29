@@ -1,0 +1,18 @@
+<svg
+    width="32"
+    height="96"
+    viewBox="0 0 32 96"
+    fill="blue"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <symbol id="arrowLeft" viewBox="0 0 32 96">
+        <path d="M32 0L26.1053 4.42013e-07L0 48H6L32 0Z" />
+        <path d="M32 96H26L0 48H6L32 96Z" />
+    </symbol>
+
+    <symbol id="arrowRight" viewBox="0 0 32 96">
+        <path d="M0 0L5.89474 4.42013e-07L32 48H26L0 0Z" />
+        <path d="M0 96H6L32 48H26L0 96Z" />
+    </symbol>
+
+</svg>
