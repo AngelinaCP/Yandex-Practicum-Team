@@ -29,8 +29,8 @@ export const LoginPage = () => {
   return (
     <Card width="300px" height="340px">
       <StyledForm onSubmit={handleSubmit}>
-        <Input label="Логин" name="login" />
-        <Input label="Пароль" type="password" name="password" />
+        <Input label="Логин" name="login" required={true} />
+        <Input label="Пароль" type="password" name="password" required={true} />
         <Button type="submit" $primary={true}>
           войти
         </Button>
