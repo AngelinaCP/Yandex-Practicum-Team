@@ -1,11 +1,12 @@
 import styled from 'styled-components'
 
-const Button = styled.button.attrs<{ $primary?: boolean; type?: string }>(
-  props => ({
-    type: props.type || 'button',
-    $primary: props.$primary ?? false,
-  })
-)`
+const Button = styled.button.attrs<{
+  $primary?: boolean
+  type?: string
+}>(props => ({
+  type: props.type || 'button',
+  $primary: props.$primary ?? false,
+}))`
   background-color: ${props =>
     props.$primary
       ? props.theme.primaryBackground

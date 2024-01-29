@@ -9,8 +9,8 @@ import { AuthService } from '@/services'
 import useAuth from '@/hooks/useAuth'
 
 export const LoginPage = () => {
-  const navigate = useNavigate()
   const { setAuth } = useAuth()
+  const navigate = useNavigate()
 
   function handleSubmit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -23,7 +23,7 @@ export const LoginPage = () => {
     const auth = new AuthService()
     auth.login({ login, password }).then(() => {
       setAuth(true)
-      navigate('/game')
+      navigate('/')
     })
   }
 
