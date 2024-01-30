@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios'
 import globalRouter from '@/global-router'
+import { storage } from '@/providers/storage.provider'
 
 export const http = axios.create({
   withCredentials: true,
@@ -15,6 +16,7 @@ http.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response?.status === 401 && globalRouter.navigate) {
       globalRouter.navigate('/login')
+      storage.setItem('user', '')
     }
 
     return Promise.reject(error)

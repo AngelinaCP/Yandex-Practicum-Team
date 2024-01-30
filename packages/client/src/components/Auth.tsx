@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { authService } from '@/services'
 import useAuth from '@/hooks/useAuth'
+import { storage } from '@/providers'
 
 export function Auth() {
   const { setAuth } = useAuth()
@@ -10,7 +11,10 @@ export function Auth() {
   useEffect(() => {
     authService
       .getUser()
-      .then(() => setAuth(true))
+      .then(resp => {
+        storage.setItem('user', resp.data)
+        setAuth(true)
+      })
       .catch(() => setAuth(false))
   }, [])
 
