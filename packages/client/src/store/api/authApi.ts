@@ -3,7 +3,11 @@ import { userApi } from './userApi'
 import { LoginInput } from '@/pages/Login/config'
 import { API_URL } from '@/store/api/config'
 import { userSlice } from '@/store/features/userSlice'
-import { GenericResponse, ILogin } from '@/store/api/types'
+import {
+  GenericResponse,
+  IChangePasswordRequest,
+  ILogin,
+} from '@/store/api/types'
 import { RegisterInput } from '@/pages/Signup/config'
 
 export const authApi = createApi({
@@ -60,11 +64,22 @@ export const authApi = createApi({
         dispatch(userSlice.actions.logout())
       },
     }),
+    changePassword: builder.mutation<GenericResponse, IChangePasswordRequest>({
+      query(data) {
+        return {
+          url: `user/password`,
+          method: 'PUT',
+          body: data,
+          credentials: 'include',
+        }
+      },
+    }),
   }),
 })
 
 export const {
+  useRegisterUserMutation,
   useLoginUserMutation,
   useLogoutUserMutation,
-  useRegisterUserMutation,
+  useChangePasswordMutation,
 } = authApi

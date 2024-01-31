@@ -17,3 +17,8 @@ export interface ILogin {
   login: string
   password: string
 }
+
+export interface IChangePasswordRequest {
+  oldPassword: string
+  newPassword: string
+}
