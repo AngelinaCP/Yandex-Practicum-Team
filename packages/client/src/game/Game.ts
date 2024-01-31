@@ -19,6 +19,7 @@ export class Game {
   width: number
   groundMargin: number
   ui: UI
+  lives: number
 
   constructor(
     context: CanvasRenderingContext2D,
@@ -39,6 +40,7 @@ export class Game {
     this.height = height
     this.groundMargin = 0
     this.player = new Player(context, this, 50, 'black')
+    this.lives = 2
   }
 
   addListener() {
@@ -153,6 +155,11 @@ export class Game {
         // cardScore.textContent = score;
         // card.style.display = "block";
         // cancelAnimationFrame(animationId);
+        if (this.lives === 1) {
+          this.arrayBlocks.length = 0
+          this.ui.gameEndMessage(this.ctx)
+        }
+        this.lives -= 1
         arrayBlock.markedToDelete = true
       }
       //User should score a point if this is the case

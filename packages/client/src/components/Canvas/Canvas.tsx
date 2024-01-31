@@ -17,6 +17,10 @@ export const Canvas = () => {
       const render = () => {
         game.start(context)
         animationFrameId = window.requestAnimationFrame(render)
+
+        if (game.lives < 1) {
+          window.cancelAnimationFrame(animationFrameId)
+        }
       }
 
       render()

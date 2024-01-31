@@ -24,8 +24,26 @@ export class UI {
     context.fillStyle = this.fontColor
 
     // score
-    context.fillText('Очки: ' + this.game.score, 20, 50)
+    let dy = 50
+    context.fillText('Очки: ' + this.game.score, 20, dy)
+    context.fillText('Жизни: ' + this.game.lives, 20, (dy *= 2))
+    context.restore()
+  }
 
+  gameEndMessage(context: CanvasRenderingContext2D) {
+    context.save()
+    context.fillStyle = `rgba(0,0,0,.7)`
+    context.fillRect(0, 0, this.game.width, this.game.height)
+    context.textAlign = 'center'
+    context.font = this.fontSize * 2 + 'px ' + this.fontFamily
+    context.fillStyle = 'white'
+    context.fillText(
+      'Game end',
+      this.game.width / 2 - 2,
+      this.game.height / 2 - 2
+    )
+    context.fillStyle = 'black'
+    context.fillText('Game end', this.game.width / 2, this.game.height / 2)
     context.restore()
   }
 }
