@@ -62,14 +62,6 @@ export class Game {
     this.ctx.stroke()
   }
 
-  drawScore() {
-    this.ctx.font = '80px Arial'
-    this.ctx.fillStyle = 'black'
-    const scoreString = this.score.toString()
-    const xOffset = (scoreString.length - 1) * 20
-    this.ctx.fillText(scoreString, 280 - xOffset, 100)
-  }
-
   //Returns true if past player past block
   isPastBlock(block: Block) {
     return (
@@ -148,7 +140,6 @@ export class Game {
     this.ui.draw(ctx)
 
     this.drawBackgroundLine()
-    this.drawScore()
 
     this.player.draw()
 
