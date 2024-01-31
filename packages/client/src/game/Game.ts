@@ -162,6 +162,7 @@ export class Game {
         // cardScore.textContent = score;
         // card.style.display = "block";
         // cancelAnimationFrame(animationId);
+        arrayBlock.markedToDelete = true
       }
       //User should score a point if this is the case
       if (this.isPastBlock(arrayBlock) && this.canScore) {
@@ -171,11 +172,11 @@ export class Game {
 
       //Delete block that has left the screen
       if (arrayBlock.x + arrayBlock.size <= 0) {
-        setTimeout(() => {
-          this.arrayBlocks.splice(index, 1)
-        }, 0)
+        arrayBlock.markedToDelete = true
       }
     })
+
+    this.arrayBlocks = this.arrayBlocks.filter(block => !block.markedToDelete)
   }
 
   initGame() {
