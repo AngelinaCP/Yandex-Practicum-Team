@@ -1,37 +1,38 @@
-import React from 'react'
+import React, { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AuthService } from '@/services/auth.service'
-import { LocalStorageService } from '@/services/localStorage.service'
-import useAuth from '@/hooks/useAuth'
 import Card from '@/components/Card'
 import Input from '@/components/Input'
 import Button from '@/components/Button/index'
 import Link from '@/components/Link'
 import { StyledForm } from '@/pages/Login/style'
+import { useLoginUserMutation } from '@/store/api/authApi'
+import { Loading } from '@/components/Loading'
 
-export const LoginPage = () => {
-  const { setAuth } = useAuth()
+export const LoginPage: FC = () => {
   const navigate = useNavigate()
+  const [loginUser, { isLoading, isError, error, isSuccess }] =
+    useLoginUserMutation()
+
+  useEffect(() => {
+    if (isSuccess) return navigate('/')
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if (isError && error?.data?.reason === 'User already in system')
+      return navigate('/')
+  }, [isSuccess, isError])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const target = event.target as typeof event.target & {
+    const { login, password } = event.target as typeof event.target & {
       login: { value: string }
       password: { value: string }
     }
-    const login = target.login.value
-    const password = target.password.value
-    const authService = new AuthService()
-    const storage = new LocalStorageService()
-    authService.login({ login, password }).then(() => {
-      storage.setItem('isAuth', 'true')
-      setAuth(true)
-      navigate('/')
-    })
+    loginUser({ login: login.value, password: password.value })
   }
 
   return (
     <Card width="300px" height="340px">
+      {isLoading && <Loading />}
       <StyledForm onSubmit={handleSubmit}>
         <Input label="Логин" name="login" required={true} />
         <Input label="Пароль" name="password" type="password" required={true} />

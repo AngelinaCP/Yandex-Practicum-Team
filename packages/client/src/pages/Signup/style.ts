@@ -6,7 +6,7 @@ export const StyledForm = styled.form`
   align-items: center;
 `
 
-export const StyledFormGroup = styled.form`
+export const StyledFormGroup = styled.div`
   display: flex;
   flex-direction: row;
   gap: 80px;
