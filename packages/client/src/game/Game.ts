@@ -1,14 +1,16 @@
 import { Player } from '@/game/Player'
 import { Block } from '@/game/Block'
-// import { BackgroundForest as Background} from './backgrounds/BackgroundForest'
-import { BackgroundCity as Background } from './backgrounds/BackgroundCity'
+import { BackgroundForest as Background } from './backgrounds/BackgroundForest'
+// import { BackgroundCity as Background } from './backgrounds/BackgroundCity'
 import { UI } from './UI'
+import { PowerUpHeart } from './powerUps'
 
 export class Game {
   player: Player
   score: number
   scoreIncrement: number
   arrayBlocks: Block[]
+  powerUps: PowerUpHeart[]
   enemySpeed: number
   canScore: boolean
   presetTime: number
@@ -27,6 +29,7 @@ export class Game {
     height: number
   ) {
     this.arrayBlocks = []
+    this.powerUps = []
     this.score = 0
     this.scoreIncrement = 0
     this.enemySpeed = 5
@@ -114,7 +117,7 @@ export class Game {
     return returnTime
   }
 
-  squaresColliding(player: Player, block: Block) {
+  squaresColliding(player: Player, block: Block | PowerUpHeart) {
     const s1 = Object.assign(
       Object.create(Object.getPrototypeOf(player)),
       player
@@ -144,6 +147,23 @@ export class Game {
     this.drawBackgroundLine()
 
     this.player.draw()
+
+    if (Math.random() < 0.1 && this.powerUps.length < 1) {
+      this.powerUps.push(new PowerUpHeart(this))
+    }
+
+    this.powerUps.forEach(powerUp => {
+      powerUp.update()
+      powerUp.draw()
+      if (powerUp.x < -powerUp.width) {
+        powerUp.markedToDelete = true
+      }
+
+      if (this.squaresColliding(this.player, powerUp)) {
+        powerUp.markedToDelete = true
+        this.lives += 1
+      }
+    })
 
     //Check to see if game speed should be increased
     this.shouldIncreaseSpeed()
@@ -175,6 +195,7 @@ export class Game {
     })
 
     this.arrayBlocks = this.arrayBlocks.filter(block => !block.markedToDelete)
+    this.powerUps = this.powerUps.filter(powerUp => !powerUp.markedToDelete)
   }
 
   initGame() {
