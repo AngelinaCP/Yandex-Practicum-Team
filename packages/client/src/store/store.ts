@@ -10,7 +10,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     userState: userReducer,
   },
-  devTools: true,
+  devTools: process.env.NODE_ENV === 'development',
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({}).concat([authApi.middleware, userApi.middleware]),
 })
