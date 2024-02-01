@@ -8,6 +8,12 @@ import { StyledForm } from '@/pages/Login/style'
 import { useLoginUserMutation } from '@/store/api/authApi'
 import { Loading } from '@/components/Loading'
 
+type errorMessage = {
+  data: {
+    reason?: string
+  }
+}
+
 export const LoginPage: FC = () => {
   const navigate = useNavigate()
   const [loginUser, { isLoading, isError, error, isSuccess }] =
@@ -15,9 +21,10 @@ export const LoginPage: FC = () => {
 
   useEffect(() => {
     if (isSuccess) return navigate('/')
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    if (isError && error?.data?.reason === 'User already in system')
+    if (
+      isError &&
+      (error as errorMessage)?.data.reason === 'User already in system'
+    )
       return navigate('/')
   }, [isSuccess, isError])
 

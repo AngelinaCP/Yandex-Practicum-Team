@@ -15,12 +15,12 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL,
     responseHandler: async response => {
-      if (response.url === `${API_URL}auth/signin` && response.status === 200) {
+      if (
+        response.url === `${API_URL}/auth/signin` &&
+        response.status === 200
+      ) {
         return Promise.resolve()
-      }
-      if (response.url === `${API_URL}auth/logout` && response.status === 200) {
-        return response.json()
-      }
+      } else return response.json()
     },
   }),
   endpoints: builder => ({
@@ -47,6 +47,8 @@ export const authApi = createApi({
           await queryFulfilled
           await dispatch(userApi.endpoints.getMe.initiate(null))
         } catch (error) {
+          console.error(error)
+        } finally {
           await dispatch(userApi.endpoints.getMe.initiate(null))
         }
       },
