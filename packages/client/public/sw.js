@@ -17,15 +17,23 @@ const URLS = [
   '/src/App.tsx'
 ];
 
+const canBeCached = (req) =>
+  req.method === 'GET' &&
+  req.url.startsWith('http') &&
+  !req.url.includes('sockjs-node');
+
 const tryNetwork = (req, timeout) => {
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(reject, timeout);
     fetch(req).then((res) => {
       clearTimeout(timeoutId);
-      const responseClone = res.clone();
-      caches.open(CACHE_NAME).then((cache) => {
-        cache.put(req, responseClone)
-      })
+      if (canBeCached(req)) {
+        const responseClone = res.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(req, responseClone)
+        })
+      }
+
       resolve(res);
     }, reject);
   });
