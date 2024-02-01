@@ -18,7 +18,6 @@ const URLS = [
 ];
 
 const tryNetwork = (req, timeout) => {
-  console.log(req)
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(reject, timeout);
     fetch(req).then((res) => {
@@ -28,13 +27,11 @@ const tryNetwork = (req, timeout) => {
         cache.put(req, responseClone)
       })
       resolve(res);
-      // Reject also if network fetch rejects.
     }, reject);
   });
 };
 
 const getFromCache = (req) => {
-  console.log('network is off so getting from cache...')
   return caches.open(CACHE_NAME).then((cache) => {
     return cache.match(req).then((result) => {
       return result || Promise.reject("no-match");
@@ -43,16 +40,13 @@ const getFromCache = (req) => {
 };
 
 self.addEventListener("install", event => {
-  console.log("install");
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('opened cache')
         return cache.addAll(URLS)
       })
-      .then(data => console.log('data', data))
       .catch(error => {
-        console.log('cache error', error)
+        console.error('cache error', error)
       })
   )
 
@@ -74,7 +68,6 @@ self.addEventListener("activate", function(event) {
 });
 
 self.addEventListener('fetch', (event) => {
-  console.log('Происходит запрос на сервер');
   event.respondWith(
     tryNetwork(event.request, 400)
       .catch(() => getFromCache(event.request))
