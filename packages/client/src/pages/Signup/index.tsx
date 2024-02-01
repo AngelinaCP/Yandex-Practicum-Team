@@ -6,12 +6,11 @@ import Link from '@/components/Link'
 import { StyledForm, StyledFormGroup } from '@/pages/Signup/style'
 import { useRegisterUserMutation } from '@/store/api/authApi'
 import { useNavigate } from 'react-router-dom'
-import { Loading } from '@/components/Loading'
+import { LoaderSpinner } from '@/components/Loading'
 
 export const SignupPage = () => {
   const navigate = useNavigate()
-  const [registerUser, { isLoading, isSuccess /*, error, isError, data*/ }] =
-    useRegisterUserMutation()
+  const [registerUser, { isLoading, isSuccess }] = useRegisterUserMutation()
 
   useEffect(() => {
     if (isSuccess) return navigate('/login')
@@ -40,7 +39,7 @@ export const SignupPage = () => {
 
   return (
     <Card width="580px" height="440px">
-      {isLoading && <Loading />}
+      {isLoading && <LoaderSpinner />}
       <StyledForm onSubmit={handleSubmit}>
         <StyledFormGroup>
           <Input name="first_name" label="Имя" required={true} />

@@ -1,7 +1,11 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import { useAppSelector } from '@/store/store'
+import { RootState, useAppSelector } from '@/store/store'
 
 export function AuthRequired() {
-  const user = useAppSelector(state => state.userState.user)
-  return user?.id ? <Outlet /> : <Navigate to="/login" replace />
+  const selectUser = (state: RootState) => state.userState.user
+  const selectUserId = (state: RootState) => selectUser(state)?.id
+
+  const userId = useAppSelector(state => selectUserId(state))
+
+  return userId ? <Outlet /> : <Navigate to="/login" replace />
 }

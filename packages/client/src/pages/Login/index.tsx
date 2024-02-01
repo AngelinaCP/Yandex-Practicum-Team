@@ -6,7 +6,7 @@ import Button from '@/components/Button/index'
 import Link from '@/components/Link'
 import { StyledForm } from '@/pages/Login/style'
 import { useLoginUserMutation } from '@/store/api/authApi'
-import { Loading } from '@/components/Loading'
+import { LoaderSpinner } from '@/components/Loading'
 
 type errorMessage = {
   data: {
@@ -39,7 +39,7 @@ export const LoginPage: FC = () => {
 
   return (
     <Card width="300px" height="340px">
-      {isLoading && <Loading />}
+      {isLoading && <LoaderSpinner />}
       <StyledForm onSubmit={handleSubmit}>
         <Input label="Логин" name="login" required={true} />
         <Input label="Пароль" name="password" type="password" required={true} />

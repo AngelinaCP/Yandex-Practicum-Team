@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Spinner, SpinnerWrapper } from '@/components/Loading/styles'
 
-export const Loading: FC = () => (
+export const LoaderSpinner: FC = () => (
   <SpinnerWrapper>
     <Spinner />
   </SpinnerWrapper>
