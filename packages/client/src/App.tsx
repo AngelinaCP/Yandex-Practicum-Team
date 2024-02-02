@@ -33,9 +33,9 @@ function App() {
       <BrowserRouter>
         <Navigation />
         <Routes>
-          <Route path="game" element={<GamePage />} />
           <Route element={<AuthRequired />}>
             <Route path="profile" element={<ProfilePage />} />
+            <Route path="game" element={<GamePage />} />
             <Route path="leaderboard" element={<LeaderboardPage />} />
             <Route path="forum">
               <Route index element={<ForumPage />} />
