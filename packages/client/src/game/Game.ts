@@ -64,15 +64,6 @@ export class Game {
     })
   }
 
-  drawBackgroundLine() {
-    this.ctx.beginPath()
-    this.ctx.moveTo(0, this.height - this.groundMargin)
-    this.ctx.lineTo(this.width, this.height - this.groundMargin)
-    this.ctx.lineWidth = 1.9
-    this.ctx.strokeStyle = 'black'
-    this.ctx.stroke()
-  }
-
   //Returns true if past player past block
   isPastBlock(block: Block) {
     return (
@@ -149,8 +140,6 @@ export class Game {
     this.background_.update()
     this.background_.draw(ctx)
     this.ui.draw(ctx)
-
-    this.drawBackgroundLine()
 
     this.player.draw()
 
