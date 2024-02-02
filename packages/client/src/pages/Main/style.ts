@@ -32,6 +32,7 @@ export const StyledBG = styled.div`
   width: 50vw;
   height: 60vh;
   background: url(${girl}) center no-repeat;
+  min-height: 500px;
 `
 
 StyledInnerWrapper.defaultProps = {
