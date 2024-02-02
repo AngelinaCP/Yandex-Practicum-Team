@@ -12,7 +12,7 @@ export const Canvas = () => {
     let animationFrameId: number
 
     if (context) {
-      const game = new Game(context, 800, 400, navigate)
+      const game = new Game(context, 800, 400)
 
       game.initGame()
 
@@ -21,6 +21,9 @@ export const Canvas = () => {
         animationFrameId = window.requestAnimationFrame(render)
 
         if (game.gameEnd) {
+          setTimeout(() => {
+            navigate('/game-end')
+          }, 2000)
           window.cancelAnimationFrame(animationFrameId)
         }
       }

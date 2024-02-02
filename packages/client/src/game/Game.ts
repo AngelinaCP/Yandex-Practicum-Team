@@ -21,15 +21,13 @@ export class Game {
   width: number
   groundMargin: number
   ui: UI
-  navigate: (s: string) => void
   lives: number
   gameEnd: boolean
 
   constructor(
     context: CanvasRenderingContext2D,
     width: number,
-    height: number,
-    navigate: (path: string) => void
+    height: number
   ) {
     this.arrayBlocks = []
     this.powerUps = []
@@ -48,7 +46,6 @@ export class Game {
     this.player = new Player(context, this)
     this.lives = 2
     this.gameEnd = false
-    this.navigate = navigate.bind(this) || undefined
   }
 
   addListener() {
@@ -180,12 +177,6 @@ export class Game {
       if (this.squaresColliding(this.player, arrayBlock)) {
         this.lives -= 1
         arrayBlock.markedToDelete = true
-
-        if (this.lives === 0) {
-          setTimeout(() => {
-            this.navigate('/game-end')
-          }, 2000)
-        }
       }
       //User should score a point if this is the case
       if (this.isPastBlock(arrayBlock) && this.canScore) {
