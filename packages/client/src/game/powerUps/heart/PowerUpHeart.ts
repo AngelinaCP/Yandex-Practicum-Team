@@ -2,32 +2,38 @@ import { Game } from '@/game/Game'
 import { SpriteAnimation } from '@/game/SpriteAnimation'
 import heart from './heart.png'
 
+const heartSpriteInfo = {
+  frameWidth: 64,
+  frameHeight: 64,
+  fps: 20,
+  frameLimit: 7,
+  path: heart,
+}
+
+/* y: [yBase * h; (yBase + yRand) * h] */
+const yBase = 0.5
+const yRand = 0.3
+const amplitudeMuliplier = 2
+
 export class PowerUpHeart extends SpriteAnimation {
   x: number
   y: number
   speedX: number
   speedY: number
-  width: number
-  height: number
-  size: number
   markedToDelete: boolean
-  type: string
   game: Game
   angle: number
+  playArea: number
 
   constructor(game: Game, scale = 1) {
-    super(game.ctx, 64, 64, 20, 7, heart, scale)
+    super(game.ctx, heartSpriteInfo, scale)
     this.game = game
     this.x = game.width
     this.markedToDelete = false
-    this.type = 'life'
     this.speedX = this.game.speed
     this.speedY = 0
-    this.width = 64
-    this.height = 64
-    this.size = 64
-    const playArea = this.game.height - this.height - this.game.groundMargin
-    this.y = Math.random() * (playArea * 0.5) + playArea * 0.25
+    this.playArea = this.game.height - this.height - this.game.groundMargin
+    this.y = Math.random() * (this.playArea * yRand) + this.playArea * yBase
     this.angle = 0
   }
 
@@ -35,7 +41,9 @@ export class PowerUpHeart extends SpriteAnimation {
     super.update(frameDelta)
     this.angle += 0.1
     this.x -= this.speedX
-    this.y += Math.sin(this.angle) * 3
+    this.y += Math.sin(this.angle) * amplitudeMuliplier
+    if (this.y < 0) this.y = 0
+    if (this.y > this.playArea) this.y = this.playArea
   }
 
   draw() {

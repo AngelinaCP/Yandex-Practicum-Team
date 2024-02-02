@@ -1,3 +1,11 @@
+type SpriteInfo = {
+  frameWidth: number
+  frameHeight: number
+  fps: number
+  frameLimit: number
+  path: string
+}
+
 export class SpriteAnimation {
   context: CanvasRenderingContext2D
   frameWidth: number
@@ -8,15 +16,13 @@ export class SpriteAnimation {
   frameCounter: number
   image: HTMLImageElement
   frameLimit: number
-  scale: number
+  width: number
+  height: number
+  size: number
 
   constructor(
     context: CanvasRenderingContext2D,
-    frameWidth: number,
-    frameHeight: number,
-    fps: number,
-    frameLimit: number,
-    image: string,
+    { frameWidth, frameHeight, fps, path, frameLimit }: SpriteInfo,
     scale = 1
   ) {
     this.context = context
@@ -27,9 +33,11 @@ export class SpriteAnimation {
     this.frameInterval = 1000 / this.fps
     this.frameCounter = 0
     this.image = new Image()
-    this.image.src = image
+    this.image.src = path
     this.frameLimit = frameLimit
-    this.scale = scale
+    this.width = frameWidth * scale
+    this.height = frameHeight * scale
+    this.size = this.width
   }
 
   update(frameDelta = 16.67) {
@@ -54,8 +62,8 @@ export class SpriteAnimation {
       this.frameHeight,
       x,
       y,
-      this.frameWidth * this.scale,
-      this.frameHeight * this.scale
+      this.width,
+      this.height
     )
   }
 }
