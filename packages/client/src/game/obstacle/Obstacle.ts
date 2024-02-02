@@ -20,7 +20,7 @@ export class Obstacle extends SpriteAnimation {
   game: Game
 
   constructor(speed: number, ctx: CanvasRenderingContext2D, game: Game) {
-    super(ctx, blockSpriteInfo, 1)
+    super(ctx, blockSpriteInfo, 70 / 400)
 
     this.width = 70
     this.x = ctx?.canvas.width + this.width

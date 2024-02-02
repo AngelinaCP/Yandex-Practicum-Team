@@ -24,7 +24,7 @@ export class Player extends SpriteAnimation {
   height: number
 
   constructor(ctx: CanvasRenderingContext2D, game: Game) {
-    super(game.ctx, playerSpriteInfo, 1)
+    super(game.ctx, playerSpriteInfo, 70 / 400)
     this.game = game
     this.x = 50
     this.jumpHeight = 12
