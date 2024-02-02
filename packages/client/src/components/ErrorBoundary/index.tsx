@@ -1,5 +1,5 @@
 import { ErrorInfo, ReactNode } from 'react'
-import React from 'react'
+import React, { Component } from 'react'
 import { Page500 } from '@/pages/Page_500'
 
 interface Props {
@@ -11,7 +11,7 @@ interface State {
   errorInfo: ErrorInfo | null
 }
 
-export class ErrorBoundary extends React.Component<Props, State> {
+export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
