@@ -45,6 +45,7 @@ export class Player extends SpriteAnimation {
 
   draw() {
     super.draw(this.x, this.y)
+    this.update()
     this.jump()
   }
 
