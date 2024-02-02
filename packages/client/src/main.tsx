@@ -1,13 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { Provider } from 'react-redux'
+import { store } from '@/store/store'
 import styled, { createGlobalStyle } from 'styled-components'
+
 import App from './App'
 import SLNTHLC from './assets/fonts/SLNTHLC.ttf'
 import SLNTHLE from './assets/fonts/SLNTHLE.ttf'
 import SLNTHLN from './assets/fonts/SLNTHLN.ttf'
 import horror from './assets/fonts/horror.ttf'
 import './index.css'
-import { AuthProvider } from '@/context/AuthProvider'
 
 const Global = createGlobalStyle`
     * {
@@ -20,12 +22,12 @@ const Global = createGlobalStyle`
     *:after {
         box-sizing: border-box;
     }
-    
+
     @font-face {
         font-family: "Silent Hill";
         src: url(${SLNTHLC}) format('truetype'), url(${SLNTHLE}) format('truetype'), url(${SLNTHLN}) format('truetype');
     }
-    
+
     @font-face {
         font-family: "horror";
         src: url(${horror}) format('truetype');
@@ -76,9 +78,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Global />
     <GlobalWrapper>
-      <AuthProvider>
+      <Provider store={store}>
         <App />
-      </AuthProvider>
+      </Provider>
     </GlobalWrapper>
   </React.StrictMode>
 )

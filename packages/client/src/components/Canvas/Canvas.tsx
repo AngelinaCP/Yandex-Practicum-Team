@@ -10,13 +10,17 @@ export const Canvas = () => {
     let animationFrameId: number
 
     if (context) {
-      const game = new Game(context, 800, 600)
+      const game = new Game(context, 800, 400)
 
       game.initGame()
 
       const render = () => {
         game.start(context)
         animationFrameId = window.requestAnimationFrame(render)
+
+        if (game.gameEnd) {
+          window.cancelAnimationFrame(animationFrameId)
+        }
       }
 
       render()
@@ -27,5 +31,5 @@ export const Canvas = () => {
     }
   }, [])
 
-  return <canvas ref={canvasRef} id="canvas" width="800" height="600" />
+  return <canvas ref={canvasRef} id="canvas" width="800" height="400" />
 }

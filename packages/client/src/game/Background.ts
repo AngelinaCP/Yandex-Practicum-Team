@@ -32,10 +32,7 @@ class Layer {
   }
 
   update() {
-    if (
-      this.x <
-      -this.scaledWidth + this.game.speed * this.speedModifier + 10
-    ) {
+    if (this.x < -this.scaledWidth + this.game.speed * this.speedModifier) {
       this.x = 0
     } else {
       this.x -= this.game.speed * this.speedModifier
@@ -61,6 +58,17 @@ class Layer {
       this.width,
       this.height,
       this.x + this.scaledWidth - this.game.speed * this.speedModifier,
+      this.y,
+      this.scaledWidth,
+      this.scaledHeight
+    )
+    context.drawImage(
+      this.image,
+      0,
+      0,
+      this.width,
+      this.height,
+      this.x + this.scaledWidth * 2 - this.game.speed * this.speedModifier,
       this.y,
       this.scaledWidth,
       this.scaledHeight

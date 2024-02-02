@@ -6,12 +6,14 @@ import { BackgroundGrunge as Background } from './backgrounds/BackgroundGrunge'
 // import { BackgroundCity as Background } from './backgrounds/BackgroundCity'
 // import { BackgroundNightForest as Background } from './backgrounds/BackgroundNightForest'
 import { UI } from './UI'
+import { PowerUpHeart } from './powerUps'
 
 export class Game {
   player: Player
   score: number
   scoreIncrement: number
   arrayBlocks: Block[]
+  powerUps: PowerUpHeart[]
   enemySpeed: number
   canScore: boolean
   presetTime: number
@@ -22,6 +24,8 @@ export class Game {
   width: number
   groundMargin: number
   ui: UI
+  lives: number
+  gameEnd: boolean
 
   constructor(
     context: CanvasRenderingContext2D,
@@ -29,6 +33,7 @@ export class Game {
     height: number
   ) {
     this.arrayBlocks = []
+    this.powerUps = []
     this.score = 0
     this.scoreIncrement = 0
     this.enemySpeed = 5
@@ -36,12 +41,15 @@ export class Game {
     this.presetTime = 1000
     this.ctx = context
     this.speed = 3
+    this.background_ = new Background(this)
     this.ui = new UI(this)
     this.width = width
     this.height = height
     this.groundMargin = 0
     this.background_ = new Background(this)
     this.player = new Player(context, this, 50, 'black')
+    this.lives = 2
+    this.gameEnd = false
   }
 
   addListener() {
@@ -63,14 +71,6 @@ export class Game {
     this.ctx.lineWidth = 1.9
     this.ctx.strokeStyle = 'black'
     this.ctx.stroke()
-  }
-
-  drawScore() {
-    this.ctx.font = '80px Arial'
-    this.ctx.fillStyle = 'black'
-    const scoreString = this.score.toString()
-    const xOffset = (scoreString.length - 1) * 20
-    this.ctx.fillText(scoreString, 280 - xOffset, 100)
   }
 
   //Returns true if past player past block
@@ -123,7 +123,7 @@ export class Game {
     return returnTime
   }
 
-  squaresColliding(player: Player, block: Block) {
+  squaresColliding(player: Player, block: Block | PowerUpHeart) {
     const s1 = Object.assign(
       Object.create(Object.getPrototypeOf(player)),
       player
@@ -151,9 +151,25 @@ export class Game {
     this.ui.draw(ctx)
 
     this.drawBackgroundLine()
-    this.drawScore()
 
     this.player.draw()
+
+    if (Math.random() < 0.1 && this.powerUps.length < 1) {
+      this.powerUps.push(new PowerUpHeart(this))
+    }
+
+    this.powerUps.forEach(powerUp => {
+      powerUp.update()
+      powerUp.draw()
+      if (powerUp.x < -powerUp.width) {
+        powerUp.markedToDelete = true
+      }
+
+      if (this.squaresColliding(this.player, powerUp)) {
+        powerUp.markedToDelete = true
+        this.lives += 1
+      }
+    })
 
     //Check to see if game speed should be increased
     this.shouldIncreaseSpeed()
@@ -162,9 +178,8 @@ export class Game {
       arrayBlock.slide()
       //End game as player and enemy have collided
       if (this.squaresColliding(this.player, arrayBlock)) {
-        // cardScore.textContent = score;
-        // card.style.display = "block";
-        // cancelAnimationFrame(animationId);
+        this.lives -= 1
+        arrayBlock.markedToDelete = true
       }
       //User should score a point if this is the case
       if (this.isPastBlock(arrayBlock) && this.canScore) {
@@ -174,11 +189,19 @@ export class Game {
 
       //Delete block that has left the screen
       if (arrayBlock.x + arrayBlock.size <= 0) {
-        setTimeout(() => {
-          this.arrayBlocks.splice(index, 1)
-        }, 0)
+        arrayBlock.markedToDelete = true
       }
     })
+
+    this.arrayBlocks = this.arrayBlocks.filter(block => !block.markedToDelete)
+    this.powerUps = this.powerUps.filter(powerUp => !powerUp.markedToDelete)
+
+    if (this.lives <= 0) {
+      this.arrayBlocks.length = 0
+      this.ui.draw(ctx)
+      this.ui.gameEndMessage(this.ctx)
+      this.gameEnd = true
+    }
   }
 
   initGame() {

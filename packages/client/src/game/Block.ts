@@ -8,6 +8,7 @@ export class Block {
   color = 'red'
   slideSpeed = 5
   ctx: CanvasRenderingContext2D
+  markedToDelete: boolean
 
   constructor(size: number, game: Game) {
     this.game = game
@@ -16,6 +17,7 @@ export class Block {
     this.y = this.game.height - this.game.groundMargin - size
     this.size = size
     this.color = 'green'
+    this.markedToDelete = false
     this.slideSpeed = this.game.enemySpeed
   }
 
