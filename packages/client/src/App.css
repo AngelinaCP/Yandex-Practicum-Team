@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'Silent Hill';
+  src: url('/fonts/SLNTHLC.ttf') format('truetype'),
+    url('/fonts/SLNTHLE.ttf') format('truetype'),
+    url('/fonts/SLNTHLN.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'horror';
+  src: url('/fonts/horror.ttf') format('truetype');
+}
