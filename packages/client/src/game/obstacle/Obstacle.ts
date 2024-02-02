@@ -1,6 +1,6 @@
-import obstacle from '@/game/obstacle/obstacle.png'
 import { SpriteAnimation } from '@/game/SpriteAnimation'
 import { Game } from '@/game/Game'
+import obstacle from './obstacle.png'
 
 const blockSpriteInfo = {
   frameWidth: 400,

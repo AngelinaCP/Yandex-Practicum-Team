@@ -1,9 +1,11 @@
 import { Header2 } from '@/components/Header'
 import styled from 'styled-components'
 
-type ResultProps = { result: string }
+type ResultProps = {
+  children: React.ReactNode
+}
 
-const data: ResultProps = {
+const data = {
   result: '13:00:34',
 }
 

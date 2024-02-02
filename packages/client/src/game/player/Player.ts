@@ -1,6 +1,6 @@
 import { Game } from '@/game'
 import { SpriteAnimation } from '@/game/SpriteAnimation'
-import player from '@/game/player/player.png'
+import player from './player.png'
 
 const playerSpriteInfo = {
   frameWidth: 128,
