@@ -218,5 +218,3 @@ export class Game {
     )
   }
 }
-
-// export default withRouter(Game);
