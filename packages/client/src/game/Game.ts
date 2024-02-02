@@ -22,6 +22,7 @@ export class Game {
   groundMargin: number
   ui: UI
   lives: number
+  gameEnd: boolean
 
   constructor(
     context: CanvasRenderingContext2D,
@@ -44,6 +45,7 @@ export class Game {
     this.groundMargin = 0
     this.player = new Player(context, this, 50, 'black')
     this.lives = 2
+    this.gameEnd = false
   }
 
   addListener() {
@@ -172,13 +174,6 @@ export class Game {
       arrayBlock.slide()
       //End game as player and enemy have collided
       if (this.squaresColliding(this.player, arrayBlock)) {
-        // cardScore.textContent = score;
-        // card.style.display = "block";
-        // cancelAnimationFrame(animationId);
-        if (this.lives === 1) {
-          this.arrayBlocks.length = 0
-          this.ui.gameEndMessage(this.ctx)
-        }
         this.lives -= 1
         arrayBlock.markedToDelete = true
       }
@@ -196,6 +191,13 @@ export class Game {
 
     this.arrayBlocks = this.arrayBlocks.filter(block => !block.markedToDelete)
     this.powerUps = this.powerUps.filter(powerUp => !powerUp.markedToDelete)
+
+    if (this.lives <= 0) {
+      this.arrayBlocks.length = 0
+      this.ui.draw(ctx)
+      this.ui.gameEndMessage(this.ctx)
+      this.gameEnd = true
+    }
   }
 
   initGame() {
