@@ -8,6 +8,10 @@ const playerSpriteInfo = {
   fps: 20,
   frameLimit: 4,
   path: player,
+  frameDelta: 16.67,
+  width: 130,
+  height: 130,
+  jumpHeight: 12,
 }
 
 export class Player extends SpriteAnimation {
@@ -27,20 +31,20 @@ export class Player extends SpriteAnimation {
     super(game.ctx, playerSpriteInfo, 70 / 400)
     this.game = game
     this.x = 50
-    this.jumpHeight = 12
+    this.jumpHeight = playerSpriteInfo.jumpHeight
     this.shouldJump = false
     this.jumpCounter = 0
     this.jumpUp = true
     this.image = new Image()
     this.image.src = player
-    this.width = 130
-    this.height = 130
+    this.width = playerSpriteInfo.width
+    this.height = playerSpriteInfo.height
     this.size = this.width
     this.y = this.game.height - this.height - this.game.groundMargin
   }
 
-  update(frameDelta = 16.67) {
-    super.update(frameDelta)
+  update() {
+    super.update(playerSpriteInfo.frameDelta)
   }
 
   draw() {
