@@ -7,7 +7,7 @@ import { PowerUpHeart } from './powerUps'
 
 export const gameProperties = {
   presetTime: 1500,
-  obtaclesSpeed: 5,
+  obstaclesSpeed: 5,
   lives: 2,
   speedIncrement: 5,
   playerCollisionExtraSize: 40,
@@ -23,7 +23,7 @@ export class Game {
   canScore: boolean
   presetTime: number
   ctx: CanvasRenderingContext2D
-  obtaclesSpeed: number
+  obstaclesSpeed: number
   background_: Background
   height: number
   width: number
@@ -44,7 +44,7 @@ export class Game {
     this.canScore = true
     this.presetTime = gameProperties.presetTime
     this.ctx = context
-    this.obtaclesSpeed = gameProperties.obtaclesSpeed
+    this.obstaclesSpeed = gameProperties.obstaclesSpeed
     this.background_ = new Background(this)
     this.ui = new UI(this)
     this.width = width
@@ -86,7 +86,7 @@ export class Game {
 
   generateBlocks() {
     const timeDelay = this.randomInterval(this.presetTime)
-    this.obstacles?.push(new Obstacle(this.obtaclesSpeed, this.ctx, this))
+    this.obstacles?.push(new Obstacle(this.obstaclesSpeed, this.ctx, this))
 
     setTimeout(() => this.generateBlocks(), timeDelay)
   }
@@ -95,13 +95,13 @@ export class Game {
     //Check to see if game speed should be increased
     if (this.scoreIncrement + gameProperties.speedIncrement === this.score) {
       this.scoreIncrement = this.score
-      this.obtaclesSpeed++
+      this.obstaclesSpeed++
       this.presetTime >= 100
         ? (this.presetTime -= 100)
         : (this.presetTime = this.presetTime / 2)
       //Update speed of existing blocks
       this.obstacles.forEach(obstacle => {
-        obstacle.slideSpeed = this.obtaclesSpeed
+        obstacle.slideSpeed = this.obstaclesSpeed
       })
     }
   }
