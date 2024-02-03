@@ -53,7 +53,6 @@ export class Game {
     this.width = width
     this.height = height
     this.groundMargin = 0
-    this.lives = 2
     this.player = new Player(context, this)
     this.lives = gameProperties.lives
     this.gameEnd = false
