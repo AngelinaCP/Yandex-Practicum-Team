@@ -8,7 +8,7 @@ type ButtonPlayProps = {
 }
 
 export const ButtonPlay = styled(Button).attrs<ButtonPlayProps>(
-  ({ to = '/game-end', primary = true, children = 'Побежали' }) => ({
+  ({ to = '/game', primary = true, children = 'Побежали' }) => ({
     as: Link,
     to,
     $primary: primary,

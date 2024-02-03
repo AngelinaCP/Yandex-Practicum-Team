@@ -14,6 +14,8 @@ import Navigation from './components/navigation'
 import interceptorsProvider from '@/providers/interceptors.provider'
 import { ForumPostPage } from '@/pages/ForumPost'
 import { AuthRequired } from '@/components/AuthRequired'
+import { GameEndPage } from '@/pages/GameEnd'
+import { GameStartPage } from '@/pages/GameStart'
 
 function App() {
   useEffect(() => {
@@ -36,6 +38,8 @@ function App() {
           <Route element={<AuthRequired />}>
             <Route path="profile" element={<ProfilePage />} />
             <Route path="game" element={<GamePage />} />
+            <Route path="game-start" element={<GameStartPage />} />
+            <Route path="game-end" element={<GameEndPage />} />
             <Route path="leaderboard" element={<LeaderboardPage />} />
             <Route path="forum">
               <Route index element={<ForumPage />} />

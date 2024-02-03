@@ -1,21 +1,29 @@
-import { Player } from '@/game/Player'
-import { Block } from '@/game/Block'
+import { Player } from '@/game/player/Player'
+import { Obstacle } from '@/game/obstacle/Obstacle'
 import { BackgroundForest as Background } from './backgrounds/BackgroundForest'
 // import { BackgroundCity as Background } from './backgrounds/BackgroundCity'
 import { UI } from './UI'
 import { PowerUpHeart } from './powerUps'
 
+export const gameProperties = {
+  presetTime: 1500,
+  obstaclesSpeed: 5,
+  lives: 2,
+  speedIncrement: 5,
+  playerCollisionExtraSize: 40,
+  obstacleCollisionExtraSize: 50,
+}
+
 export class Game {
   player: Player
   score: number
   scoreIncrement: number
-  arrayBlocks: Block[]
+  obstacles: Obstacle[]
   powerUps: PowerUpHeart[]
-  enemySpeed: number
   canScore: boolean
   presetTime: number
   ctx: CanvasRenderingContext2D
-  speed: number
+  obstaclesSpeed: number
   background_: Background
   height: number
   width: number
@@ -29,22 +37,21 @@ export class Game {
     width: number,
     height: number
   ) {
-    this.arrayBlocks = []
+    this.obstacles = []
     this.powerUps = []
     this.score = 0
     this.scoreIncrement = 0
-    this.enemySpeed = 5
     this.canScore = true
-    this.presetTime = 1000
+    this.presetTime = gameProperties.presetTime
     this.ctx = context
-    this.speed = 3
+    this.obstaclesSpeed = gameProperties.obstaclesSpeed
     this.background_ = new Background(this)
     this.ui = new UI(this)
     this.width = width
     this.height = height
     this.groundMargin = 0
-    this.player = new Player(context, this, 50, 'black')
-    this.lives = 2
+    this.player = new Player(context, this)
+    this.lives = gameProperties.lives
     this.gameEnd = false
   }
 
@@ -70,7 +77,7 @@ export class Game {
   }
 
   //Returns true if past player past block
-  isPastBlock(block: Block) {
+  isPastBlock(block: Obstacle) {
     return (
       this.player.x + this.player.size / 2 > block.x + block.size / 4 &&
       this.player.x + this.player.size / 2 < block.x + (block.size / 4) * 3
@@ -79,22 +86,22 @@ export class Game {
 
   generateBlocks() {
     const timeDelay = this.randomInterval(this.presetTime)
-    this.arrayBlocks?.push(new Block(50, this.enemySpeed, this.ctx))
+    this.obstacles?.push(new Obstacle(this.obstaclesSpeed, this.ctx, this))
 
     setTimeout(() => this.generateBlocks(), timeDelay)
   }
 
   shouldIncreaseSpeed() {
     //Check to see if game speed should be increased
-    if (this.scoreIncrement + 10 === this.score) {
+    if (this.scoreIncrement + gameProperties.speedIncrement === this.score) {
       this.scoreIncrement = this.score
-      this.enemySpeed++
+      this.obstaclesSpeed++
       this.presetTime >= 100
         ? (this.presetTime -= 100)
         : (this.presetTime = this.presetTime / 2)
       //Update speed of existing blocks
-      this.arrayBlocks.forEach(block => {
-        block.slideSpeed = this.enemySpeed
+      this.obstacles.forEach(obstacle => {
+        obstacle.slideSpeed = this.obstaclesSpeed
       })
     }
   }
@@ -119,16 +126,17 @@ export class Game {
     return returnTime
   }
 
-  squaresColliding(player: Player, block: Block | PowerUpHeart) {
+  squaresColliding(player: Player, block: Obstacle | PowerUpHeart) {
     const s1 = Object.assign(
       Object.create(Object.getPrototypeOf(player)),
       player
     )
     const s2 = Object.assign(Object.create(Object.getPrototypeOf(block)), block)
     //Don't need pixel perfect collision detection
-    s2.size = s2.size - 10
-    s2.x = s2.x + 10
-    s2.y = s2.y + 10
+    s2.size = s2.size - gameProperties.playerCollisionExtraSize
+    s2.x = s2.x + gameProperties.obstacleCollisionExtraSize
+    s2.y = s2.y + gameProperties.obstacleCollisionExtraSize
+
     return !(
       (
         s1.x > s2.x + s2.size || //R1 is to the right of R2
@@ -139,7 +147,7 @@ export class Game {
     )
   }
 
-  start(ctx: CanvasRenderingContext2D) {
+  start = (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     this.background_.update()
@@ -170,30 +178,30 @@ export class Game {
     //Check to see if game speed should be increased
     this.shouldIncreaseSpeed()
 
-    this.arrayBlocks.forEach((arrayBlock, index) => {
-      arrayBlock.slide()
+    this.obstacles.forEach(obstacle => {
+      obstacle.slide()
       //End game as player and enemy have collided
-      if (this.squaresColliding(this.player, arrayBlock)) {
+      if (this.squaresColliding(this.player, obstacle)) {
         this.lives -= 1
-        arrayBlock.markedToDelete = true
+        obstacle.markedToDelete = true
       }
       //User should score a point if this is the case
-      if (this.isPastBlock(arrayBlock) && this.canScore) {
+      if (this.isPastBlock(obstacle) && this.canScore) {
         this.canScore = false
         this.score++
       }
 
       //Delete block that has left the screen
-      if (arrayBlock.x + arrayBlock.size <= 0) {
-        arrayBlock.markedToDelete = true
+      if (obstacle.x + obstacle.size <= 0) {
+        obstacle.markedToDelete = true
       }
     })
 
-    this.arrayBlocks = this.arrayBlocks.filter(block => !block.markedToDelete)
+    this.obstacles = this.obstacles.filter(obstacle => !obstacle.markedToDelete)
     this.powerUps = this.powerUps.filter(powerUp => !powerUp.markedToDelete)
 
     if (this.lives <= 0) {
-      this.arrayBlocks.length = 0
+      this.obstacles.length = 0
       this.ui.draw(ctx)
       this.ui.gameEndMessage(this.ctx)
       this.gameEnd = true

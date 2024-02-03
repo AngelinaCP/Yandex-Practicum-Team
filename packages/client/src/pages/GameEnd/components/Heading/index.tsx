@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Header1 } from '@/components/Header'
 
 type HeaderProps = {
-  header: React.ReactNode
+  children: React.ReactNode
 }
 
 const data = {
