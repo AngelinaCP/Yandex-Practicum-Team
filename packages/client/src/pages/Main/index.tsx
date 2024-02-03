@@ -14,7 +14,7 @@ export const MainPage: FC = () => {
       <Logo />
       <StyledInnerWrapper>
         <Card height="300px" width="300px">
-          <ButtonLink to="/game" $primary={true}>
+          <ButtonLink to="/game-start" $primary={true}>
             играть
           </ButtonLink>
           <ButtonLink to="/profile">профиль</ButtonLink>

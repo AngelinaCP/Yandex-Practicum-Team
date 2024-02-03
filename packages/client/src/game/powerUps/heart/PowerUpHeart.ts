@@ -30,7 +30,7 @@ export class PowerUpHeart extends SpriteAnimation {
     this.game = game
     this.x = game.width
     this.markedToDelete = false
-    this.speedX = this.game.speed
+    this.speedX = this.game.obstaclesSpeed
     this.speedY = 0
     this.playArea = this.game.height - this.height - this.game.groundMargin
     this.y = Math.random() * (this.playArea * yRand) + this.playArea * yBase

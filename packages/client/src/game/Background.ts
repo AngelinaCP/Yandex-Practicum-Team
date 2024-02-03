@@ -35,7 +35,7 @@ class Layer {
     if (this.x < -this.scaledWidth + this.game.speed * this.speedModifier) {
       this.x = 0
     } else {
-      this.x -= this.game.speed * this.speedModifier
+      this.x -= this.game.obstaclesSpeed * this.speedModifier
     }
   }
 

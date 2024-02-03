@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 import { Game } from '@/game'
+import { useNavigate } from 'react-router-dom'
 
 export const Canvas = () => {
   const canvasRef = useRef(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const canvas: HTMLCanvasElement | null = canvasRef.current
@@ -19,6 +21,9 @@ export const Canvas = () => {
         animationFrameId = window.requestAnimationFrame(render)
 
         if (game.gameEnd) {
+          setTimeout(() => {
+            navigate('/game-end')
+          }, 2000)
           window.cancelAnimationFrame(animationFrameId)
         }
       }

@@ -35,7 +35,7 @@ function Navigation() {
             <Link to="/signup">Регистрация</Link>
           </li>
           <li>
-            <Link to="/game">Игра</Link>
+            <Link to="/game-start">Игра</Link>
           </li>
           <li>
             <Link to="/profile">Профиль</Link>
