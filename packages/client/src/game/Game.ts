@@ -10,7 +10,7 @@ import { PowerUpHeart } from './powerUps'
 
 export const gameProperties = {
   presetTime: 1500,
-  obstaclesSpeed: 5,
+  gameSpeed: 5,
   lives: 2,
   speedIncrement: 5,
   playerCollisionExtraSize: 40,
@@ -26,7 +26,7 @@ export class Game {
   canScore: boolean
   presetTime: number
   ctx: CanvasRenderingContext2D
-  obstaclesSpeed: number
+  gameSpeed: number
   background_: Background
   height: number
   width: number
@@ -40,22 +40,22 @@ export class Game {
     width: number,
     height: number
   ) {
-    this.obstacles = []
-    this.powerUps = []
     this.score = 0
     this.scoreIncrement = 0
     this.canScore = true
     this.presetTime = gameProperties.presetTime
     this.ctx = context
-    this.obstaclesSpeed = gameProperties.obstaclesSpeed
-    this.background_ = new Background(this)
+    this.gameSpeed = gameProperties.gameSpeed
     this.ui = new UI(this)
     this.width = width
     this.height = height
     this.groundMargin = 0
-    this.player = new Player(context, this)
     this.lives = gameProperties.lives
     this.gameEnd = false
+    this.background_ = new Background(this)
+    this.player = new Player(context, this)
+    this.obstacles = []
+    this.powerUps = []
   }
 
   addListener() {
@@ -80,7 +80,7 @@ export class Game {
 
   generateBlocks() {
     const timeDelay = this.randomInterval(this.presetTime)
-    this.obstacles?.push(new Obstacle(this.obstaclesSpeed, this.ctx, this))
+    this.obstacles?.push(new Obstacle(this.gameSpeed, this.ctx, this))
     setTimeout(() => this.generateBlocks(), timeDelay)
   }
 
@@ -88,13 +88,13 @@ export class Game {
     //Check to see if game speed should be increased
     if (this.scoreIncrement + gameProperties.speedIncrement === this.score) {
       this.scoreIncrement = this.score
-      this.obstaclesSpeed++
+      this.gameSpeed++
       this.presetTime >= 100
         ? (this.presetTime -= 100)
         : (this.presetTime = this.presetTime / 2)
       //Update speed of existing blocks
       this.obstacles.forEach(obstacle => {
-        obstacle.slideSpeed = this.obstaclesSpeed
+        obstacle.slideSpeed = this.gameSpeed
       })
     }
   }

@@ -32,10 +32,10 @@ class Layer {
   }
 
   update() {
-    if (this.x < -this.scaledWidth + this.game.speed * this.speedModifier) {
+    if (this.x < -this.scaledWidth + this.game.gameSpeed * this.speedModifier) {
       this.x = 0
     } else {
-      this.x -= this.game.obstaclesSpeed * this.speedModifier
+      this.x -= this.game.gameSpeed * this.speedModifier
     }
   }
 
@@ -57,7 +57,7 @@ class Layer {
       0,
       this.width,
       this.height,
-      this.x + this.scaledWidth - this.game.speed * this.speedModifier,
+      this.x + this.scaledWidth - this.game.gameSpeed * this.speedModifier,
       this.y,
       this.scaledWidth,
       this.scaledHeight
@@ -68,7 +68,7 @@ class Layer {
       0,
       this.width,
       this.height,
-      this.x + this.scaledWidth * 2 - this.game.speed * this.speedModifier,
+      this.x + this.scaledWidth * 2 - this.game.gameSpeed * this.speedModifier,
       this.y,
       this.scaledWidth,
       this.scaledHeight
