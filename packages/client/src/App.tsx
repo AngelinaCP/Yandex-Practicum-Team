@@ -13,6 +13,7 @@ import { Page404 } from './pages/Page_404'
 import Navigation from './components/navigation'
 import interceptorsProvider from '@/providers/interceptors.provider'
 import { ForumPostPage } from '@/pages/ForumPost'
+import { startServiceWorker } from '@/sw.init'
 import { AuthRequired } from '@/components/AuthRequired'
 import { GameEndPage } from '@/pages/GameEnd'
 import { GameStartPage } from '@/pages/GameStart'
@@ -28,6 +29,7 @@ function App() {
 
     fetchServerData()
     interceptorsProvider()
+    startServiceWorker()
   }, [])
 
   return (
