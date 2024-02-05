@@ -1,18 +1,7 @@
 import { Game } from '@/game'
 import { SpriteAnimation } from '@/game/SpriteAnimation'
-import player from './player.png'
 
-const playerSpriteInfo = {
-  frameWidth: 128,
-  frameHeight: 130,
-  fps: 20,
-  frameLimit: 4,
-  path: player,
-  frameDelta: 16.67,
-  width: 130,
-  height: 130,
-  jumpHeight: 12,
-}
+type PlayerInfo = Omit<GamePlayerSkin, 'title' | 'thumbnail'>
 
 export class Player extends SpriteAnimation {
   x: number
@@ -27,7 +16,11 @@ export class Player extends SpriteAnimation {
   width: number
   height: number
 
-  constructor(ctx: CanvasRenderingContext2D, game: Game) {
+  constructor(
+    ctx: CanvasRenderingContext2D,
+    game: Game,
+    playerSpriteInfo: PlayerInfo
+  ) {
     super(game.ctx, playerSpriteInfo, 70 / 400)
     this.game = game
     this.x = 50
@@ -36,15 +29,15 @@ export class Player extends SpriteAnimation {
     this.jumpCounter = 0
     this.jumpUp = true
     this.image = new Image()
-    this.image.src = player
-    this.width = playerSpriteInfo.width
-    this.height = playerSpriteInfo.height
+    this.image.src = playerSpriteInfo.path
+    this.width = this.frameWidth * playerSpriteInfo.scale
+    this.height = this.frameHeight * playerSpriteInfo.scale
     this.size = this.width
     this.y = this.game.height - this.height - this.game.groundMargin
   }
 
   update() {
-    super.update(playerSpriteInfo.frameDelta)
+    super.update()
   }
 
   draw() {

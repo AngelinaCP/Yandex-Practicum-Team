@@ -1,10 +1,21 @@
 import React, { useEffect, useRef } from 'react'
 import { Game } from '@/game'
 import { useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '@/store/store'
+import {
+  playerSelector,
+  backgroundSelector,
+  gameSlice,
+  setScore,
+} from '@/game/gameSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 export const Canvas = () => {
   const canvasRef = useRef(null)
   const navigate = useNavigate()
+  const player = useSelector(playerSelector)
+  const background = useSelector(backgroundSelector)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const canvas: HTMLCanvasElement | null = canvasRef.current
@@ -12,7 +23,7 @@ export const Canvas = () => {
     let animationFrameId: number
 
     if (context) {
-      const game = new Game(context, 800, 400)
+      const game = new Game(context, 800, 400, player, background)
 
       game.initGame()
 
@@ -24,6 +35,7 @@ export const Canvas = () => {
           setTimeout(() => {
             navigate('/game-end')
           }, 2000)
+          dispatch(setScore(game.score))
           window.cancelAnimationFrame(animationFrameId)
         }
       }
