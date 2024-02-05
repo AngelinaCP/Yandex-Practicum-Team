@@ -1,19 +1,9 @@
 import { Header2 } from '@/components/Header'
+import { scoreSelector } from '@/game/gameSlice'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-type ResultProps = {
-  children: React.ReactNode
-}
-
-const data = {
-  result: '13:00:34',
-}
-
-export const Result = styled(Header2).attrs<Partial<ResultProps>>(
-  ({ children = data.result }) => ({
-    children,
-  })
-)`
+const Header = styled(Header2)`
   margin-bottom: 1.5em;
   font-size: 2em;
   color: ${props => props.theme.color};
@@ -23,11 +13,17 @@ export const Result = styled(Header2).attrs<Partial<ResultProps>>(
   }
 `
 
-Result.defaultProps = {
+Header.defaultProps = {
   theme: {
     dark: {
       color: '#ffffff',
     },
     color: '#37363F',
   },
+}
+
+export const Result: React.FC = () => {
+  const score = useSelector(scoreSelector)
+
+  return <Header>{score}</Header>
 }
