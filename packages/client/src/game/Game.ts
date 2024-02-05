@@ -7,10 +7,10 @@ import { backgrounds, Background } from './background'
 
 export const gameProperties = {
   presetTime: 1500,
-  gameSpeed: 5,
+  gameSpeed: 6,
   lives: 2,
   speedIncrement: 5,
-  playerCollisionExtraSize: 40,
+  playerCollisionExtraSize: 70,
   obstacleCollisionExtraSize: 50,
 }
 
