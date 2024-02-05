@@ -9,13 +9,7 @@ interface InputProps {
   value?: string
 }
 
-const Input: FC<InputProps> = ({
-  label,
-  name,
-  required,
-  type = undefined,
-  value,
-}) => (
+const Input: FC<InputProps> = ({ label, name, required, type, value }) => (
   <InputWrapperStyle>
     <InputStyle
       type={type || 'input'}
