@@ -1,12 +1,9 @@
 import { Player } from '@/game/player/Player'
 import { Obstacle } from '@/game/obstacle/Obstacle'
-import { BackgroundForest as Background } from './backgrounds/BackgroundForest'
-// import { BackgroundCity as Background } from './backgrounds/BackgroundCity'
-// import { BackgroundNightForest as Background } from './backgrounds/BackgroundNightForest'
-// import { BackgroundCountry as Background } from './backgrounds/BackgroundCountry'
-// import { BackgroundGrunge as Background } from './backgrounds/BackgroundGrunge'
 import { UI } from './UI'
 import { PowerUpHeart } from './powerUps'
+import { players } from './player'
+import { backgrounds, Background } from './background'
 
 export const gameProperties = {
   presetTime: 1500,
@@ -38,7 +35,9 @@ export class Game {
   constructor(
     context: CanvasRenderingContext2D,
     width: number,
-    height: number
+    height: number,
+    player: string,
+    background: string
   ) {
     this.score = 0
     this.scoreIncrement = 0
@@ -52,8 +51,10 @@ export class Game {
     this.groundMargin = 0
     this.lives = gameProperties.lives
     this.gameEnd = false
-    this.background_ = new Background(this)
-    this.player = new Player(context, this)
+    const bacgroundInfo = backgrounds[background]
+    this.background_ = new Background(this, bacgroundInfo)
+    const playerInfo = players[player]
+    this.player = new Player(context, this, playerInfo)
     this.obstacles = []
     this.powerUps = []
   }
