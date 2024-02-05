@@ -1,7 +1,7 @@
 ![Alt](https://repobeats.axiom.co/api/embed/1145203cf757e188dbb21cb1a2d845870701cfbc.svg "Repobeats analytics image")
 
 [`Видео проекта`](https://www.loom.com/share/6896ee92d6714e1e8b6f098b1244e862?sid=29535a97-352e-4f06-b1bf-5f7c30213ab7)
-[`Задачи проекта`](https://file.io/Qj6u9ccy7qR1)
+[`Задачи проекта`](https://file.io/5F0150X3WkJo)
 
 
 ### Как запускать?
