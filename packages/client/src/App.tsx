@@ -17,6 +17,7 @@ import { startServiceWorker } from '@/sw.init'
 import { AuthRequired } from '@/components/AuthRequired'
 import { GameEndPage } from '@/pages/GameEnd'
 import { GameStartPage } from '@/pages/GameStart'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 function App() {
   useEffect(() => {
@@ -35,26 +36,28 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Navigation />
-        <Routes>
-          <Route element={<AuthRequired />}>
-            <Route path="profile" element={<ProfilePage />} />
-            <Route path="game" element={<GamePage />} />
-            <Route path="game-start" element={<GameStartPage />} />
-            <Route path="game-end" element={<GameEndPage />} />
-            <Route path="leaderboard" element={<LeaderboardPage />} />
-            <Route path="forum">
-              <Route index element={<ForumPage />} />
-              <Route path=":forumId" element={<ForumPostPage />} />
+        <ErrorBoundary>
+          <Navigation />
+          <Routes>
+            <Route element={<AuthRequired />}>
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="game" element={<GamePage />} />
+              <Route path="game-start" element={<GameStartPage />} />
+              <Route path="game-end" element={<GameEndPage />} />
+              <Route path="leaderboard" element={<LeaderboardPage />} />
+              <Route path="forum">
+                <Route index element={<ForumPage />} />
+                <Route path=":forumId" element={<ForumPostPage />} />
+              </Route>
+              <Route path="topic" element={<TopicPage />} />
             </Route>
-            <Route path="topic" element={<TopicPage />} />
-          </Route>
-          <Route path="/" element={<MainPage />} index />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="signup" element={<SignupPage />} />
-          <Route path="*" element={<Page404 />} />
-        </Routes>
-      </BrowserRouter>
+            <Route path="/" element={<MainPage />} index />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="signup" element={<SignupPage />} />
+            <Route path="*" element={<Page404 />} />
+           </Routes>
+         </ErrorBoundary>
+        </BrowserRouter>
     </>
   )
 }
