@@ -19,6 +19,7 @@ import {
   StyledFormGroup,
   StyledFormGroupModal,
 } from '@/pages/Profile/style'
+import { userApi } from '@/store/api/userApi'
 
 export const ProfilePage = () => {
   const [changePassword, { isLoading, isSuccess }] = useChangePasswordMutation()
@@ -34,10 +35,14 @@ export const ProfilePage = () => {
     setSelectedFile(file)
   }
   const selectUser = (state: RootState) => state.userState.user
+  const currentUser = useAppSelector(state => selectUser(state))
 
   useEffect(() => {
     if (isSuccess) toggleShowModal()
-    if (isSuccessAvatar) toggleShowAvatarModal()
+    if (isSuccessAvatar) {
+      toggleShowAvatarModal()
+      userApi.endpoints.getMe.initiate(null)
+    }
   }, [isSuccess, isSuccessAvatar])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -53,15 +58,17 @@ export const ProfilePage = () => {
     })
   }
 
-  const handleSubmitAvatar = async (event: FormEvent) => {
+  const handleSubmitAvatar = (event: FormEvent) => {
     event.preventDefault()
-    if (selectedFile) changeAvatar(selectedFile)
+    if (selectedFile) {
+      changeAvatar(selectedFile)
+    }
   }
 
   return (
     <Card width="580px" height="510px">
       <Avatar
-        image={useAppSelector(state => selectUser(state))?.avatar}
+        image={currentUser?.avatar}
         changeAvatar={toggleShowAvatarModal}
       />
       <StyledFormGroup>
@@ -69,13 +76,13 @@ export const ProfilePage = () => {
           name="first_name"
           label="Имя"
           required={true}
-          value={useAppSelector(state => selectUser(state))?.first_name}
+          value={currentUser?.first_name}
         />
         <Input
           name="second_name"
           label="Фамилия"
           required={true}
-          value={useAppSelector(state => selectUser(state))?.second_name}
+          value={currentUser?.second_name}
         />
       </StyledFormGroup>
       <StyledFormGroup>
@@ -83,13 +90,13 @@ export const ProfilePage = () => {
           name="email"
           label="E-mail"
           required={true}
-          value={useAppSelector(state => selectUser(state))?.email}
+          value={currentUser?.email}
         />
         <Input
           name="phone"
           label="Телефон"
           required={true}
-          value={useAppSelector(state => selectUser(state))?.phone}
+          value={currentUser?.phone}
         />
       </StyledFormGroup>
       <StyledFormGroup>
@@ -97,7 +104,7 @@ export const ProfilePage = () => {
           name="login"
           label="Логин"
           required={true}
-          value={useAppSelector(state => selectUser(state))?.login}
+          value={currentUser?.login}
         />
         <Button onClick={toggleShowModal}>сменить пароль</Button>
       </StyledFormGroup>
