@@ -22,3 +22,5 @@ export interface IChangePasswordRequest {
   oldPassword: string
   newPassword: string
 }
+
+export type TChangeAvatarRequest = File
