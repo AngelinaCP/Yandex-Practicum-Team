@@ -14,11 +14,7 @@ import Link from '@/components/Link'
 import { Avatar } from '@/components/Avatar'
 import { Modal } from '@/components/Modal'
 import { FileInput } from '@/pages/Profile/fileInput'
-import {
-  StyledForm,
-  StyledFormGroup,
-  StyledFormGroupModal,
-} from '@/pages/Profile/style'
+import { StyledForm, StyledFormGroup } from '@/pages/Profile/style'
 
 export const ProfilePage = () => {
   const [changePassword, { isLoading, isSuccess }] = useChangePasswordMutation()
@@ -122,12 +118,12 @@ export const ProfilePage = () => {
                 label="Новый пароль"
                 required={true}
               />
-              <StyledFormGroupModal>
+              <StyledFormGroup>
                 <Button onClick={toggleShowModal}>Отмена</Button>
                 <Button type="submit" $primary={true}>
                   Сохранить
                 </Button>
-              </StyledFormGroupModal>
+              </StyledFormGroup>
             </StyledForm>
           </Modal>,
           document.body
@@ -138,12 +134,12 @@ export const ProfilePage = () => {
             {isLoadingAvatar && <LoaderSpinner />}
             <StyledForm onSubmit={handleSubmitAvatar}>
               <FileInput onFileChange={handleFileChange} />
-              <StyledFormGroupModal>
+              <StyledFormGroup>
                 <Button onClick={toggleShowAvatarModal}>Отмена</Button>
                 <Button type="submit" $primary={true}>
                   Сохранить
                 </Button>
-              </StyledFormGroupModal>
+              </StyledFormGroup>
             </StyledForm>
           </Modal>,
           document.body
