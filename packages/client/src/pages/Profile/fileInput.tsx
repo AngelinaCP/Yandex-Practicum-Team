@@ -11,7 +11,7 @@ export const FileInput: React.FC<FileInputProps> = ({ onFileChange }) => {
     onFileChange(file)
   }
 
-  const StiledFileInput = styled.input`
+  const StyledFileInput = styled.input`
     display: none;
   `
   const StyledFileLabel = styled.label`
@@ -147,7 +147,7 @@ export const FileInput: React.FC<FileInputProps> = ({ onFileChange }) => {
 
   return (
     <StyledFileLabel>
-      <StiledFileInput type="file" onChange={handleFileChange} />
+      <StyledFileInput type="file" onChange={handleFileChange} />
       Выбрать Аватар
     </StyledFileLabel>
   )
