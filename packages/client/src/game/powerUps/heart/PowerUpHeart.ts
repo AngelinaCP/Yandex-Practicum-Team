@@ -11,8 +11,8 @@ const heartSpriteInfo = {
 }
 
 /* y: [yBase * h; (yBase + yRand) * h] */
-const yBase = 0.5
-const yRand = 0.3
+const yBase = 0.2
+const yRand = 0.1
 const amplitudeMuliplier = 2
 
 export class PowerUpHeart extends SpriteAnimation {
@@ -30,7 +30,7 @@ export class PowerUpHeart extends SpriteAnimation {
     this.game = game
     this.x = game.width
     this.markedToDelete = false
-    this.speedX = this.game.speed
+    this.speedX = this.game.gameSpeed
     this.speedY = 0
     this.playArea = this.game.height - this.height - this.game.groundMargin
     this.y = Math.random() * (this.playArea * yRand) + this.playArea * yBase

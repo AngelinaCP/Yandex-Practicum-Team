@@ -9,7 +9,7 @@ const NameStyled = styled(Header3)`
 `
 const ImgStyled = styled.img`
   padding: 0 2rem;
-  max-height: 150px;
+  height: 130px;
   width: auto;
 `
 

@@ -1,12 +1,25 @@
-import { useCallback, useState, FC } from 'react'
+import { useCallback, FC } from 'react'
 import { ArrowControl } from '../ArrowControl'
 import { nextItem } from './nextItem'
 import { Layout } from './components/Layout'
 import { Header } from './components/Header'
 import { CurrentSelection } from './components/CurrentSelection'
 import styled from 'styled-components'
+import {
+  backgroundSelector,
+  gameSlice,
+  playerSelector,
+  setBackground,
+  setPlayer,
+} from '@/game/gameSlice'
+import { useSelector, useDispatch } from 'react-redux'
 
-type SelectorProps = { title: string; content: GameSkin[] }
+type SelectorProps = {
+  title: string
+  content: Record<string, GameSkin>
+  storeSetter: typeof setBackground | typeof setPlayer
+  storeSelector: typeof backgroundSelector | typeof playerSelector
+}
 
 export type GameSelectorProps = {
   selector: SelectorProps
@@ -20,19 +33,25 @@ const CurrentSelectionWithControls = styled.div`
 `
 
 export const GameSelector: FC<GameSelectorProps> = ({ selector }) => {
+  const gameStore = useSelector(selector.storeSelector)
+  const dispatch = useDispatch()
   const { title, content } = selector
-  const enableArrows = content.length > 1
-
-  const [selection, setSelection] = useState(0)
+  const selectorOptions = Object.keys(content)
+  const enableArrows = selectorOptions.length > 1
 
   const handleChange = useCallback(
     (toLeft = false) => {
-      const next = nextItem(toLeft, content.length, selection)
-      return setSelection(next)
+      const next = nextItem(
+        toLeft,
+        selectorOptions.length,
+        selectorOptions.indexOf(gameStore)
+      )
+      dispatch(selector.storeSetter(selectorOptions[next]))
     },
-    [selection]
+    [gameStore]
   )
-
+  console.log(content)
+  console.log(gameStore)
   return (
     <Layout>
       <Header>{title}</Header>
@@ -41,8 +60,8 @@ export const GameSelector: FC<GameSelectorProps> = ({ selector }) => {
           <ArrowControl $toLeft={true} onClick={() => handleChange(true)} />
         )}
         <CurrentSelection
-          name={content[selection].title}
-          image={content[selection].thumbnail}
+          name={content[gameStore].title}
+          image={content[gameStore].thumbnail}
         />
         {enableArrows && <ArrowControl onClick={() => handleChange()} />}
       </CurrentSelectionWithControls>
