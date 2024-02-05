@@ -6,15 +6,23 @@ interface InputProps {
   label: string
   required: boolean
   type?: string
+  value?: string
 }
 
-const Input: FC<InputProps> = ({ label, name, required, type = undefined }) => (
+const Input: FC<InputProps> = ({
+  label,
+  name,
+  required,
+  type = undefined,
+  value,
+}) => (
   <InputWrapperStyle>
     <InputStyle
       type={type || 'input'}
       placeholder=""
       name={name}
       id={name}
+      value={value}
       required={required}
     />
     <InputLabelStyle htmlFor="name">{label}</InputLabelStyle>

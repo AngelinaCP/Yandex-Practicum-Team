@@ -5,6 +5,7 @@ import { API_URL } from '@/store/api/config'
 import { userSlice } from '@/store/features/userSlice'
 import {
   GenericResponse,
+  TChangeAvatarRequest,
   IChangePasswordRequest,
   ILogin,
 } from '@/store/api/types'
@@ -76,6 +77,28 @@ export const authApi = createApi({
         }
       },
     }),
+    changeAvatar: builder.mutation<GenericResponse, TChangeAvatarRequest>({
+      query(data) {
+        const formData = new FormData()
+        formData.append('avatar', data || '')
+        return {
+          url: `user/profile/avatar`,
+          method: 'PUT',
+          body: formData,
+          credentials: 'include',
+        }
+      },
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled
+          await dispatch(userApi.endpoints.getMe.initiate(null))
+        } catch (error) {
+          console.error(error)
+        } finally {
+          await dispatch(userApi.endpoints.getMe.initiate(null))
+        }
+      },
+    }),
   }),
 })
 
@@ -84,4 +107,5 @@ export const {
   useLoginUserMutation,
   useLogoutUserMutation,
   useChangePasswordMutation,
+  useChangeAvatarMutation,
 } = authApi
