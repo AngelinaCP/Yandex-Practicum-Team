@@ -1,2 +1,2 @@
-export { ThemeSelector } from './ThemeSelector'
-export { CharacterSelector } from './CharacterSelector'
+export { BackgroundSelector } from './BackgroundSelector'
+export { PlayerSelector } from './PlayerSelector'

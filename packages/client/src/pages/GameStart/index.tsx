@@ -1,12 +1,12 @@
 import { Layout } from './components/Layout'
-import { CharacterSelector, ThemeSelector } from './components/GameSelector'
+import { PlayerSelector, BackgroundSelector } from './components/GameSelector'
 import { ButtonPlay } from './components/ButtonPlay'
 import { LinkHome } from './components/LinkHome'
 
 export const GameStartPage: React.FC = () => (
   <Layout>
-    <CharacterSelector />
-    <ThemeSelector />
+    <PlayerSelector />
+    <BackgroundSelector />
     <ButtonPlay />
     <LinkHome />
   </Layout>
