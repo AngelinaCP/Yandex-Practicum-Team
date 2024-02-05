@@ -4,6 +4,7 @@ import { Page500 } from '@/pages/Page_500'
 
 interface Props {
   children?: ReactNode
+  fallback?: React.FC<{ errorMessage: string }>
 }
 
 interface State {
@@ -29,7 +30,11 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.errorInfo) {
-      return <Page500 />
+      return this.props.fallback ? (
+        this.props.fallback({ errorMessage: this.state.error?.message ?? '' })
+      ) : (
+        <Page500 />
+      )
     }
     return this.props.children
   }
