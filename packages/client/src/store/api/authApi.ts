@@ -2,12 +2,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { userApi } from './userApi'
 import { LoginInput } from '@/pages/Login/config'
 import { API_URL } from '@/store/api/config'
-import { userSlice } from '@/store/features/userSlice'
+import { setUser, userSlice } from '@/store/features/userSlice'
 import {
   GenericResponse,
   TChangeAvatarRequest,
   IChangePasswordRequest,
   ILogin,
+  IUser,
 } from '@/store/api/types'
 import { RegisterInput } from '@/pages/Signup/config'
 
@@ -77,7 +78,7 @@ export const authApi = createApi({
         }
       },
     }),
-    changeAvatar: builder.mutation<GenericResponse, TChangeAvatarRequest>({
+    changeAvatar: builder.mutation<IUser, TChangeAvatarRequest>({
       query(data) {
         const formData = new FormData()
         formData.append('avatar', data || '')
@@ -90,12 +91,10 @@ export const authApi = createApi({
       },
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled
-          await dispatch(userApi.endpoints.getMe.initiate(null))
+          const { data } = await queryFulfilled
+          dispatch(setUser({ ...data }))
         } catch (error) {
           console.error(error)
-        } finally {
-          await dispatch(userApi.endpoints.getMe.initiate(null))
         }
       },
     }),

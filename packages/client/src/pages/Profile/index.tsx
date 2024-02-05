@@ -19,7 +19,6 @@ import {
   StyledFormGroup,
   StyledFormGroupModal,
 } from '@/pages/Profile/style'
-import { userApi } from '@/store/api/userApi'
 
 export const ProfilePage = () => {
   const [changePassword, { isLoading, isSuccess }] = useChangePasswordMutation()
@@ -39,10 +38,7 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     if (isSuccess) toggleShowModal()
-    if (isSuccessAvatar) {
-      toggleShowAvatarModal()
-      userApi.endpoints.getMe.initiate(null)
-    }
+    if (isSuccessAvatar) toggleShowAvatarModal()
   }, [isSuccess, isSuccessAvatar])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
