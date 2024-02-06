@@ -10,20 +10,25 @@ import { LoaderSpinner } from '@/components/Loading'
 import { RegisterInput, registerSchema } from './config'
 import { formValidator } from '@/helpers/formValidator'
 
-interface RegisterInputs extends HTMLFormControlsCollection {
-  first_name: HTMLInputElement
-  second_name: HTMLInputElement
-  phone: HTMLInputElement
-  email: HTMLInputElement
-  login: HTMLInputElement
-  password: HTMLInputElement
+interface RegisterFormFields<T> {
+  first_name: T
+  second_name: T
+  phone: T
+  email: T
+  login: T
+  password: T
+  passwordConfirm: T
 }
+
+interface RegisterInputs
+  extends HTMLFormControlsCollection,
+    RegisterFormFields<HTMLInputElement> {}
 
 interface RegisterForm extends HTMLFormElement {
   readonly elements: RegisterInputs
 }
 
-const registerFormValidator = formValidator(registerSchema)
+const registerFormValidator = formValidator<RegisterInput>(registerSchema)
 
 export const SignupPage = () => {
   const navigate = useNavigate()
@@ -35,6 +40,7 @@ export const SignupPage = () => {
     first_name: [],
     login: [],
     password: [],
+    passwordConfirm: [],
     phone: [],
     second_name: [],
   })
@@ -49,20 +55,23 @@ export const SignupPage = () => {
     const form = event.currentTarget
 
     const registerData = {
-      first_name: form.first_name.value,
-      second_name: form.second_name.value,
-      phone: form.phone.value,
-      email: form.email.value,
-      login: form.login.value,
-      password: form.password.value,
+      first_name: form.elements.first_name.value,
+      second_name: form.elements.second_name.value,
+      phone: form.elements.phone.value,
+      email: form.elements.email.value,
+      login: form.elements.login.value,
+      password: form.elements.password.value,
+      passwordConfirm: form.elements.passwordConfirm.value,
     }
 
     const [isValid, inputErrors] = registerFormValidator(registerData)
 
     if (isValid && Object.keys(inputErrors).length < 1) {
+      console.log('register')
       setErrorMessages({})
       registerUser(registerData)
     } else {
+      console.log('not register')
       setErrorMessages(inputErrors)
     }
   }
@@ -84,8 +93,6 @@ export const SignupPage = () => {
             required={true}
             errorMessages={errorMessages.second_name}
           />
-        </StyledFormGroup>
-        <StyledFormGroup>
           <Input
             name="email"
             label="E-mail"
@@ -98,20 +105,25 @@ export const SignupPage = () => {
             required={true}
             errorMessages={errorMessages.phone}
           />
-        </StyledFormGroup>
-        <StyledFormGroup>
-          <Input
-            name="login"
-            label="Логин"
-            required={true}
-            errorMessages={errorMessages.login}
-          />
           <Input
             name="password"
             label="Пароль"
             type="password"
             required={true}
             errorMessages={errorMessages.password}
+          />
+          <Input
+            name="passwordConfirm"
+            label="Подтверждение пароля"
+            type="password"
+            required={true}
+            errorMessages={errorMessages.passwordConfirm}
+          />
+          <Input
+            name="login"
+            label="Логин"
+            required={true}
+            errorMessages={errorMessages.login}
           />
         </StyledFormGroup>
         <Button type="submit" $primary={true}>

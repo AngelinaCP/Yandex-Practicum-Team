@@ -1,13 +1,12 @@
-import { ZodObject, ZodRawShape, ZodTypeAny } from 'zod'
 import z from 'zod'
 
 export const formValidator = <
-  T extends ZodRawShape = Record<string, ZodTypeAny>
+  T extends Record<string, unknown> = Record<string, unknown>
 >(
-  schema: ZodObject<T>
+  schema: z.ZodType<T, z.ZodTypeDef, T>
 ) => {
   const getInputsErrors = (formData: {
-    [key in keyof z.infer<typeof schema>]: unknown
+    [key in keyof T]: T[key]
   }): [
     boolean,
     (
