@@ -28,7 +28,7 @@ const Input: FC<InputProps> = ({
       value={value}
       required={required}
     />
-    <InputLabelStyle htmlFor="name">{label}</InputLabelStyle>
+    <InputLabelStyle htmlFor={name}>{label}</InputLabelStyle>
     {errorMessages.length > 0 &&
       errorMessages.map((e, i) => <ErrorMessage key={i}>{e}</ErrorMessage>)}
   </InputWrapperStyle>
