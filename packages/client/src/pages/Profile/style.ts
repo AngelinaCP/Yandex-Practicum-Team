@@ -12,7 +12,6 @@ export const StyledFormGroup = styled.div`
   gap: 80px;
 
   button {
-    margin-bottom: 0;
     margin-top: 18px;
   }
 `

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { userApi } from './userApi'
 import { LoginInput } from '@/pages/Login/config'
 import { API_URL } from '@/store/api/config'
-import { setUser, userSlice } from '@/store/features/userSlice'
+import { setUser, logout } from '@/store/features/userSlice'
 import {
   GenericResponse,
   TChangeAvatarRequest,
@@ -17,10 +17,7 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL,
     responseHandler: async response => {
-      if (
-        response.url === `${API_URL}/auth/signin` &&
-        response.status === 200
-      ) {
+      if (response.ok) {
         return Promise.resolve()
       } else return response.json()
     },
@@ -65,7 +62,7 @@ export const authApi = createApi({
       },
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
         await queryFulfilled
-        dispatch(userSlice.actions.logout())
+        dispatch(logout())
       },
     }),
     changePassword: builder.mutation<GenericResponse, IChangePasswordRequest>({
@@ -98,6 +95,16 @@ export const authApi = createApi({
         }
       },
     }),
+    changeProfile: builder.mutation<IUser, IUser>({
+      query(data) {
+        return {
+          url: `user/profile`,
+          method: 'PUT',
+          body: data,
+          credentials: 'include',
+        }
+      },
+    }),
   }),
 })
 
@@ -107,4 +114,5 @@ export const {
   useLogoutUserMutation,
   useChangePasswordMutation,
   useChangeAvatarMutation,
+  useChangeProfileMutation,
 } = authApi

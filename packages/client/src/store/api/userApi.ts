@@ -22,7 +22,7 @@ export const userApi = createApi({
           const { data } = await queryFulfilled
           dispatch(setUser(data))
         } catch (error) {
-          //
+          console.error(error)
         }
       },
     }),
