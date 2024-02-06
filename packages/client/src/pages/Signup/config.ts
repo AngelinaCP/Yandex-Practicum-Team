@@ -1,17 +1,21 @@
 import { object, string, TypeOf } from 'zod'
 
-const registerSchema = object({
-  first_name: string().min(1, 'Full name is required').max(100),
-  second_name: string().min(1, 'Full name is required').max(100),
+const requierdString = 'Обязательное поле'
+
+export const registerSchema = object({
+  first_name: string().min(1, requierdString).max(100),
+  second_name: string().min(1, requierdString).max(100),
   email: string()
-    .min(1, 'Email address is required')
-    .email('Email Address is invalid'),
-  phone: string().min(1, 'Phone number is required'),
-  login: string().min(1, 'Login is required'),
+    .min(1, requierdString)
+    .email('Формат e-mail: <name>@<domain>.<zone>'),
+  phone: string()
+    .min(1, requierdString)
+    .regex(/^\+?\d{11,}/, 'Формат телефона: плюс и только цифры'),
+  login: string().min(1, requierdString),
   password: string()
-    .min(1, 'Password is required')
-    .min(8, 'Password must be more than 8 characters')
-    .max(32, 'Password must be less than 32 characters'),
+    .min(1, requierdString)
+    .min(8, 'Пароль должен быть больше 8 символов')
+    .max(32, 'Пароль должен быть не больше 32 символов'),
 })
 
 export type RegisterInput = TypeOf<typeof registerSchema>
