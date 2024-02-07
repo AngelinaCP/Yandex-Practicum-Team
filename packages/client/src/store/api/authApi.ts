@@ -9,6 +9,7 @@ import {
   IChangePasswordRequest,
   ILogin,
   IUser,
+  formValues,
 } from '@/store/api/types'
 import { RegisterInput } from '@/pages/Signup/config'
 
@@ -65,7 +66,10 @@ export const authApi = createApi({
         dispatch(logout())
       },
     }),
-    changePassword: builder.mutation<GenericResponse, IChangePasswordRequest>({
+    changePassword: builder.mutation<
+      GenericResponse,
+      IChangePasswordRequest | formValues
+    >({
       query(data) {
         return {
           url: `user/password`,
@@ -95,7 +99,7 @@ export const authApi = createApi({
         }
       },
     }),
-    changeProfile: builder.mutation<IUser, IUser>({
+    changeProfile: builder.mutation<IUser, IUser | formValues>({
       query(data) {
         return {
           url: `user/profile`,
