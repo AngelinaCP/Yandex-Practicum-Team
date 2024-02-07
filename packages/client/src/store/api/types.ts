@@ -19,8 +19,8 @@ export interface ILogin {
 }
 
 export interface IChangePasswordRequest {
-  oldPassword: string
-  newPassword: string
+  old_password?: string
+  new_password?: string
 }
 
 export type TChangeAvatarRequest = File

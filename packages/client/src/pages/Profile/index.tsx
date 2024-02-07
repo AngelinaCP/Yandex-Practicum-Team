@@ -20,6 +20,31 @@ import { Modal } from '@/components/Modal'
 import { FileInput } from '@/pages/Profile/fileInput'
 import { StyledForm, StyledFormGroup } from '@/pages/Profile/style'
 
+interface IProfileFormFields<T> {
+  first_name: T
+  second_name: T
+  phone: T
+  email: T
+  login: T
+  display_name: T
+}
+interface IPasswordFormFields<T> {
+  old_password: T
+  new_password: T
+}
+interface IProfileInputs
+  extends HTMLFormControlsCollection,
+    IProfileFormFields<HTMLInputElement> {}
+interface IPasswordInputs
+  extends HTMLFormControlsCollection,
+    IPasswordFormFields<HTMLInputElement> {}
+interface IProfileForm extends HTMLFormElement {
+  readonly elements: IProfileInputs
+}
+interface IPasswordForm extends HTMLFormElement {
+  readonly elements: IPasswordInputs
+}
+
 export const ProfilePage = () => {
   const [changePassword, { isLoading, isSuccess }] = useChangePasswordMutation()
   const [logoutUser] = useLogoutUserMutation()
@@ -41,17 +66,11 @@ export const ProfilePage = () => {
     setSelectedFile(file)
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmitPassword = (event: FormEvent<IPasswordForm>) => {
     event.preventDefault()
-    const { new_password, old_password } =
-      event.target as typeof event.target & {
-        new_password: { value: string }
-        old_password: { value: string }
-      }
-    changePassword({
-      newPassword: new_password.value,
-      oldPassword: old_password.value,
-    })
+    const form = event.currentTarget
+    const values = Object.fromEntries(new FormData(form).entries())
+    changePassword(values)
   }
 
   const handleSubmitAvatar = (event: FormEvent) => {
@@ -61,26 +80,12 @@ export const ProfilePage = () => {
     }
   }
 
-  const handleSubmitProfile = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmitProfile = (event: FormEvent<IProfileForm>) => {
     event.preventDefault()
+    const form = event.currentTarget
+    const values = Object.fromEntries(new FormData(form).entries())
+    changeProfile(values)
     toggleIsEdit()
-    const { first_name, second_name, phone, email, login, display_name } =
-      event.target as typeof event.target & {
-        first_name: { value: string }
-        second_name: { value: string }
-        phone: { value: string }
-        email: { value: string }
-        login: { value: string }
-        display_name: { value: string }
-      }
-    changeProfile({
-      first_name: first_name.value,
-      second_name: second_name.value,
-      phone: phone.value,
-      email: email.value,
-      login: login.value,
-      display_name: display_name.value,
-    })
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -176,7 +181,7 @@ export const ProfilePage = () => {
         createPortal(
           <Modal open={showModal}>
             {isLoading && <LoaderSpinner />}
-            <StyledForm onSubmit={handleSubmit}>
+            <StyledForm onSubmit={handleSubmitPassword}>
               <Input
                 type="password"
                 name="old_password"
