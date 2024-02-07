@@ -2,8 +2,8 @@ import React, { FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createPortal } from 'react-dom'
 import { useToggle } from '@/hooks'
-import { RootState, useAppDispatch, useAppSelector } from '@/store/store'
-import { setUser } from '@/store/features/userSlice'
+import { useAppDispatch, useAppSelector } from '@/store/store'
+import { setUser, selectUser } from '@/store/features/userSlice'
 import {
   useChangePasswordMutation,
   useChangeAvatarMutation,
@@ -57,7 +57,6 @@ export const ProfilePage = () => {
   const [showAvatarModal, toggleShowAvatarModal] = useToggle(false)
   const [isEdit, toggleIsEdit] = useToggle(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const selectUser = (state: RootState) => state.userState.user
   const currentUser = useAppSelector(state => selectUser(state))
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
