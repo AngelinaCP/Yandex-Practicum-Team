@@ -1,26 +1,14 @@
-import z from 'zod'
+import { z } from 'zod'
 
-export const formValidator = <
-  T extends Record<string, unknown> = Record<string, unknown>
->(
-  schema: z.ZodType<T, z.ZodTypeDef, T>
-) => {
-  const getInputsErrors = (formData: {
-    [key in keyof T]: T[key]
-  }): [
-    boolean,
-    (
-      | { [key in keyof z.infer<typeof schema>]: string[] }
-      | Record<string, unknown>
-    )
-  ] => {
+export const formValidator = <T extends z.ZodSchema>(schema: T) => {
+  const getInputsErrors = (formData: z.infer<T>) => {
     const result = schema.safeParse(formData)
 
     if (!result.success) {
       const errorData = result.error.formErrors.fieldErrors
-      return [result.success, errorData]
+      return { success: result.success, errors: errorData }
     } else {
-      return [true, {}]
+      return { success: true, errors: {} }
     }
   }
 
