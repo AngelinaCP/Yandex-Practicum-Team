@@ -1,7 +1,9 @@
 import React, { FormEvent, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { createPortal } from 'react-dom'
 import { useToggle } from '@/hooks'
 import { RootState, useAppDispatch, useAppSelector } from '@/store/store'
+import { setUser } from '@/store/features/userSlice'
 import {
   useChangePasswordMutation,
   useChangeAvatarMutation,
@@ -17,8 +19,6 @@ import { Avatar } from '@/components/Avatar'
 import { Modal } from '@/components/Modal'
 import { FileInput } from '@/pages/Profile/fileInput'
 import { StyledForm, StyledFormGroup } from '@/pages/Profile/style'
-import { useNavigate } from 'react-router-dom'
-import { setUser } from '@/store/features/userSlice'
 
 export const ProfilePage = () => {
   const [changePassword, { isLoading, isSuccess }] = useChangePasswordMutation()
