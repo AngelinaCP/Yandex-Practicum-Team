@@ -4,15 +4,10 @@ import Card from '@/components/Card'
 import Input from '@/components/Input'
 import Button from '@/components/Button/index'
 import Link from '@/components/Link'
+import { LoaderSpinner } from '@/components/Loading'
 import { StyledForm } from '@/pages/Login/style'
 import { useLoginUserMutation } from '@/store/api/authApi'
-import { LoaderSpinner } from '@/components/Loading'
-
-type errorMessage = {
-  data: {
-    reason?: string
-  }
-}
+import { errorMessage } from '@/store/api/types'
 
 export const LoginPage: FC = () => {
   const navigate = useNavigate()
@@ -24,7 +19,8 @@ export const LoginPage: FC = () => {
     if (
       isError &&
       ((error as errorMessage)?.data?.reason === 'User already in system' ||
-        (error as errorMessage)?.data?.reason === 'User already in system')
+        (error as errorMessage)?.error?.data?.reason ===
+          'User already in system')
     )
       return navigate('/')
   }, [isSuccess, isError])
