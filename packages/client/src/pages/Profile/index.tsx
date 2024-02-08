@@ -2,8 +2,9 @@ import React, { FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createPortal } from 'react-dom'
 import { useToggle } from '@/hooks'
-import { useAppDispatch, useAppSelector } from '@/store/store'
+import { useAppSelector } from '@/store/store'
 import { setUser, selectUser } from '@/store/features/userSlice'
+import { IUser } from '@/store/api/types'
 import {
   useChangePasswordMutation,
   useChangeAvatarMutation,
@@ -46,20 +47,27 @@ interface IPasswordForm extends HTMLFormElement {
 }
 
 export const ProfilePage = () => {
-  const [changePassword, { isLoading, isSuccess }] = useChangePasswordMutation()
   const [logoutUser] = useLogoutUserMutation()
+  const [changePassword, { isLoading, isSuccess }] = useChangePasswordMutation()
   const [
     changeAvatar,
     { isLoading: isLoadingAvatar, isSuccess: isSuccessAvatar },
   ] = useChangeAvatarMutation()
-  const [changeProfile] = useChangeProfileMutation()
+  const [
+    changeProfile,
+    {
+      isLoading: isProfileLoading,
+      isSuccess: isProfileSuccess,
+      isError: isProfileError,
+    },
+  ] = useChangeProfileMutation()
   const [showModal, toggleShowModal] = useToggle(false)
   const [showAvatarModal, toggleShowAvatarModal] = useToggle(false)
   const [isEdit, toggleIsEdit] = useToggle(false)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const currentUser = useAppSelector(state => selectUser(state))
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const [userInfo, setUserInfo] = useState<IUser | null>(currentUser)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
   const handleFileChange = (file: File | null) => {
     setSelectedFile(file)
@@ -84,32 +92,34 @@ export const ProfilePage = () => {
     const form = event.currentTarget
     const values = Object.fromEntries(new FormData(form).entries())
     changeProfile(values)
-    toggleIsEdit()
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
-    if (currentUser) dispatch(setUser({ ...currentUser, [name]: value }))
+    setUserInfo({ ...userInfo, [name]: value } as IUser)
   }
 
   useEffect(() => {
     if (isSuccess) toggleShowModal()
     if (isSuccessAvatar) toggleShowAvatarModal()
-  }, [isSuccess, isSuccessAvatar])
+    if (isProfileSuccess) toggleIsEdit()
+    if (isProfileError) {
+      setUser(currentUser as IUser)
+      setUserInfo(currentUser as IUser)
+    }
+  }, [isSuccess, isSuccessAvatar, isProfileSuccess, isProfileError])
 
   return (
     <Card width="580px" height="auto">
-      <Avatar
-        image={currentUser?.avatar}
-        changeAvatar={toggleShowAvatarModal}
-      />
+      <Avatar image={userInfo?.avatar} changeAvatar={toggleShowAvatarModal} />
       <StyledForm onSubmit={handleSubmitProfile}>
+        {isProfileLoading && <LoaderSpinner />}
         <StyledFormGroup>
           <Input
             name="first_name"
             label="Имя"
             required={true}
-            value={currentUser?.first_name}
+            value={userInfo?.first_name}
             disabled={!isEdit}
             onChange={handleInputChange}
           />
@@ -117,7 +127,7 @@ export const ProfilePage = () => {
             name="second_name"
             label="Фамилия"
             required={true}
-            value={currentUser?.second_name}
+            value={userInfo?.second_name}
             disabled={!isEdit}
             onChange={handleInputChange}
           />
@@ -127,7 +137,7 @@ export const ProfilePage = () => {
             name="email"
             label="E-mail"
             required={true}
-            value={currentUser?.email}
+            value={userInfo?.email}
             disabled={!isEdit}
             onChange={handleInputChange}
           />
@@ -135,7 +145,7 @@ export const ProfilePage = () => {
             name="phone"
             label="Телефон"
             required={true}
-            value={currentUser?.phone}
+            value={userInfo?.phone}
             disabled={!isEdit}
             onChange={handleInputChange}
           />
@@ -145,7 +155,7 @@ export const ProfilePage = () => {
             name="login"
             label="Логин"
             required={true}
-            value={currentUser?.login}
+            value={userInfo?.login}
             disabled={!isEdit}
             onChange={handleInputChange}
           />
@@ -153,7 +163,7 @@ export const ProfilePage = () => {
             name="display_name"
             label="Псевдоним"
             required={false}
-            value={currentUser?.display_name}
+            value={userInfo?.display_name}
             disabled={!isEdit}
             onChange={handleInputChange}
           />
