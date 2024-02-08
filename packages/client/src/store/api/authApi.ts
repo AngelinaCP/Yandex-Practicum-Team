@@ -10,6 +10,7 @@ import {
   ILogin,
   IUser,
   formValues,
+  errorMessage,
 } from '@/store/api/types'
 import { RegisterInput } from '@/pages/Signup/config'
 
@@ -49,11 +50,14 @@ export const authApi = createApi({
             userApi.endpoints.getMe.initiate(null, { forceRefetch: true })
           )
         } catch (error) {
-          console.error(error)
-        } finally {
-          dispatch(
-            userApi.endpoints.getMe.initiate(null, { forceRefetch: true })
-          )
+          if (
+            (error as errorMessage).error?.data?.reason ===
+            'User already in system'
+          ) {
+            dispatch(
+              userApi.endpoints.getMe.initiate(null, { forceRefetch: true })
+            )
+          } else console.error(error)
         }
       },
     }),

@@ -26,3 +26,11 @@ export interface IChangePasswordRequest {
 export type TChangeAvatarRequest = File
 
 export type formValues = { [k: string]: FormDataEntryValue }
+
+export type errorMessage = {
+  error: {
+    data?: {
+      reason?: string
+    }
+  }
+}
