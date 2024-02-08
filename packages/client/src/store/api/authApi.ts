@@ -51,8 +51,9 @@ export const authApi = createApi({
           )
         } catch (error) {
           if (
-            (error as errorMessage).error?.data?.reason ===
-            'User already in system'
+            (error as errorMessage)?.error?.data?.reason ===
+              'User already in system' ||
+            (error as errorMessage)?.data?.reason === 'User already in system'
           ) {
             dispatch(
               userApi.endpoints.getMe.initiate(null, { forceRefetch: true })

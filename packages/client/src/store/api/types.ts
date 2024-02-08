@@ -28,9 +28,12 @@ export type TChangeAvatarRequest = File
 export type formValues = { [k: string]: FormDataEntryValue }
 
 export type errorMessage = {
-  error: {
+  error?: {
     data?: {
       reason?: string
     }
+  }
+  data?: {
+    reason?: string
   }
 }
