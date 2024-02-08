@@ -1,10 +1,11 @@
 import React, {
   FC,
-  FormEvent,
   useCallback,
   useState,
   useMemo,
   useEffect,
+  ChangeEventHandler,
+  ChangeEvent,
 } from 'react'
 import { InputLabelStyle, InputStyle, InputWrapperStyle } from './style'
 import { ErrorMessage } from './ErrorMessage'
@@ -18,7 +19,8 @@ interface InputProps {
   errorMessages?: string[]
   zodValidate?: z.ZodTypeAny
   value?: string
-  onChange?: (event: FormEvent<HTMLInputElement>) => void
+  disabled?: boolean
+  onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 let firstRender = true
@@ -27,11 +29,12 @@ const Input: FC<InputProps> = ({
   label,
   name,
   required = false,
-  type,
+  type = 'text',
   zodValidate,
   errorMessages = [],
-  onChange,
   value = '',
+  disabled = false,
+  onChange,
 }) => {
   const [valueInternal, setValue] = useState(value)
   const [focusState, setFocusState] = useState('default')
@@ -64,7 +67,7 @@ const Input: FC<InputProps> = ({
     }
   }, [])
 
-  const handleChange = (event: FormEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (onChange) onChange(event)
     setValue(event.currentTarget.value)
   }
@@ -85,6 +88,7 @@ const Input: FC<InputProps> = ({
         name={name}
         id={name}
         required={required}
+        disabled={disabled}
         onBlur={handleBlur}
         onFocus={handleFocus}
         onChange={handleChange}

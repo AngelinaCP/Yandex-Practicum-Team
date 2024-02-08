@@ -2,13 +2,15 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { userApi } from './userApi'
 import { LoginInput } from '@/pages/Login/config'
 import { API_URL } from '@/store/api/config'
-import { setUser, userSlice } from '@/store/features/userSlice'
+import { setUser, logout } from '@/store/features/userSlice'
 import {
   GenericResponse,
   TChangeAvatarRequest,
   IChangePasswordRequest,
   ILogin,
   IUser,
+  formValues,
+  errorMessage,
 } from '@/store/api/types'
 import { RegisterInput } from '@/pages/Signup/config'
 
@@ -17,10 +19,7 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL,
     responseHandler: async response => {
-      if (
-        response.url === `${API_URL}/auth/signin` &&
-        response.status === 200
-      ) {
+      if (response.ok) {
         return Promise.resolve()
       } else return response.json()
     },
@@ -47,11 +46,19 @@ export const authApi = createApi({
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
-          await dispatch(userApi.endpoints.getMe.initiate(null))
+          dispatch(
+            userApi.endpoints.getMe.initiate(null, { forceRefetch: true })
+          )
         } catch (error) {
-          console.error(error)
-        } finally {
-          await dispatch(userApi.endpoints.getMe.initiate(null))
+          if (
+            (error as errorMessage)?.error?.data?.reason ===
+              'User already in system' ||
+            (error as errorMessage)?.data?.reason === 'User already in system'
+          ) {
+            dispatch(
+              userApi.endpoints.getMe.initiate(null, { forceRefetch: true })
+            )
+          } else console.error(error)
         }
       },
     }),
@@ -65,10 +72,13 @@ export const authApi = createApi({
       },
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
         await queryFulfilled
-        dispatch(userSlice.actions.logout())
+        dispatch(logout())
       },
     }),
-    changePassword: builder.mutation<GenericResponse, IChangePasswordRequest>({
+    changePassword: builder.mutation<
+      GenericResponse,
+      IChangePasswordRequest | formValues
+    >({
       query(data) {
         return {
           url: `user/password`,
@@ -98,6 +108,16 @@ export const authApi = createApi({
         }
       },
     }),
+    changeProfile: builder.mutation<IUser, IUser | formValues>({
+      query(data) {
+        return {
+          url: `user/profile`,
+          method: 'PUT',
+          body: data,
+          credentials: 'include',
+        }
+      },
+    }),
   }),
 })
 
@@ -107,4 +127,5 @@ export const {
   useLogoutUserMutation,
   useChangePasswordMutation,
   useChangeAvatarMutation,
+  useChangeProfileMutation,
 } = authApi
