@@ -23,7 +23,7 @@ export const LoginPage: FC = () => {
     if (isSuccess) return navigate('/')
     if (
       isError &&
-      (error as errorMessage).data.reason === 'User already in system'
+      (error as errorMessage)?.data?.reason === 'User already in system'
     )
       return navigate('/')
   }, [isSuccess, isError])
