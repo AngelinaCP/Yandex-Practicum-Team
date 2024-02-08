@@ -1,4 +1,11 @@
-import React, { FC, FormEvent, useCallback, useState } from 'react'
+import React, {
+  FC,
+  FormEvent,
+  useCallback,
+  useState,
+  useMemo,
+  useEffect,
+} from 'react'
 import { InputLabelStyle, InputStyle, InputWrapperStyle } from './style'
 import { ErrorMessage } from './ErrorMessage'
 import z from 'zod'
@@ -10,7 +17,11 @@ interface InputProps {
   type?: 'text' | 'file' | 'password' | 'checkbox'
   errorMessages?: string[]
   zodValidate?: z.ZodTypeAny
+  value?: string
+  onChange?: (event: FormEvent<HTMLInputElement>) => void
 }
+
+let firstRender = true
 
 const Input: FC<InputProps> = ({
   label,
@@ -19,14 +30,16 @@ const Input: FC<InputProps> = ({
   type,
   zodValidate,
   errorMessages = [],
+  onChange,
+  value = '',
 }) => {
-  const [errorMessagesInternal, setErrorMessages] =
-    useState<string[]>(errorMessages)
+  const [valueInternal, setValue] = useState(value)
+  const [focusState, setFocusState] = useState('default')
 
-  const zodErrors = useCallback((value: string): string[] => {
+  const getInputErrors = useCallback((): string[] => {
     errorMessages = []
     if (zodValidate) {
-      const zodResult = zodValidate.safeParse(value)
+      const zodResult = zodValidate.safeParse(valueInternal)
       if (!zodResult.success) {
         const errors = zodResult.error.format()._errors
         return errors
@@ -34,41 +47,57 @@ const Input: FC<InputProps> = ({
       return []
     }
     return []
+  }, [valueInternal])
+
+  const errors = useMemo(() => {
+    const join = firstRender ? [] : getInputErrors()
+    for (let i = 0; i < errorMessages.length; i++) {
+      if (!join.includes(errorMessages[i])) join.push(errorMessages[i])
+    }
+    return join
+  }, [errorMessages, valueInternal, focusState])
+
+  useEffect(() => {
+    firstRender = false
+    return () => {
+      firstRender = true
+    }
   }, [])
 
-  const handleBlur = (event: FormEvent<HTMLInputElement>) => {
-    event.preventDefault()
-    setErrorMessages(zodErrors(event.currentTarget.value))
+  const handleChange = (event: FormEvent<HTMLInputElement>) => {
+    if (onChange) onChange(event)
+    setValue(event.currentTarget.value)
   }
 
-  const handleChange = (event: FormEvent<HTMLInputElement>) => {
-    setErrorMessages(zodErrors(event.currentTarget.value))
+  const handleBlur = () => {
+    setFocusState('blur')
+  }
+
+  const handleFocus = () => {
+    setFocusState('focus')
   }
 
   return (
     <InputWrapperStyle>
       <InputStyle
-        type={type || 'input'}
+        type={type || 'text'}
         placeholder=""
         name={name}
         id={name}
         required={required}
         onBlur={handleBlur}
-        onFocus={handleBlur}
+        onFocus={handleFocus}
         onChange={handleChange}
+        value={valueInternal}
       />
       <InputLabelStyle htmlFor={name}>{label}</InputLabelStyle>
-      {errorMessagesInternal.length > 0 &&
-        errorMessagesInternal.map((e, i) => (
-          <ErrorMessage key={i}>{e}</ErrorMessage>
-        ))}
+      {errors.length > 0 &&
+        errors.map((e, i) => <ErrorMessage key={i}>{e}</ErrorMessage>)}
     </InputWrapperStyle>
   )
 }
 
 export default Input
-
-const requirdeString = 'Обязательное поле'
 
 const inputCreator =
   (
@@ -84,11 +113,11 @@ const inputCreator =
         label={label}
         zodValidate={zodValidate}
         type={type}
-        // errorMessages={props.errorMessages}
         {...props}
       />
     )
 
+const requirdeString = 'Обязательное поле'
 export const InputFirstNameZodSchema = z
   .string()
   .min(1, requirdeString)
@@ -119,7 +148,7 @@ export const InputEmail = inputCreator('email', 'E-mail', InputEmailZodSchema)
 export const InputPhoneZodSchema = z
   .string()
   .min(1, requirdeString)
-  .regex(/^\+?\d{11,}/, 'Формат телефона: только цифры')
+  .regex(/^\+?\d{11,}$/, 'Формат телефона: только цифры (11)')
 export const InputPhone = inputCreator('phone', 'Телефон', InputPhoneZodSchema)
 
 export const InputPasswordZodSchema = z
