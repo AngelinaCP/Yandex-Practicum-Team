@@ -58,7 +58,7 @@ export const SignupPage = () => {
   return (
     <Card width="580px" height="auto">
       {isLoading && <LoaderSpinner />}
-      <StyledForm onSubmitCapture={handleSubmit}>
+      <StyledForm onSubmit={handleSubmit}>
         <StyledFormGroup>
           <InputFirstName errorMessages={errors.first_name ?? []} />
           <InputSecondName errorMessages={errors.second_name ?? []} />
