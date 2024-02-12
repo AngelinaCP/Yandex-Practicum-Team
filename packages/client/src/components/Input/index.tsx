@@ -1,9 +1,7 @@
 import React, {
   FC,
-  useCallback,
   useState,
   useMemo,
-  useEffect,
   ChangeEventHandler,
   ChangeEvent,
 } from 'react'
@@ -17,55 +15,39 @@ interface InputProps {
   required?: boolean
   type?: 'text' | 'file' | 'password' | 'checkbox'
   errorMessages?: string[]
-  zodValidate?: z.ZodTypeAny
+  zodValidate?: z.ZodTypeAny | null
   value?: string
   disabled?: boolean
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
-
-let firstRender = true
 
 const Input: FC<InputProps> = ({
   label,
   name,
   required = false,
   type = 'text',
-  zodValidate,
+  zodValidate = null,
   errorMessages = [],
   value = '',
   disabled = false,
   onChange,
 }) => {
   const [valueInternal, setValue] = useState(value)
-  const [focusState, setFocusState] = useState('default')
+  const [focusState, setFocusState] = useState<'default' | 'focus' | 'blur'>(
+    'default'
+  )
 
-  const getInputErrors = useCallback((): string[] => {
-    errorMessages = []
-    if (zodValidate) {
+  const errors = useMemo((): string[] => {
+    let errorsInternal: string[] = []
+    if (zodValidate && focusState !== 'default') {
       const zodResult = zodValidate.safeParse(valueInternal)
       if (!zodResult.success) {
-        const errors = zodResult.error.format()._errors
-        return errors
-      }
-      return []
+        return (errorsInternal = zodResult.error.format()._errors)
+      } else return []
+    } else {
+      return errorMessages
     }
-    return []
-  }, [valueInternal])
-
-  const errors = useMemo(() => {
-    const join = firstRender ? [] : getInputErrors()
-    for (let i = 0; i < errorMessages.length; i++) {
-      if (!join.includes(errorMessages[i])) join.push(errorMessages[i])
-    }
-    return join
-  }, [errorMessages, valueInternal, focusState])
-
-  useEffect(() => {
-    firstRender = false
-    return () => {
-      firstRender = true
-    }
-  }, [])
+  }, [valueInternal, focusState, errorMessages])
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (onChange) onChange(event)
@@ -107,7 +89,7 @@ const inputCreator =
   (
     name: string,
     label: string,
-    zodValidate: z.ZodTypeAny,
+    zodValidate: z.ZodTypeAny | null = null,
     type: 'text' | 'password' | 'file' = 'text'
   ): FC<Partial<InputProps>> =>
   props =>
@@ -173,7 +155,7 @@ export const InputPasswordConfirmZodSchema = z
 export const InputPasswordConfirm = inputCreator(
   'passwordConfirm',
   'Подтверждение пароля',
-  InputPasswordConfirmZodSchema,
+  null,
   'password'
 )
 
