@@ -20,6 +20,8 @@ import { Avatar } from '@/components/Avatar'
 import { Modal } from '@/components/Modal'
 import { FileInput } from '@/pages/Profile/fileInput'
 import { StyledForm, StyledFormGroup } from '@/pages/Profile/style'
+import { useFormValidate } from '@/hooks/useFormValid'
+import { profileSchema } from './formProfileSchema'
 
 interface IProfileFormFields<T> {
   first_name: T
@@ -68,6 +70,7 @@ export const ProfilePage = () => {
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState<IUser | null>(currentUser)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [errors, validateForm] = useFormValidate(profileSchema)
 
   const handleFileChange = (file: File | null) => {
     setSelectedFile(file)
@@ -91,7 +94,8 @@ export const ProfilePage = () => {
     event.preventDefault()
     const form = event.currentTarget
     const values = Object.fromEntries(new FormData(form).entries())
-    changeProfile(values)
+    const isFormValid = validateForm(values)
+    if (isFormValid) changeProfile(values)
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,6 +126,7 @@ export const ProfilePage = () => {
             value={userInfo?.first_name}
             disabled={!isEdit}
             onChange={handleInputChange}
+            errorMessages={errors.first_name ?? []}
           />
           <Input
             name="second_name"
@@ -130,6 +135,7 @@ export const ProfilePage = () => {
             value={userInfo?.second_name}
             disabled={!isEdit}
             onChange={handleInputChange}
+            errorMessages={errors.second_name ?? []}
           />
         </StyledFormGroup>
         <StyledFormGroup>
@@ -140,6 +146,7 @@ export const ProfilePage = () => {
             value={userInfo?.email}
             disabled={!isEdit}
             onChange={handleInputChange}
+            errorMessages={errors.email ?? []}
           />
           <Input
             name="phone"
@@ -148,6 +155,7 @@ export const ProfilePage = () => {
             value={userInfo?.phone}
             disabled={!isEdit}
             onChange={handleInputChange}
+            errorMessages={errors.phone ?? []}
           />
         </StyledFormGroup>
         <StyledFormGroup>
@@ -158,6 +166,7 @@ export const ProfilePage = () => {
             value={userInfo?.login}
             disabled={!isEdit}
             onChange={handleInputChange}
+            errorMessages={errors.login ?? []}
           />
           <Input
             name="display_name"
@@ -166,6 +175,7 @@ export const ProfilePage = () => {
             value={userInfo?.display_name}
             disabled={!isEdit}
             onChange={handleInputChange}
+            errorMessages={errors.display_name ?? []}
           />
         </StyledFormGroup>
         <StyledFormGroup>

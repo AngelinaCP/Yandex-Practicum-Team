@@ -39,8 +39,8 @@ function App() {
         <ErrorBoundary>
           <Navigation />
           <Routes>
+            <Route path="profile" element={<ProfilePage />} />
             <Route element={<AuthRequired />}>
-              <Route path="profile" element={<ProfilePage />} />
               <Route path="game" element={<GamePage />} />
               <Route path="game-start" element={<GameStartPage />} />
               <Route path="game-end" element={<GameEndPage />} />
@@ -55,9 +55,9 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignupPage />} />
             <Route path="*" element={<Page404 />} />
-           </Routes>
-         </ErrorBoundary>
-        </BrowserRouter>
+          </Routes>
+        </ErrorBoundary>
+      </BrowserRouter>
     </>
   )
 }
