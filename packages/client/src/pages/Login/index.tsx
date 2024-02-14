@@ -30,11 +30,8 @@ export const LoginPage: FC = () => {
 
   useEffect(() => {
     if (!data) service_id({ redirect_uri: uri })
-  }, [data])
-
-  useEffect(() => {
     if (code) oAuth({ code: code, redirect_uri: uri })
-  }, [code])
+  }, [data, code])
 
   useEffect(() => {
     if (oAuthSuccess) return navigate('/')
