@@ -20,8 +20,6 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL,
     responseHandler: async response => {
-      console.log('response', response)
-
       if (
         response.ok &&
         (response.url === `${API_URL}/auth/signin` ||
