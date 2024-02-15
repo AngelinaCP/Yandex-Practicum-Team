@@ -12,6 +12,7 @@ import TopicPage from './pages/topic.page'
 import { Page404 } from './pages/Page_404'
 import Navigation from './components/navigation'
 import interceptorsProvider from '@/providers/interceptors.provider'
+import { GlobalWrapper } from './components/GlobalWrapper'
 import { ForumPostPage } from '@/pages/ForumPost'
 import { startServiceWorker } from '@/sw.init'
 import { AuthRequired } from '@/components/AuthRequired'
@@ -34,7 +35,7 @@ function App() {
   }, [])
 
   return (
-    <>
+    <GlobalWrapper>
       <BrowserRouter>
         <ErrorBoundary>
           <Navigation />
@@ -55,10 +56,10 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignupPage />} />
             <Route path="*" element={<Page404 />} />
-           </Routes>
-         </ErrorBoundary>
-        </BrowserRouter>
-    </>
+          </Routes>
+        </ErrorBoundary>
+      </BrowserRouter>
+    </GlobalWrapper>
   )
 }
 
