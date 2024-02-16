@@ -27,6 +27,7 @@ export const LoginPage: FC = () => {
 
   const uri = window.location.href.split('?')[0]
   const code = window.location.search.split('code=')[1]
+  const loginError = error || oAuthError_
 
   useEffect(() => {
     if (!data) service_id({ redirect_uri: uri })
@@ -34,18 +35,13 @@ export const LoginPage: FC = () => {
   }, [data, code])
 
   useEffect(() => {
-    if (oAuthSuccess) return navigate('/')
-    if (isSuccess) return navigate('/')
+    if (oAuthSuccess || isSuccess) return navigate('/')
     if (
-      (isError &&
-        ((error as errorMessage)?.data?.reason === 'User already in system' ||
-          (error as errorMessage)?.error?.data?.reason ===
-            'User already in system')) ||
-      (oAuthError &&
-        ((oAuthError_ as errorMessage)?.data?.reason ===
-          'User already in system' ||
-          (oAuthError_ as errorMessage)?.error?.data?.reason ===
-            'User already in system'))
+      (isError || oAuthError) &&
+      [
+        (loginError as errorMessage)?.data?.reason,
+        (loginError as errorMessage)?.error?.data?.reason,
+      ].includes('User already in system')
     )
       return navigate('/')
   }, [isSuccess, oAuthSuccess, oAuthError, isError])

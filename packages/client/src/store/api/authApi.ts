@@ -22,8 +22,9 @@ export const authApi = createApi({
     responseHandler: async response => {
       if (
         response.ok &&
-        (response.url === `${API_URL}/auth/signin` ||
-          response.url === `${API_URL}/auth/logout`)
+        [`${API_URL}/auth/signin`, `${API_URL}/auth/logout`].includes(
+          response.url
+        )
       ) {
         return Promise.resolve()
       } else {
@@ -67,9 +68,10 @@ export const authApi = createApi({
           )
         } catch (error) {
           if (
-            (error as errorMessage)?.error?.data?.reason ===
-              'User already in system' ||
-            (error as errorMessage)?.data?.reason === 'User already in system'
+            [
+              (error as errorMessage)?.error?.data?.reason,
+              (error as errorMessage)?.data?.reason,
+            ].includes('User already in system')
           ) {
             dispatch(
               userApi.endpoints.getMe.initiate(null, { forceRefetch: true })
@@ -95,9 +97,10 @@ export const authApi = createApi({
           )
         } catch (error) {
           if (
-            (error as errorMessage)?.error?.data?.reason ===
-              'User already in system' ||
-            (error as errorMessage)?.data?.reason === 'User already in system'
+            [
+              (error as errorMessage)?.error?.data?.reason,
+              (error as errorMessage)?.data?.reason,
+            ].includes('User already in system')
           ) {
             dispatch(
               userApi.endpoints.getMe.initiate(null, { forceRefetch: true })
