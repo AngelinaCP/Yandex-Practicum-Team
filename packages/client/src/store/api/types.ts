@@ -18,6 +18,14 @@ export interface ILogin {
   password: string
 }
 
+export interface ILeaderboard {
+  data: {
+    name: string
+    silentHillScore: number
+    date: number
+  }
+}
+
 export interface IChangePasswordRequest {
   old_password: string
   new_password: string

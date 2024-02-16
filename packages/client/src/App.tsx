@@ -6,7 +6,7 @@ import { MainPage } from './pages/Main'
 import { SignupPage } from './pages/Signup'
 import { ProfilePage } from './pages/Profile'
 import GamePage from './pages/game.page'
-import LeaderboardPage from './pages/leaderboard.page'
+import { LeaderboardPage } from './pages/Leaderboard'
 import { ForumPage } from './pages/Forum'
 import TopicPage from './pages/topic.page'
 import { Page404 } from './pages/Page_404'
@@ -55,9 +55,9 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignupPage />} />
             <Route path="*" element={<Page404 />} />
-           </Routes>
-         </ErrorBoundary>
-        </BrowserRouter>
+          </Routes>
+        </ErrorBoundary>
+      </BrowserRouter>
     </>
   )
 }
