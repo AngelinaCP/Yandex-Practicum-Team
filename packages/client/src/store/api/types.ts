@@ -2,6 +2,15 @@ export interface GenericResponse {
   id: string | number
 }
 
+export interface CodeResponse {
+  service_id: string
+}
+
+export interface OAuthRequest {
+  code: string
+  redirect_uri: string
+}
+
 export interface IUser {
   id: number
   first_name: string
@@ -11,11 +20,6 @@ export interface IUser {
   login: string
   avatar: string
   email: string
-}
-
-export interface ILogin {
-  login: string
-  password: string
 }
 
 export interface ILeaderboard {
