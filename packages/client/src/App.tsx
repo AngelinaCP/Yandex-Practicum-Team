@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { LoginPage } from './pages/Login'
 import { MainPage } from './pages/Main'
 import { SignupPage } from './pages/Signup'
@@ -20,6 +20,30 @@ import { GameEndPage } from '@/pages/GameEnd'
 import { GameStartPage } from '@/pages/GameStart'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 
+import { Provider } from 'react-redux'
+import { store } from '@/store/store'
+
+export const AppRoutes = () => (
+  <Routes>
+    <Route element={<AuthRequired />}>
+      <Route path="profile" element={<ProfilePage />} />
+      <Route path="game" element={<GamePage />} />
+      <Route path="game-start" element={<GameStartPage />} />
+      <Route path="game-end" element={<GameEndPage />} />
+      <Route path="leaderboard" element={<LeaderboardPage />} />
+      <Route path="forum">
+        <Route index element={<ForumPage />} />
+        <Route path=":forumId" element={<ForumPostPage />} />
+      </Route>
+      <Route path="topic" element={<TopicPage />} />
+    </Route>
+    <Route path="/" element={<MainPage />} index />
+    <Route path="login" element={<LoginPage />} />
+    <Route path="signup" element={<SignupPage />} />
+    <Route path="*" element={<Page404 />} />
+  </Routes>
+)
+
 function App() {
   useEffect(() => {
     const fetchServerData = async () => {
@@ -35,31 +59,16 @@ function App() {
   }, [])
 
   return (
-    <GlobalWrapper>
-      <BrowserRouter>
+    <Provider store={store}>
+      <GlobalWrapper>
+        {/* <BrowserRouter> */}
         <ErrorBoundary>
           <Navigation />
-          <Routes>
-            <Route element={<AuthRequired />}>
-              <Route path="profile" element={<ProfilePage />} />
-              <Route path="game" element={<GamePage />} />
-              <Route path="game-start" element={<GameStartPage />} />
-              <Route path="game-end" element={<GameEndPage />} />
-              <Route path="leaderboard" element={<LeaderboardPage />} />
-              <Route path="forum">
-                <Route index element={<ForumPage />} />
-                <Route path=":forumId" element={<ForumPostPage />} />
-              </Route>
-              <Route path="topic" element={<TopicPage />} />
-            </Route>
-            <Route path="/" element={<MainPage />} index />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="signup" element={<SignupPage />} />
-            <Route path="*" element={<Page404 />} />
-          </Routes>
+          <AppRoutes />
         </ErrorBoundary>
-      </BrowserRouter>
-    </GlobalWrapper>
+        {/* </BrowserRouter> */}
+      </GlobalWrapper>
+    </Provider>
   )
 }
 
