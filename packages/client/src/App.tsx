@@ -23,43 +23,44 @@ import { ErrorBoundary } from '@/components/ErrorBoundary'
 function App() {
   useEffect(() => {
     const fetchServerData = async () => {
-      const url = `http://localhost:${__SERVER_PORT__}`
+      const url = `http://localhost:${__SERVER_PORT__}/api`
       const response = await fetch(url)
       const data = await response.json()
       console.log(data)
     }
 
     fetchServerData()
-    interceptorsProvider()
-    startServiceWorker()
+    // interceptorsProvider()
+    // startServiceWorker()
   }, [])
 
   return (
-    <GlobalWrapper>
-      <BrowserRouter>
-        <ErrorBoundary>
-          <Navigation />
-          <Routes>
-            <Route element={<AuthRequired />}>
-              <Route path="profile" element={<ProfilePage />} />
-              <Route path="game" element={<GamePage />} />
-              <Route path="game-start" element={<GameStartPage />} />
-              <Route path="game-end" element={<GameEndPage />} />
-              <Route path="leaderboard" element={<LeaderboardPage />} />
-              <Route path="forum">
-                <Route index element={<ForumPage />} />
-                <Route path=":forumId" element={<ForumPostPage />} />
-              </Route>
-              <Route path="topic" element={<TopicPage />} />
-            </Route>
-            <Route path="/" element={<MainPage />} index />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="signup" element={<SignupPage />} />
-            <Route path="*" element={<Page404 />} />
-          </Routes>
-        </ErrorBoundary>
-      </BrowserRouter>
-    </GlobalWrapper>
+    <div>Hello from client</div>
+    // <GlobalWrapper>
+    //   <BrowserRouter>
+    //     <ErrorBoundary>
+    //       <Navigation />
+    //       <Routes>
+    //         <Route element={<AuthRequired />}>
+    //           <Route path="profile" element={<ProfilePage />} />
+    //           <Route path="game" element={<GamePage />} />
+    //           <Route path="game-start" element={<GameStartPage />} />
+    //           <Route path="game-end" element={<GameEndPage />} />
+    //           <Route path="leaderboard" element={<LeaderboardPage />} />
+    //           <Route path="forum">
+    //             <Route index element={<ForumPage />} />
+    //             <Route path=":forumId" element={<ForumPostPage />} />
+    //           </Route>
+    //           <Route path="topic" element={<TopicPage />} />
+    //         </Route>
+    //         <Route path="/" element={<MainPage />} index />
+    //         <Route path="login" element={<LoginPage />} />
+    //         <Route path="signup" element={<SignupPage />} />
+    //         <Route path="*" element={<Page404 />} />
+    //       </Routes>
+    //     </ErrorBoundary>
+    //   </BrowserRouter>
+    // </GlobalWrapper>
   )
 }
 
