@@ -56,7 +56,7 @@ async function startServer() {
 
         template = await vite!.transformIndexHtml(url, template)
       }
-      let render: () => Promise<string>
+      let render: (args: unknown) => Promise<string>
 
       if (!isDev()) {
         render = (await import(ssrClientPath)).render
@@ -65,7 +65,7 @@ async function startServer() {
           .render
       }
 
-      const appHtml = await render()
+      const appHtml = await render({ path: url })
 
       const html = template.replace(`<!--ssr-outlet-->`, appHtml)
 

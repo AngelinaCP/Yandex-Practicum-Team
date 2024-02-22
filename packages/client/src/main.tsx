@@ -1,17 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { Provider } from 'react-redux'
-import { store } from '@/store/store'
-import styled, { createGlobalStyle } from 'styled-components'
 import App from './App'
 import './index.css'
+import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <React.StrictMode>
-    {/*комментим пока не будет реализован redux/router на бэке*/}
-    {/*<Provider store={store}>*/}
-    <App />
-    {/*</Provider>*/}
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 )
