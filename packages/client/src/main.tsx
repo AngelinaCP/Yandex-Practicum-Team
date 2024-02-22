@@ -9,6 +9,7 @@ import './index.css'
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <React.StrictMode>
+    {/*комментим пока не будет реализован redux/router на бэке*/}
     {/*<Provider store={store}>*/}
     <App />
     {/*</Provider>*/}

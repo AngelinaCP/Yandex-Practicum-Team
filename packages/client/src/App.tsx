@@ -30,12 +30,15 @@ function App() {
     }
 
     fetchServerData()
+    //комментим пока не будет реализован redux/router на бэке
     // interceptorsProvider()
     // startServiceWorker()
   }, [])
 
   return (
     <div>Hello from client</div>
+
+    //комментим пока не будет реализован redux/router на бэке
     // <GlobalWrapper>
     //   <BrowserRouter>
     //     <ErrorBoundary>
