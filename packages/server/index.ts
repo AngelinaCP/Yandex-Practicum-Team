@@ -9,7 +9,7 @@ import express from 'express'
 import * as path from 'path'
 import * as fs from 'fs'
 
-const isDev = () => process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'development'
 
 async function startServer() {
   const app = express()
@@ -22,7 +22,7 @@ async function startServer() {
 
   let vite: ViteDevServer | undefined
 
-  if (isDev()) {
+  if (isDev) {
     vite = await createViteServer({
       server: { middlewareMode: true },
       root: srcPath,
@@ -36,7 +36,7 @@ async function startServer() {
     res.json('👋 Howdy from the server :)')
   })
 
-  if (!isDev()) {
+  if (!isDev) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
 
@@ -46,7 +46,7 @@ async function startServer() {
     try {
       let template: string
 
-      if (!isDev()) {
+      if (!isDev) {
         template = fs.readFileSync(
           path.resolve(distPath, 'index.html'),
           'utf-8'
@@ -58,7 +58,7 @@ async function startServer() {
       }
       let render: (args: unknown) => Promise<string>
 
-      if (!isDev()) {
+      if (!isDev) {
         render = (await import(ssrClientPath)).render
       } else {
         render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
@@ -73,7 +73,7 @@ async function startServer() {
     } catch (e) {
       // If an error is caught, let Vite fix the stack trace so it maps back
       // to your actual source code.
-      if (isDev()) {
+      if (isDev) {
         vite!.ssrFixStacktrace(e as Error)
       }
       next(e)
