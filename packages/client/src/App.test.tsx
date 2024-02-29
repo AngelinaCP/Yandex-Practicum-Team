@@ -1,5 +1,6 @@
 import App from './App'
 import { render, screen } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
 
 // @ts-ignore
 global.fetch = jest.fn(() =>
@@ -7,6 +8,10 @@ global.fetch = jest.fn(() =>
 )
 
 test('it has 12 routes', async () => {
-  render(<App />)
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  )
   expect(screen.getAllByRole('link')).toHaveLength(12)
 })
