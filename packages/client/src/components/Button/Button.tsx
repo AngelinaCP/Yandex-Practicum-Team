@@ -3,9 +3,11 @@ import styled from 'styled-components'
 const Button = styled.button.attrs<{
   $primary?: boolean
   type?: string
+  disabled?: boolean
 }>(props => ({
   type: props.type || 'button',
   $primary: props.$primary ?? false,
+  disabled: props.disabled ?? false,
 }))`
   background-color: ${props =>
     props.$primary

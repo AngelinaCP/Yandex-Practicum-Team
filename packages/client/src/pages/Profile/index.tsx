@@ -123,7 +123,7 @@ export const ProfilePage = () => {
             name="first_name"
             label="Имя"
             required={true}
-            value={userInfo?.first_name}
+            value={userInfo?.first_name ?? ''}
             disabled={!isEdit}
             onChange={handleInputChange}
             errorMessages={errors.first_name ?? []}
@@ -132,7 +132,7 @@ export const ProfilePage = () => {
             name="second_name"
             label="Фамилия"
             required={true}
-            value={userInfo?.second_name}
+            value={userInfo?.second_name ?? ''}
             disabled={!isEdit}
             onChange={handleInputChange}
             errorMessages={errors.second_name ?? []}
@@ -143,7 +143,7 @@ export const ProfilePage = () => {
             name="email"
             label="E-mail"
             required={true}
-            value={userInfo?.email}
+            value={userInfo?.email ?? ''}
             disabled={!isEdit}
             onChange={handleInputChange}
             errorMessages={errors.email ?? []}
@@ -152,7 +152,7 @@ export const ProfilePage = () => {
             name="phone"
             label="Телефон"
             required={true}
-            value={userInfo?.phone}
+            value={userInfo?.phone ?? ''}
             disabled={!isEdit}
             onChange={handleInputChange}
             errorMessages={errors.phone ?? []}
@@ -163,7 +163,7 @@ export const ProfilePage = () => {
             name="login"
             label="Логин"
             required={true}
-            value={userInfo?.login}
+            value={userInfo?.login ?? ''}
             disabled={!isEdit}
             onChange={handleInputChange}
             errorMessages={errors.login ?? []}
@@ -172,7 +172,7 @@ export const ProfilePage = () => {
             name="display_name"
             label="Псевдоним"
             required={false}
-            value={userInfo?.display_name}
+            value={userInfo?.display_name ?? ''}
             disabled={!isEdit}
             onChange={handleInputChange}
             errorMessages={errors.display_name ?? []}

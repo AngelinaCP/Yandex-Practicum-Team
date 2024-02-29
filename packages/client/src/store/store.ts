@@ -4,17 +4,23 @@ import { authApi } from './api/authApi'
 import { userApi } from './api/userApi'
 import userReducer from './features/userSlice'
 import { gameReducer } from '@/game/gameSlice'
+import { leaderboardApi } from '@/store/api/leaderboardApi'
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+    [leaderboardApi.reducerPath]: leaderboardApi.reducer,
     userState: userReducer,
     game: gameReducer,
   },
   devTools: process.env.NODE_ENV === 'development',
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({}).concat([authApi.middleware, userApi.middleware]),
+    getDefaultMiddleware({}).concat([
+      authApi.middleware,
+      userApi.middleware,
+      leaderboardApi.middleware,
+    ]),
 })
 
 export type RootState = ReturnType<typeof store.getState>
