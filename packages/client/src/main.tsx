@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import { createStoreWithInitial } from './store/store'
 
 const store = createStoreWithInitial(window.__PRELOADED_STATE__)
+delete window.__PRELOADED_STATE__
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
