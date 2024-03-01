@@ -9,7 +9,7 @@ import express from 'express'
 import * as path from 'path'
 import * as fs from 'fs'
 
-import { preloadedStateFromURL } from './store/preloadedStateFromURL'
+import serverState from './store/serverState'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -67,13 +67,13 @@ async function startServer() {
           .render
       }
 
-      const state = await preloadedStateFromURL(url)
+      await serverState.addToStateIfURL(url)
 
-      const appHtml = await render({ path: url, state })
+      const appHtml = await render({ path: url, state: serverState.state })
       const appHeadScript = `
         <script>
           window.__PRELOADED_STATE__ =
-            ${JSON.stringify(state).replace(/</g, '\\u003c')}
+            ${JSON.stringify(serverState.state).replace(/</g, '\\u003c')}
         </script>`
 
       const html = template
