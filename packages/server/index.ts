@@ -9,6 +9,8 @@ import express from 'express'
 import * as path from 'path'
 import * as fs from 'fs'
 
+import { PreloadStateByUrlService } from './store/preloadStateByUrlService'
+
 const isDev = process.env.NODE_ENV === 'development'
 
 async function startServer() {
@@ -65,9 +67,18 @@ async function startServer() {
           .render
       }
 
-      const appHtml = await render({ path: url })
+      const state = await new PreloadStateByUrlService(url).getState()
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const appHtml = await render({ path: url, state: state })
+      const appHeadScript = `
+        <script>
+          window.__PRELOADED_STATE__ =
+            ${JSON.stringify(state).replace(/</g, '\\u003c')}
+        </script>`
+
+      const html = template
+        .replace(`<!--ssr-outlet-->`, appHtml)
+        .replace(`<!--ssr-head-script-->`, appHeadScript)
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
