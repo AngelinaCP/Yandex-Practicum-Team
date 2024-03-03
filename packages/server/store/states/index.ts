@@ -10,3 +10,7 @@ export const stateSelector = {
   [Routes.DEFAULT]: [getUserState],
   [Routes.GAME_START]: [getGameState],
 }
+
+export function isRoute(url: string): url is Routes {
+  return url in stateSelector
+}

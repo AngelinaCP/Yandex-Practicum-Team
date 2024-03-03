@@ -1,5 +1,5 @@
 import type { RootState } from 'client/src/store/store'
-import { stateSelector, Routes } from './states'
+import { stateSelector, Routes, isRoute } from './states'
 
 export class PreloadStateByUrlService {
   private state: Partial<RootState> = {}
@@ -16,7 +16,7 @@ export class PreloadStateByUrlService {
   }
 
   private async getStateByUrl(url: string) {
-    if (!isValidUrl(url)) {
+    if (!isRoute(url)) {
       return
     }
 
@@ -35,12 +35,17 @@ export class PreloadStateByUrlService {
       stateSelector[url].map(stateGetterPromise => stateGetterPromise())
     )
 
-    const urlState = stateGetters.reduce((state, result, i) => {
-      if (result.status == 'fulfilled') {
+    const urlState = stateGetters.reduce((state, result, stateGetterIndex) => {
+      const enum RESULT_STATUS {
+        FULLFILLED = 'fulfilled',
+        REJECTED = 'rejected',
+      }
+
+      if (result.status == RESULT_STATUS.FULLFILLED) {
         return { ...state, ...result.value }
       } else {
         console.error(
-          `PreloadStateByUrlService: failed to resolve state getter "${stateSelector[url][i].name}"`
+          `PreloadStateByUrlService: failed to resolve state getter "${stateSelector[url][stateGetterIndex].name}"`
         )
         return state
       }
@@ -48,8 +53,4 @@ export class PreloadStateByUrlService {
 
     this.state = { ...this.state, ...urlState }
   }
-}
-
-function isValidUrl(url: string): url is Routes {
-  return url in stateSelector
 }
