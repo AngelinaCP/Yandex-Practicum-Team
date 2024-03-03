@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IUser } from '../api/types'
 import { RootState } from '@/store/store'
 
-interface IUserState {
+export interface IUserState {
   user: IUser | null
 }
 
