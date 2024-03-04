@@ -104,7 +104,7 @@ const inputCreator =
     )
 
 const requirdeString = 'Обязательное поле'
-export const InputFirstNameZodSchema = z
+export const inputFirstNameZodSchema = z
   .string()
   .min(1, requirdeString)
   .max(100)
@@ -112,32 +112,32 @@ export const InputFirstNameZodSchema = z
 export const InputFirstName = inputCreator(
   'first_name',
   'Имя',
-  InputFirstNameZodSchema
+  inputFirstNameZodSchema
 )
 
-export const InputSecondNameZodSchema = z
+export const inputSecondNameZodSchema = z
   .string()
   .min(1, requirdeString)
   .max(100)
 export const InputSecondName = inputCreator(
   'second_name',
   'Фамилия',
-  InputSecondNameZodSchema
+  inputSecondNameZodSchema
 )
 
-export const InputEmailZodSchema = z
+export const inputEmailZodSchema = z
   .string()
   .min(1, requirdeString)
   .email('Формат e-mail: <name>@<domain>.<zone>')
-export const InputEmail = inputCreator('email', 'E-mail', InputEmailZodSchema)
+export const InputEmail = inputCreator('email', 'E-mail', inputEmailZodSchema)
 
-export const InputPhoneZodSchema = z
+export const inputPhoneZodSchema = z
   .string()
   .min(1, requirdeString)
   .regex(/^\+?\d{11,}$/, 'Формат телефона: только цифры (11)')
-export const InputPhone = inputCreator('phone', 'Телефон', InputPhoneZodSchema)
+export const InputPhone = inputCreator('phone', 'Телефон', inputPhoneZodSchema)
 
-export const InputPasswordZodSchema = z
+export const inputPasswordZodSchema = z
   .string()
   .min(1, requirdeString)
   .min(8, 'Пароль должен быть больше 8 символов')
@@ -145,11 +145,11 @@ export const InputPasswordZodSchema = z
 export const InputPassword = inputCreator(
   'password',
   'Пароль',
-  InputPasswordZodSchema,
+  inputPasswordZodSchema,
   'password'
 )
 
-export const InputPasswordConfirmZodSchema = z
+export const inputPasswordConfirmZodSchema = z
   .string()
   .min(1, 'Пароли не совпадают')
 export const InputPasswordConfirm = inputCreator(
@@ -159,5 +159,5 @@ export const InputPasswordConfirm = inputCreator(
   'password'
 )
 
-export const InputLoginZodSchema = z.string().min(1, requirdeString)
-export const InputLogin = inputCreator('login', 'Логин', InputLoginZodSchema)
+export const inputLoginZodSchema = z.string().min(1, requirdeString)
+export const InputLogin = inputCreator('login', 'Логин', inputLoginZodSchema)
