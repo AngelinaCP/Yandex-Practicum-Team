@@ -1,4 +1,4 @@
-import type { RootState } from 'client/src/store/store'
+import type { RootState } from '../states'
 
 export const getUserState = async (): Promise<Partial<RootState>> =>
   Promise.resolve({
