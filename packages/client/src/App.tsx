@@ -20,7 +20,7 @@ import { GameEndPage } from '@/pages/GameEnd'
 import { GameStartPage } from '@/pages/GameStart'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ThemeContext } from '@/context/ThemeProvider'
-import { ToggleTheme } from 'components/ToggleTheme'
+import { ToggleTheme } from '@/components/ToggleTheme'
 
 function App() {
   useEffect(() => {
@@ -40,7 +40,7 @@ function App() {
 
   return (
     <GlobalWrapper className={`global-wrapper ${theme}`}>
-      <ToggleTheme></ToggleTheme>
+      <ToggleTheme />
       <ErrorBoundary>
         <Navigation />
         <Routes>
