@@ -1,5 +1,6 @@
-import React, { FC, ReactNode } from 'react'
+import React, { FC, ReactNode, useContext } from 'react'
 import { CardStyle } from './style'
+import { ThemeContext } from '@/context/ThemeProvider'
 
 interface CardProps {
   children: ReactNode
@@ -8,10 +9,17 @@ interface CardProps {
   className?: string
 }
 
-const Card: FC<CardProps> = ({ children, width, height, className = '' }) => (
-  <CardStyle width={width} height={height} className={className}>
-    {children}
-  </CardStyle>
-)
+const Card: FC<CardProps> = ({ children, width, height, className = '' }) => {
+  const { theme } = useContext(ThemeContext)
+
+  return (
+    <CardStyle
+      width={width}
+      height={height}
+      className={`${className} ${theme}`}>
+      {children}
+    </CardStyle>
+  )
+}
 
 export default Card

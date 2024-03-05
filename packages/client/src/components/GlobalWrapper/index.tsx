@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const GlobalWrapper = styled.div`
+  position: relative;
   display: flex;
   width: 100%;
   min-height: 100vh;
@@ -9,8 +10,14 @@ export const GlobalWrapper = styled.div`
   justify-content: center;
   background-color: ${props => props.theme.backgroundColor};
 
-  @media (prefers-color-scheme: dark) {
+  &.dark-theme {
     background-color: ${props => props.theme.dark.backgroundColor};
+    color: #ffffff;
+  }
+
+  &.light-theme {
+    background-color: ${props => props.theme.backgroundColor};
+    color: #36395a;
   }
 `
 

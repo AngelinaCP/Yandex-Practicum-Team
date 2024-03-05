@@ -67,7 +67,7 @@ const Button = styled.button.attrs<{
     transform: translateY(2px);
   }
 
-  @media (prefers-color-scheme: dark) {
+  &.dark-theme {
     background-color: ${props =>
       props.$primary
         ? props.theme.dark.primaryBackground

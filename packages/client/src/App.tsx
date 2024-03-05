@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import { LoginPage } from './pages/Login'
@@ -11,7 +11,7 @@ import { ForumPage } from './pages/Forum'
 import TopicPage from './pages/topic.page'
 import { Page404 } from './pages/Page_404'
 import Navigation from './components/navigation'
-import interceptorsProvider from '@/providers/interceptors.provider'
+import interceptorsProvider from './providers/interceptors.provider'
 import { GlobalWrapper } from './components/GlobalWrapper'
 import { ForumPostPage } from '@/pages/ForumPost'
 import { startServiceWorker } from '@/sw.init'
@@ -19,6 +19,8 @@ import { AuthRequired } from '@/components/AuthRequired'
 import { GameEndPage } from '@/pages/GameEnd'
 import { GameStartPage } from '@/pages/GameStart'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
+import { ThemeContext } from '@/context/ThemeProvider'
+import { ToggleTheme } from 'components/ToggleTheme'
 
 function App() {
   useEffect(() => {
@@ -34,8 +36,11 @@ function App() {
     startServiceWorker()
   }, [])
 
+  const { theme } = useContext(ThemeContext)
+
   return (
-    <GlobalWrapper>
+    <GlobalWrapper className={`global-wrapper ${theme}`}>
+      <ToggleTheme></ToggleTheme>
       <ErrorBoundary>
         <Navigation />
         <Routes>
