@@ -6,7 +6,7 @@ export default {
   testEnvironment: 'jsdom',
   testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}'],
   globals: {
-    __SERVER_PORT__: process.env.SERVER_PORT ?? 3000,
+    __SERVER_PORT__: process.env.SERVER_PORT ?? 3001,
   },
   transform: {
     // '^.+\\.[tj]sx?$' to process js/ts with `ts-jest`
