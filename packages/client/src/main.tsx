@@ -5,7 +5,7 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { createStoreWithInitial } from './store/store'
-import { ThemeProvider } from '@/context/ThemeProvider'
+import { ThemeContextProvider } from '@/context/ThemeProvider'
 
 const store = createStoreWithInitial(window.__PRELOADED_STATE__)
 delete window.__PRELOADED_STATE__
@@ -15,9 +15,9 @@ ReactDOM.hydrateRoot(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <ThemeProvider>
+        <ThemeContextProvider>
           <App />
-        </ThemeProvider>
+        </ThemeContextProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

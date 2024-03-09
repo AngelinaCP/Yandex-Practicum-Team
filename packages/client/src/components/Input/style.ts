@@ -21,7 +21,7 @@ export const InputStyle = styled.input`
   outline: 0;
   font-family: inherit;
   font-size: 18px;
-  color: ${props => props.theme.color};
+  color: ${props => props.theme.inputColor};
   background: transparent;
   &:-webkit-autofill,
   &:-webkit-autofill:focus {
@@ -56,20 +56,7 @@ export const InputStyle = styled.input`
     border-image: linear-gradient(to right, #3b3b3b, #81ecec);
     border-image-slice: 1;
   }
-
-  @media (prefers-color-scheme: dark) {
-    color: ${props => props.theme.dark.color};
-  }
 `
-
-InputStyle.defaultProps = {
-  theme: {
-    dark: {
-      color: '#c8fff0',
-    },
-    color: '#36395A',
-  },
-}
 
 export const InputLabelStyle = styled.label`
   position: absolute;
@@ -79,10 +66,6 @@ export const InputLabelStyle = styled.label`
   font-size: 20px;
   color: ${props => props.theme.color};
   transition: 0.2s;
-
-  @media (prefers-color-scheme: dark) {
-    color: ${props => props.theme.dark.color};
-  }
 `
 
 InputLabelStyle.defaultProps = {

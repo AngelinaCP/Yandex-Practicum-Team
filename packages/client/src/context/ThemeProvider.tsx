@@ -1,43 +1,48 @@
 import React, { useEffect, createContext, useState } from 'react'
 import { useSaveThemeMutation } from '@/store/api/themeApi'
+import { ThemeProvider } from 'styled-components'
+import { ThemeEnum } from '@/enums'
+import { themes } from '@/themes'
 
 type ThemeContextType = {
   theme: string
-  setTheme: (theme: string) => void
+  setTheme: (theme: ThemeEnum) => void
   toggleTheme: () => void
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: 'dark-theme',
+  theme: ThemeEnum.darkTheme,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setTheme: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggleTheme: () => {},
 })
 
-const getTheme = () => {
-  const theme = localStorage.getItem('theme')
+const getTheme = (): ThemeEnum => {
+  const theme = localStorage.getItem('theme') as ThemeEnum
   if (!theme) {
-    localStorage.setItem('theme', 'dark-theme')
-    return 'dark-theme'
+    localStorage.setItem('theme', ThemeEnum.darkTheme)
+    return ThemeEnum.darkTheme
   } else {
     return theme
   }
 }
 
-const ThemeProvider = ({ children }: { children: JSX.Element }) => {
+const ThemeContextProvider = ({ children }: { children: JSX.Element }) => {
   const [theme, setTheme] = useState(getTheme)
   const [saveTheme] = useSaveThemeMutation()
+  const [domLoaded, setDomLoaded] = useState(false)
 
   function toggleTheme() {
-    if (theme === 'dark-theme') {
-      setTheme('light-theme')
+    if (theme === ThemeEnum.darkTheme) {
+      setTheme(ThemeEnum.lightTheme)
     } else {
-      setTheme('dark-theme')
+      setTheme(ThemeEnum.darkTheme)
     }
   }
 
   useEffect(() => {
+    setDomLoaded(true)
     saveTheme(theme)
     const refreshTheme = () => {
       localStorage.setItem('theme', theme)
@@ -47,15 +52,31 @@ const ThemeProvider = ({ children }: { children: JSX.Element }) => {
   }, [theme])
 
   return (
-    <ThemeContext.Provider
-      value={{
-        theme,
-        setTheme,
-        toggleTheme,
-      }}>
-      {children}
-    </ThemeContext.Provider>
+    <>
+      {domLoaded && (
+        <ThemeProvider theme={findTheme(theme).colors}>
+          <ThemeContext.Provider
+            value={{
+              theme,
+              setTheme,
+              toggleTheme,
+            }}>
+            {children}
+          </ThemeContext.Provider>
+        </ThemeProvider>
+      )}
+    </>
   )
 }
 
-export { ThemeContext, ThemeProvider }
+export { ThemeContext, ThemeContextProvider }
+
+function findTheme(themeName = 'dark-theme') {
+  const theme = themes.find(theme => theme.name === themeName)
+
+  if (theme) {
+    return theme
+  }
+
+  return themes[0]
+}

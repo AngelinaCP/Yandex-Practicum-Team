@@ -4,7 +4,7 @@ export const LogoStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: inherit;
+  color: ${props => props.theme.color};
 
   & span {
     font-family: 'Silent Hill', monospace;

@@ -4,13 +4,13 @@ import { useContext } from 'react'
 import { ThemeContext } from '@/context/ThemeProvider'
 
 export const ToggleTheme = () => {
-  const { toggleTheme } = useContext(ThemeContext)
+  const { theme, toggleTheme } = useContext(ThemeContext)
 
   return (
     <StyledToggleWrapper>
-      <img src="src/assets/images/moon.png" width="32" alt="dark mode" />
-      <ThemeSwitcher onClick={() => toggleTheme()} />
-      <img src="src/assets/images/sun.png" width="32" alt="light mode" />
+      <img src="images/moon.png" width="32" alt="dark mode" />
+      <ThemeSwitcher checked={theme === 'light-theme'} onClick={toggleTheme} />
+      <img src="images/sun.png" width="32" alt="light mode" />
     </StyledToggleWrapper>
   )
 }
