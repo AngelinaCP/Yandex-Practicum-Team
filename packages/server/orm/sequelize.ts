@@ -1,5 +1,6 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import path from 'path'
+import 'dotenv/config'
 
 const {
   POSTGRES_PORT: port = 5432,
