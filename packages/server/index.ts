@@ -11,11 +11,16 @@ import * as fs from 'fs'
 
 import { PreloadStateByUrlService } from './store/preloadStateByUrlService'
 
+// import { sequelize } from "./orm/sequelize";
+// import { router } from './router'
+
 const isDev = process.env.NODE_ENV === 'development'
 
 async function startServer() {
   const app = express()
   app.use(cors())
+  // .use(express.json())
+  // .use(router)
   const port = Number(process.env.SERVER_PORT) || 3001
 
   const distPath = path.dirname(require.resolve('client/dist/index.html'))
@@ -90,6 +95,8 @@ async function startServer() {
       next(e)
     }
   })
+
+  // await sequelize.sync();
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
