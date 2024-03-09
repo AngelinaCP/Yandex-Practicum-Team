@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import { LoginPage } from './pages/Login'
@@ -19,7 +19,6 @@ import { AuthRequired } from '@/components/AuthRequired'
 import { GameEndPage } from '@/pages/GameEnd'
 import { GameStartPage } from '@/pages/GameStart'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
-import { ThemeContext } from '@/context/ThemeProvider'
 import { ToggleTheme } from '@/components/ToggleTheme'
 
 function App() {
@@ -36,10 +35,8 @@ function App() {
     startServiceWorker()
   }, [])
 
-  const { theme } = useContext(ThemeContext)
-
   return (
-    <GlobalWrapper className={`global-wrapper ${theme}`}>
+    <GlobalWrapper className={'global-wrapper'}>
       <ToggleTheme />
       <ErrorBoundary>
         <Navigation />
