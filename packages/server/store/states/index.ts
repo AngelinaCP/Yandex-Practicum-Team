@@ -14,3 +14,19 @@ export const stateSelector = {
 export function isRoute(url: string): url is Routes {
   return url in stateSelector
 }
+
+export type RootState = {
+  userState: {
+    user: {
+      id: number
+      avatar: string
+      display_name: string
+      email: string
+      first_name: string
+      login: string
+      phone: string
+      second_name: string
+    }
+  }
+  game: { player: string; background: string; score: number }
+}

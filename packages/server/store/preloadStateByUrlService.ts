@@ -1,5 +1,4 @@
-import type { RootState } from 'client/src/store/store'
-import { stateSelector, Routes, isRoute } from './states'
+import { stateSelector, Routes, isRoute, RootState } from './states'
 
 export class PreloadStateByUrlService {
   private state: Partial<RootState> = {}
