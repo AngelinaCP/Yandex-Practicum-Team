@@ -33,7 +33,7 @@ services:
 
     client:
         container_name: prakticum-client
-        image: practicum-client
+        image: prakticum-client
         build:
             context: .
             dockerfile: Dockerfile.client
@@ -48,7 +48,7 @@ services:
 
     server:
         container_name: prakticum-server
-        image: practicum-server
+        image: prakticum-server
         build:
             context: .
             dockerfile: Dockerfile.server
