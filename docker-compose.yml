@@ -30,7 +30,6 @@ services:
         depends_on:
             - postgres
 
-
     client:
         container_name: prakticum-client
         image: prakticum-client
