@@ -32,20 +32,18 @@ services:
         - local
 
     postgres:
+      container_name: ${POSTGRES_SERVICE_NAME}
       image: postgres:14
-      # env_file:
-        # - .env
+      env_file:
+        - .env
       restart: always
       ports:
-        - 5435:5432
+        - ${POSTGRES_PORT}:5432
       volumes:
         - ./tmp/pgdata:/var/lib/postgresql/data
       environment:
         PGDATA: /var/lib/postgresql/data/pgdata
         POSTGRES_HOST_AUTH_METHOD: trust
-        POSTGRES_USERNAME: user
-        POSTGRES_PASSWORD: newPassword
-        POSTGRES_DB: yandexteam
       networks:
         - local
         
@@ -62,14 +60,11 @@ services:
         - "8080:80"
       user: '$UID:$GID'
       volumes:
-        - pgadmin:/var/lib/pgadmin
+        - ./tmp/pgadmin:/var/lib/pgadmin
       depends_on:
         - postgres
       networks:
         - local
-
-volumes:
-  pgadmin:
 
 networks:
   local:

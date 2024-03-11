@@ -2,25 +2,26 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import path from 'path'
 import 'dotenv/config'
 
-/* const {
-  POSTGRES_HOST: host,
+const {
   POSTGRES_PORT: port = 5432,
   POSTGRES_DB: database,
-  POSTGRES_USER: username,
+  POSTGRES_USERNAME: username,
   POSTGRES_PASSWORD: password,
+  POSTGRES_SERVICE_NAME: host,
 } = process.env
 
-console.log(process.env) */
+console.log(process.env)
 
 const models = resolveModelsPaths(['models/**'])
 
 const sequelizeOptions: SequelizeOptions = {
   dialect: 'postgres',
   models,
-  port: 5432,
-  database: 'yandexteam',
-  username: 'user',
-  password: 'newPassword',
+  port: +port,
+  database,
+  username,
+  password,
+  host,
 }
 
 console.log(sequelizeOptions)
