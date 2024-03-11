@@ -1,4 +1,4 @@
-import type { RootState } from 'client/src/store/store'
+import type { RootState } from '../preloadStateByUrlService'
 
 export const getGameState = async (): Promise<Partial<RootState>> =>
   Promise.resolve({

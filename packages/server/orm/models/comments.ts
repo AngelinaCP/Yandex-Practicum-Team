@@ -6,7 +6,7 @@ import {
   DataType,
   AutoIncrement,
 } from 'sequelize-typescript'
-import {
+import type {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,

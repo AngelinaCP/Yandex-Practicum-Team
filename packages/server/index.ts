@@ -1,28 +1,26 @@
 import dotenv from 'dotenv'
 import cors from 'cors'
-import { createServer as createViteServer } from 'vite'
-import type { ViteDevServer } from 'vite'
+// import { createServer as createViteServer } from 'vite'
+// import type { ViteDevServer } from 'vite'
 
 dotenv.config()
 
 import express from 'express'
-import * as path from 'path'
-import * as fs from 'fs'
+// import * as path from 'path'
+// import * as fs from 'fs'
 
-import { PreloadStateByUrlService } from './store/preloadStateByUrlService'
+// import { PreloadStateByUrlService } from './store/preloadStateByUrlService'
 
-// import { sequelize } from "./orm/sequelize";
-// import { router } from './router'
+import { sequelize } from './orm/sequelize'
+import { router } from './router'
 
-const isDev = process.env.NODE_ENV === 'development'
+// const isDev = process.env.NODE_ENV === 'development'
 
 async function startServer() {
   const app = express()
-  app.use(cors())
-  // .use(express.json())
-  // .use(router)
+  app.use(cors()).use(express.json()).use(router)
   const port = Number(process.env.SERVER_PORT) || 3001
-
+  /* 
   const distPath = path.dirname(require.resolve('client/dist/index.html'))
   const srcPath = path.dirname(require.resolve('client'))
   const ssrClientPath = require.resolve('client/ssr-dist/client.cjs')
@@ -95,8 +93,13 @@ async function startServer() {
       next(e)
     }
   })
-
-  // await sequelize.sync();
+ */
+  try {
+    await sequelize.sync({ force: true })
+  } catch (e) {
+    console.error('failed to connect to db')
+    console.error(e)
+  }
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
