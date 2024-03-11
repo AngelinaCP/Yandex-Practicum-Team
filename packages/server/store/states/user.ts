@@ -1,4 +1,4 @@
-import type { RootState } from '../preloadStateByUrlService'
+import type { RootState } from '../states'
 
 export const getUserState = async (): Promise<Partial<RootState>> =>
   Promise.resolve({

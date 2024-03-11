@@ -1,4 +1,3 @@
-// import type { RootState } from 'client/src/store/store'
 import { stateSelector, Routes, isRoute } from './states'
 
 export type RootState = Record<string, unknown>

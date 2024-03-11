@@ -1,13 +1,20 @@
 ARG NODE_VERSION=16
 
-FROM node:${NODE_VERSION}
+FROM node:${NODE_VERSION} as client
 
-COPY ./packages/server /home/server
-
-WORKDIR /home/server
-
+COPY packages/client /home/client/
+WORKDIR /home/client
 RUN yarn install --frozen-lockfile
 RUN yarn build
 
+FROM node:${NODE_VERSION}
+COPY packages/server /home/server/
+
+WORKDIR /home/server
+RUN yarn install --frozen-lockfile
+COPY --from=client /home/client/ ./node_modules/client
+RUN rm -rf /home/server/dist/ && yarn build
+
+CMD ["node", "/home/server/dist/index.js"]
+
 EXPOSE ${SERVER_PORT}
-CMD [ "node", "/home/server/dist/index.js" ]
