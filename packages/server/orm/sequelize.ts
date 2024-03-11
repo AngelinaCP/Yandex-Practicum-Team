@@ -5,12 +5,10 @@ import 'dotenv/config'
 const {
   POSTGRES_PORT: port = 5432,
   POSTGRES_DB: database,
-  POSTGRES_USERNAME: username,
+  POSTGRES_USER: username,
   POSTGRES_PASSWORD: password,
   POSTGRES_SERVICE_NAME: host,
 } = process.env
-
-console.log(process.env)
 
 const models = resolveModelsPaths(['models/**'])
 
@@ -23,8 +21,6 @@ const sequelizeOptions: SequelizeOptions = {
   password,
   host,
 }
-
-console.log(sequelizeOptions)
 
 export const sequelize = new Sequelize(sequelizeOptions)
 
