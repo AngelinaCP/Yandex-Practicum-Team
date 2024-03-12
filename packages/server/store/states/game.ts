@@ -1,4 +1,4 @@
-import type { RootState } from '../states'
+import type { RootState } from './index'
 
 export const getGameState = async (): Promise<Partial<RootState>> =>
   Promise.resolve({
