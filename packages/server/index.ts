@@ -64,19 +64,25 @@ async function startServer() {
 
         template = await vite!.transformIndexHtml(url, template)
       }
-      let render: (args: unknown) => Promise<string>
-
+      let render: (
+        args: unknown
+      ) => Promise<{ html: string; styleTags: string }>
       if (!isDev) {
-        render = (await import(ssrClientPath)).render
+        render = (await import(ssrClientPath)).getHtmlAndStyleTags
       } else {
         render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
-          .render
+          .getHtmlAndStyleTags
       }
 
       const state = await new PreloadStateByUrlService(url).getState()
 
-      const appHtml = await render({ path: url, state: state })
+      const { html: appHtml, styleTags } = await render({
+        path: url,
+        state: state,
+      })
+
       const appHeadScript = `
+        ${styleTags}
         <script>
           window.__PRELOADED_STATE__ =
             ${JSON.stringify(state).replace(/</g, '\\u003c')}
