@@ -1,9 +1,7 @@
-import dotenv from 'dotenv'
+import 'dotenv/config'
 import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
-
-dotenv.config()
 
 import express from 'express'
 import * as path from 'path'
@@ -17,13 +15,18 @@ import { router } from './router'
 const isDev = process.env.NODE_ENV === 'development'
 
 async function startServer() {
-  const app = express()
-  app.use(cors()).use(express.json()).use(router)
   const port = Number(process.env.SERVER_PORT) || 3001
 
   const distPath = path.dirname(require.resolve('client/dist/index.html'))
   const srcPath = path.dirname(require.resolve('client'))
   const ssrClientPath = require.resolve('client/ssr-dist/client.cjs')
+
+  const app = express()
+  app
+    .use(cors())
+    .use(express.json())
+    .use(router)
+    .use(express.static(path.resolve(srcPath, 'public')))
 
   let vite: ViteDevServer | undefined
 

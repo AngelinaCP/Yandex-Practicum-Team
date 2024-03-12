@@ -5,5 +5,5 @@ FROM node:${NODE_VERSION} as client
 
 COPY packages/client /home/
 WORKDIR /home/client
-RUN yarn install --frozen-lockfile \
+HEALTHCHECK CMD yarn install --frozen-lockfile \
     yarn build

@@ -207,4 +207,9 @@ export class Game {
       this.randomInterval(this.presetTime)
     )
   }
+
+  cleanGame() {
+    this.obstacles = []
+    this.powerUps = []
+  }
 }

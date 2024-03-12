@@ -1,13 +1,13 @@
 ARG NODE_VERSION=16
 
-FROM node:${NODE_VERSION} as client
+FROM node:${NODE_VERSION} AS base
 
+FROM base AS client
 COPY packages/client /home/client/
 WORKDIR /home/client
-RUN yarn install --frozen-lockfile
-RUN yarn build
+RUN yarn install --frozen-lockfile && yarn build
 
-FROM node:${NODE_VERSION}
+FROM base AS server
 COPY packages/server /home/server/
 
 WORKDIR /home/server

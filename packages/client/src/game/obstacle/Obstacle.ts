@@ -1,13 +1,12 @@
 import { SpriteAnimation } from '@/game/SpriteAnimation'
 import { Game } from '@/game/Game'
-import obstacle from './obstacle.png'
 
 const blockSpriteInfo = {
   frameWidth: 400,
   frameHeight: 400,
   fps: 20,
   frameLimit: 4,
-  path: obstacle,
+  path: '/game_obstacles/obstacle.png',
 }
 
 export class Obstacle extends SpriteAnimation {
