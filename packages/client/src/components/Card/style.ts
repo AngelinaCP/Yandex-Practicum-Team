@@ -16,11 +16,6 @@ export const CardStyle = styled.div<Props>`
   border-radius: 6px;
   background-color: ${props => props.theme.backgroundColor};
   box-shadow: ${props => props.theme.boxShadow};
-
-  @media (prefers-color-scheme: dark) {
-    box-shadow: ${props => props.theme.dark.boxShadow};
-    background-color: ${props => props.theme.dark.backgroundColor};
-  }
 `
 
 CardStyle.defaultProps = {

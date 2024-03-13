@@ -44,6 +44,10 @@ async function startServer() {
     res.json('👋 Howdy from the server :)')
   })
 
+  app.put('/api/theme', (_, res) => {
+    res.json('Theme api will be here...')
+  })
+
   if (!isDev) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }

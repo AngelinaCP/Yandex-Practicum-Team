@@ -11,7 +11,7 @@ import { ForumPage } from './pages/Forum'
 import TopicPage from './pages/topic.page'
 import { Page404 } from './pages/Page_404'
 import Navigation from './components/navigation'
-import interceptorsProvider from '@/providers/interceptors.provider'
+import interceptorsProvider from './providers/interceptors.provider'
 import { GlobalWrapper } from './components/GlobalWrapper'
 import { ForumPostPage } from '@/pages/ForumPost'
 import { startServiceWorker } from '@/sw.init'
@@ -19,6 +19,7 @@ import { AuthRequired } from '@/components/AuthRequired'
 import { GameEndPage } from '@/pages/GameEnd'
 import { GameStartPage } from '@/pages/GameStart'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
+import { ToggleTheme } from '@/components/ToggleTheme'
 
 function App() {
   useEffect(() => {
@@ -35,7 +36,8 @@ function App() {
   }, [])
 
   return (
-    <GlobalWrapper>
+    <GlobalWrapper className={'global-wrapper'}>
+      <ToggleTheme />
       <ErrorBoundary>
         <Navigation />
         <Routes>
