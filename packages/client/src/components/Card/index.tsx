@@ -8,10 +8,12 @@ interface CardProps {
   className?: string
 }
 
-const Card: FC<CardProps> = ({ children, width, height, className = '' }) => (
-  <CardStyle width={width} height={height} className={className}>
-    {children}
-  </CardStyle>
-)
+const Card: FC<CardProps> = ({ children, width, height, className = '' }) => {
+  return (
+    <CardStyle width={width} height={height} className={`${className}`}>
+      {children}
+    </CardStyle>
+  )
+}
 
 export default Card

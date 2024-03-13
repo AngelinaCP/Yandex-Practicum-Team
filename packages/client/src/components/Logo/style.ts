@@ -18,17 +18,4 @@ export const LogoStyle = styled.div`
   & span:last-child {
     font-size: 80px;
   }
-
-  @media (prefers-color-scheme: dark) {
-    color: ${props => props.theme.dark.color};
-  }
 `
-
-LogoStyle.defaultProps = {
-  theme: {
-    dark: {
-      color: '#ffffff',
-    },
-    color: '#37363F',
-  },
-}

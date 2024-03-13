@@ -19,11 +19,6 @@ export const StyledInnerWrapper = styled.div`
   & p {
     position: absolute;
     bottom: 30px;
-    color: ${props => props.theme.color};
-
-    @media (prefers-color-scheme: dark) {
-      color: ${props => props.theme.dark.color};
-    }
   }
 `
 
@@ -33,12 +28,3 @@ export const StyledBG = styled.div`
   background: url('/girl.webp') center no-repeat;
   min-height: 500px;
 `
-
-StyledInnerWrapper.defaultProps = {
-  theme: {
-    dark: {
-      color: '#ffffff',
-    },
-    color: '#37363F',
-  },
-}

@@ -11,14 +11,16 @@ const ButtonL = (
   props: PropsWithChildren<
     LinkProps & { $primary?: boolean; disabled?: boolean }
   >
-) => (
-  <Button
-    to={props.to}
-    as={LinkStyled}
-    $primary={props.$primary}
-    disabled={props.disabled}>
-    {props.children}
-  </Button>
-)
+) => {
+  return (
+    <Button
+      to={props.to}
+      as={LinkStyled}
+      $primary={props.$primary}
+      disabled={props.disabled}>
+      {props.children}
+    </Button>
+  )
+}
 
 export default ButtonL
