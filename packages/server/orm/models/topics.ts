@@ -5,14 +5,17 @@ import {
   Column,
   DataType,
   AutoIncrement,
+  BelongsTo,
   HasMany,
 } from 'sequelize-typescript'
 import type {
+  NonAttribute,
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
 } from 'sequelize'
-import Topic from './joins/topic'
+import Comments from './comments'
+import Users from './users'
 
 @Table({ tableName: 'topics', timestamps: true })
 class Topics extends Model<
@@ -21,15 +24,20 @@ class Topics extends Model<
 > {
   @PrimaryKey
   @AutoIncrement
-  @HasMany(() => Topic, { foreignKey: 'topic_id', as: 'topicData' })
   @Column({ type: DataType.INTEGER, field: 'topic_id' })
-  declare topicId: CreationOptional<number>
+  declare topicIndex?: CreationOptional<number>
 
   @Column({ type: DataType.STRING, field: 'topic_title' })
-  declare topicTitle: string
+  declare title: string
 
-  @Column({ type: DataType.STRING, field: 'topic_text' })
-  declare topicText: string
+  @BelongsTo(() => Users, {
+    foreignKey: 'authorIndex',
+    as: 'author',
+  })
+  declare authorIndex: Users
+
+  @HasMany(() => Comments, { foreignKey: 'commentIndex', as: 'Comments' })
+  declare commentIndex?: NonAttribute<Comments[]>
 }
 
 export default Topics

@@ -1,27 +1,31 @@
-import RepliesTable, {
-  RepliesCreateAttributes,
-} from '../../orm/models/joins/replies'
-import CommentsTable from '../../orm/models/comments'
+import type { FindOptions } from 'sequelize'
+import Replies, { RepliesCreateAttributes } from '../../orm/models/replies'
+import { col } from 'sequelize'
+import type { CommentsAttributes } from '../../orm/models/comments'
 
 class RepliesService {
-  addReply(data: RepliesCreateAttributes) {
-    return RepliesTable.create(data)
+  create(data: RepliesCreateAttributes) {
+    return Replies.create(data)
   }
 
-  getAllReplies() {
-    return RepliesTable.findAll()
-  }
-
-  getReplies(parentCommentId: number) {
-    return RepliesTable.findAll({
-      where: { parentCommentId },
+  find(parentCommentId: CommentsAttributes['commentIndex']) {
+    const params: FindOptions = {
+      where: parentCommentId ? { parentCommentId } : {},
+      // raw: true,
       include: [
-        {
-          model: CommentsTable,
-          as: 'comment',
-        },
+        { association: 'Users', attributes: [] },
+        { association: 'ReplyComment', attributes: [] },
+        { association: 'ParentComment', attributes: [] },
       ],
-    })
+      attributes: [
+        [col('"ReplyComment"."comment_id"'), 'index'],
+        [col('"ReplyComment"."comment_text"'), 'message'],
+        [col('"ReplyComment"."createdAt'), 'time'],
+        [col('"Users"."user_display_name"'), 'author'],
+        'parentCommentId',
+      ],
+    }
+    return Replies.findAll(params)
   }
 }
 

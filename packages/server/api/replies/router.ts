@@ -7,20 +7,13 @@ const enum ENDPOINTS {
   COMMENT_ID = '/:commentId',
 }
 
-const repliesApiRouter = Router()
+const topicsApiRouter = Router()
 
-repliesApiRouter
-  .get(ENDPOINTS.COMMENT_ID, (req, res) => {
-    RepliesApi.getReplies(req, res)
-  })
-  .get(ENDPOINTS.ROOT, (req, res) => {
-    RepliesApi.getAllReplies(req, res)
-  })
-  .post(ENDPOINTS.COMMENT_ID, (req, res) => {
-    RepliesApi.createReply(req, res)
-  })
+topicsApiRouter
+  .get(ENDPOINTS.COMMENT_ID, RepliesApi.getReplies)
+  .post(ENDPOINTS.COMMENT_ID, RepliesApi.addReply)
 
 export function addRepliesApiRoutes(router: Router) {
-  router.use(ENDPOINTS.API, repliesApiRouter)
+  router.use(ENDPOINTS.API, topicsApiRouter)
   return router
 }

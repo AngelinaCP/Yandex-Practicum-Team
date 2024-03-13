@@ -1,54 +1,56 @@
-import type { Request, Response } from 'express'
+import type { NextFunction, Request, Response } from 'express'
 import type { CommentsCreateAttributes } from '../../orm/models/comments'
 import { repliesService } from './service'
-import { topicService } from '../topic/service'
+import { commentsService } from '../../api/comments/service'
+import type { RepliesCreateAttributes } from '../../orm/models/replies'
 
 export class RepliesApi {
-  static getAllReplies = async (_request: Request, response: Response) => {
-    try {
-      const replies = await repliesService.getAllReplies()
-      response.json(replies)
-    } catch (error) {
-      console.error('RepliesApi.getReplies Error')
-      console.error(error)
-      response.json(null)
-    }
-  }
-
   static getReplies = async (
-    request: Request<{ commentId: string }>,
-    response: Response
+    request: Request<{ commentId?: string }>,
+    response: Response,
+    next: NextFunction
   ) => {
     try {
       const { commentId } = request.params
-      const reply = await repliesService.getReplies(+commentId)
-      response.json(reply)
+      if (!commentId) {
+        next()
+      } else {
+        const topic = await repliesService.find(+commentId)
+        response.json(topic)
+      }
     } catch (error) {
       console.error('RepliesApi.getReplies Error')
       console.error(error)
-      response.json(null)
+      next(error)
     }
   }
 
-  static createReply = async (
-    request: TypedRequest<CommentsCreateAttributes, { commentId: string }>,
-    response: Response
+  static addReply = async (
+    request: TypedRequest<
+      CommentsCreateAttributes,
+      { commentIndex: RepliesCreateAttributes['parentCommentId'] }
+    >,
+    response: Response,
+    next: NextFunction
   ) => {
     try {
-      const { commentId: parentCommentId } = request.params
-      const { commentText } = request.body
-      const data = { commentId: undefined, commentText }
-      const newComment = await topicService.addComment(data)
-      await repliesService.addReply({
-        replyId: undefined,
-        commentId: newComment.commentId,
-        parentCommentId: +parentCommentId,
+      const { topicIndex, message, authorIndex } = request.body
+      const { commentIndex: parentCommentId } = request.params
+      const data = { authorIndex, topicIndex, message }
+      //@ts-ignore
+      const comment = await commentsService.create(data)
+      const reply = await repliesService.create({
+        parentCommentId,
+        commentIndex: comment.commentIndex,
+        replyIndex: undefined,
+        authorIndex,
       })
-      response.json(newComment)
+      console.log(reply)
+      response.json(reply)
     } catch (error) {
-      console.error('RepliesApi.createReply Error')
+      console.error('RepliesApi.addComment Error')
       console.error(error)
-      response.json(null)
+      next(error)
     }
   }
 }

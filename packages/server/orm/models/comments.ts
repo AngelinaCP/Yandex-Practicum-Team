@@ -5,12 +5,19 @@ import {
   Column,
   DataType,
   AutoIncrement,
+  Unique,
+  BelongsTo,
+  HasMany,
 } from 'sequelize-typescript'
 import type {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
+  NonAttribute,
 } from 'sequelize'
+import Users from './users'
+import Replies from './replies'
+import Topics from './topics'
 
 @Table({ tableName: 'comments', timestamps: true })
 class Comments extends Model<
@@ -18,12 +25,22 @@ class Comments extends Model<
   InferCreationAttributes<Comments>
 > {
   @PrimaryKey
+  @Unique
   @AutoIncrement
   @Column({ type: DataType.INTEGER, field: 'comment_id' })
-  declare commentId: CreationOptional<number>
+  declare commentIndex: CreationOptional<number>
 
   @Column({ type: DataType.CHAR, field: 'comment_text' })
-  declare commentText: string
+  declare message: string
+
+  @BelongsTo(() => Topics, { foreignKey: 'topicIndex', as: 'Topics' })
+  declare topicIndex: Topics
+
+  @BelongsTo(() => Users, { foreignKey: 'authorIndex', as: 'Users' })
+  declare authorIndex: Users
+
+  @HasMany(() => Replies, { foreignKey: 'replyIndex', as: 'Replies' })
+  declare replyIndex?: NonAttribute<Replies[]>
 }
 
 export default Comments

@@ -3,27 +3,16 @@ import type { UsersCreateAttributes } from '../../orm/models/users'
 import { usersService } from './service'
 
 export class UsersApi {
-  static getUsers = async (_request: Request, response: Response) => {
-    try {
-      const user = await usersService.find()
-      response.json(user)
-    } catch (error) {
-      console.error('UsersApi.getUsers Error')
-      console.error(error)
-      response.json(null)
-    }
-  }
-
-  static getUserById = async (
-    request: Request<{ userId: string }>,
+  static getUser = async (
+    request: Request<{ userId?: string }>,
     response: Response
   ) => {
     try {
       const { userId } = request.params
-      const user = await usersService.find(+userId)
+      const user = await usersService.find(userId ? +userId : undefined)
       response.json(user)
     } catch (error) {
-      console.error('UsersApi.getUserById Error')
+      console.error('UsersApi.getUser Error')
       console.error(error)
       response.json(null)
     }
@@ -34,8 +23,9 @@ export class UsersApi {
     response: Response
   ) => {
     try {
-      const { userId = undefined, userDisplayName, userYandexId } = request.body
-      const data = { userId, userDisplayName, userYandexId }
+      const { authorIndex = undefined, author, userYandexId } = request.body
+      const data = { authorIndex, author, userYandexId }
+      console.log(data)
       const user = await usersService.create(data)
       response.json(user)
     } catch (error) {
