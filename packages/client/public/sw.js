@@ -47,6 +47,9 @@ const URLS = [
   '/game_obstacles/obstacle.png',
   '/game_powerups/heart.png',
   '/girl.webp',
+  '/images/fullscreen.svg',
+  '/images/moon.svg',
+  '/images/sun.svg',
   '/sw.js',
 ]
 
