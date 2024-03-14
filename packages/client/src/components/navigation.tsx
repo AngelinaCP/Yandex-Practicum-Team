@@ -45,9 +45,6 @@ function Navigation() {
         <li>
           <Link to="/forum">Форум</Link>
         </li>
-        <li>
-          <Link to="/topic">Топик</Link>
-        </li>
       </ul>
     </StyledNav>
   )

@@ -8,7 +8,6 @@ import { ProfilePage } from './pages/Profile'
 import GamePage from './pages/game.page'
 import { LeaderboardPage } from './pages/Leaderboard'
 import { ForumPage } from './pages/Forum'
-import TopicPage from './pages/topic.page'
 import { Page404 } from './pages/Page_404'
 import Navigation from './components/navigation'
 import interceptorsProvider from './providers/interceptors.provider'
@@ -57,7 +56,6 @@ function App() {
                 <Route index element={<ForumPage />} />
                 <Route path=":forumId" element={<ForumPostPage />} />
               </Route>
-              <Route path="topic" element={<TopicPage />} />
             </Route>
             <Route path="/" element={<MainPage />} index />
             <Route path="login" element={<LoginPage />} />

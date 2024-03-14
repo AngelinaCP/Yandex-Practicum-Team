@@ -9,7 +9,10 @@ export const ToggleTheme = () => {
   return (
     <StyledToggleWrapper>
       <img src="images/moon.png" width="32" alt="dark mode" />
-      <ThemeSwitcher checked={theme === 'light-theme'} onClick={toggleTheme} />
+      <ThemeSwitcher
+        defaultChecked={theme === 'light-theme'}
+        onClick={toggleTheme}
+      />
       <img src="images/sun.png" width="32" alt="light mode" />
     </StyledToggleWrapper>
   )
