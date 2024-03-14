@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { TTopic } from './types'
-import 'dotenv/config'
 
-const { SERVER_PORT } = process.env
-const BASE_URL = `http://localhost:${SERVER_PORT}/api/`
+const { SERVER_PORT } = import.meta.env
+const BASE_URL = `http://localhost:3001/${SERVER_PORT}/api/`
 
 export const forumApi = createApi({
   reducerPath: 'forumApi',

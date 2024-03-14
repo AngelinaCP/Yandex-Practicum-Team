@@ -13,18 +13,11 @@ export const ArrowControl = styled.button.attrs<ArrowControlProps>(
   background: none;
   border: 0;
   cursor: pointer;
-  fill: ${props => props.theme.arrowFill};
-
-  @media (prefers-color-scheme: dark) {
-    fill: ${props => props.theme.dark.arrowFill};
-  }
+  fill: ${props => props.theme.gameSelectorArrowFill};
 `
 
 ArrowControl.defaultProps = {
   theme: {
-    dark: {
-      arrowFill: '#acaa9e',
-    },
-    arrowFill: '#6d6c6c',
+    gameSelectorArrowFill: '#6d6c6c',
   },
 }

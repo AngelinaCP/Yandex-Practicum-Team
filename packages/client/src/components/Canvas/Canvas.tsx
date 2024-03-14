@@ -40,7 +40,6 @@ export const Canvas = () => {
         if (game.gameEnd) {
           setTimeout(() => {
             game.cleanGame()
-            console.log(game.obstacles)
             navigate('/game-end')
           }, 2000)
           dispatch(setScore(game.score))

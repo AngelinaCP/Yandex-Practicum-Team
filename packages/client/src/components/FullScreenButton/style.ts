@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import fullscreen from '../../assets/images/fullscreen.svg'
 
 export const FullScreenEnterButtonWrapper = styled.section`
   position: absolute;
@@ -15,7 +14,7 @@ export const FullScreenEnterButton = styled.button`
   margin-left: auto;
   width: 40px;
   height: 40px;
-  background: url(${fullscreen}) center no-repeat;
+  background: url('/images/fullscreen.svg') center no-repeat;
   border: none;
   cursor: pointer;
 `

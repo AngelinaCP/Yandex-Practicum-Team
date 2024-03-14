@@ -3,18 +3,12 @@ import styled from 'styled-components'
 // type THeaders = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 
 const header = ([headerTag]: TemplateStringsArray) => styled(headerTag)`
-  color: ${props => props.theme.color};
-
-  @media (prefers-color-scheme: dark) {
-    color: ${props => props.theme.dark.color};
-  }
+  color: ${props => props.theme.headerColor};
 `
 const defaultTheme = {
-  dark: {
-    color: '#ffffff',
-  },
-  color: '#37363F',
+  headerColor: '#37363F',
 }
+
 const Header1 = header`h1`
 Header1.defaultProps = { theme: defaultTheme }
 const Header2 = header`h2`
