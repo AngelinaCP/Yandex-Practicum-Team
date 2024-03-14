@@ -15,23 +15,38 @@ import {
   StyledFlex,
   Input,
 } from '@/pages/Forum/style'
+import { useCreateTopicMutation, useGetTopicsQuery } from '@/store/api/forum'
+// import {useAppDispatch, useAppSelector} from "@/hooks"
 
 export const ForumPage = () => {
   const [showModal, toggleShowModal] = useToggle(false)
   const navigate = useNavigate()
+  const {
+    data: topicsData,
+    error: topicsError,
+    isLoading: topicsIsLoading,
+  } = useGetTopicsQuery()
+  const [createTopic] = useCreateTopicMutation()
 
   return (
     <StyledWrapper>
       <Button onClick={toggleShowModal}>Новый пост</Button>
-      {forumDataMock.map(forum => (
-        <StyledPost onClick={() => navigate(`/forum/${forum.index}`)}>
-          <Title>{forum.title}</Title>
-          <StyledInfo>
-            <p>{forum.author}</p>
-            <p>{`${forum.comments.length ?? 0} comments`}</p>
-          </StyledInfo>
-        </StyledPost>
-      ))}
+      {topicsIsLoading ? (
+        <code>Topics are loading</code>
+      ) : topicsError ? (
+        <code>Failed to get topics</code>
+      ) : (
+        topicsData &&
+        topicsData.map(topic => (
+          <StyledPost onClick={() => navigate(`/forum/${topic.topicIndex}`)}>
+            <Title>{topic.title}</Title>
+            <StyledInfo>
+              <p>{topic.author}</p>
+              <p>{`${topic.comments.length ?? 0} comments`}</p>
+            </StyledInfo>
+          </StyledPost>
+        ))
+      )}
       {showModal &&
         createPortal(
           <Modal open={showModal}>
