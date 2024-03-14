@@ -2,13 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { Game } from '@/game'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/store'
-import {
-  playerSelector,
-  backgroundSelector,
-  gameSlice,
-  setScore,
-} from '@/game/gameSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { playerSelector, backgroundSelector, setScore } from '@/game/gameSlice'
 import { useFullScreen } from '@/hooks/useFullScreen'
 import {
   FullScreenEnterButton,
@@ -18,9 +12,9 @@ import {
 export const Canvas = () => {
   const canvasRef = useRef(null)
   const navigate = useNavigate()
-  const player = useSelector(playerSelector)
-  const background = useSelector(backgroundSelector)
-  const dispatch = useDispatch()
+  const player = useAppSelector(playerSelector)
+  const background = useAppSelector(backgroundSelector)
+  const dispatch = useAppDispatch()
   const toggleFullScreen = useFullScreen(canvasRef, ['Alt', 'Enter'])
 
   useEffect(() => {
