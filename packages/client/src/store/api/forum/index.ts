@@ -1,12 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { TTopic } from './types'
 
-const SERVER_PORT = import.meta.env.VITE_SERVER_PORT ?? 3001
-const BASE_URL = `http://localhost:${SERVER_PORT}/api/`
-
 export const forumApi = createApi({
   reducerPath: 'forumApi',
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001' }),
   tagTypes: ['Forums', 'Topics'],
   endpoints: builder => ({
     getTopics: builder.query<TTopic[], void>({
@@ -14,17 +11,15 @@ export const forumApi = createApi({
       providesTags: result =>
         result
           ? [
-              ...result.map(
-                ({ topicIndex }) => ({ type: 'Topics', topicIndex } as const)
+              ...result!.map(
+                ({ index }) => ({ type: 'Topics', index } as const)
               ),
               { type: 'Topics', id: 'LIST' },
             ]
           : [{ type: 'Topics', id: 'LIST' }],
     }),
-    createTopic: builder.mutation<
-      void,
-      Pick<TTopic, 'title' | 'time' | 'author' | 'comments'>
-    >({
+
+    createTopic: builder.mutation({
       query(body) {
         return {
           url: `topics`,
@@ -34,7 +29,22 @@ export const forumApi = createApi({
       },
       invalidatesTags: [{ type: 'Topics', id: 'LIST' }],
     }),
+
+    addComment: builder.mutation({
+      query({ id, ...body }) {
+        return {
+          url: `comments/${id}`,
+          method: 'POST',
+          body,
+        }
+      },
+      invalidatesTags: [{ type: 'Topics', id: 'LIST' }],
+    }),
   }),
 })
 
-export const { useCreateTopicMutation, useGetTopicsQuery } = forumApi
+export const {
+  useCreateTopicMutation,
+  useGetTopicsQuery,
+  useAddCommentMutation,
+} = forumApi

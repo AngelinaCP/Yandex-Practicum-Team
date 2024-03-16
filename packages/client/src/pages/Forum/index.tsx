@@ -4,7 +4,6 @@ import { useToggle } from '@/hooks'
 import { createPortal } from 'react-dom'
 import { Modal } from '@/components/Modal'
 import { useNavigate } from 'react-router-dom'
-import { forumDataMock } from '@/helpers/mock'
 import {
   StyledWrapper,
   StyledPost,
@@ -16,9 +15,13 @@ import {
   Input,
 } from '@/pages/Forum/style'
 import { useCreateTopicMutation, useGetTopicsQuery } from '@/store/api/forum'
-// import {useAppDispatch, useAppSelector} from "@/hooks"
+import { RootState, useAppSelector } from '@/store/store'
 
 export const ForumPage = () => {
+  const selectUser = (state: RootState) => state.userState.user
+  const selectUserId = (state: RootState) => selectUser(state)?.id
+  const userId = useAppSelector(state => selectUserId(state))
+
   const [showModal, toggleShowModal] = useToggle(false)
   const navigate = useNavigate()
   const {
@@ -27,6 +30,20 @@ export const ForumPage = () => {
     isLoading: topicsIsLoading,
   } = useGetTopicsQuery()
   const [createTopic] = useCreateTopicMutation()
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const { topicName, topicDescription } = e.target as typeof e.target & {
+      topicName: { value: string }
+      topicDescription: { value: string }
+    }
+    createTopic({
+      title: topicName.value,
+      description: topicDescription.value,
+      author: userId,
+    })
+    toggleShowModal()
+  }
 
   return (
     <StyledWrapper>
@@ -38,11 +55,11 @@ export const ForumPage = () => {
       ) : (
         topicsData &&
         topicsData.map(topic => (
-          <StyledPost onClick={() => navigate(`/forum/${topic.topicIndex}`)}>
+          <StyledPost onClick={() => navigate(`/forum/${topic.index}`)}>
             <Title>{topic.title}</Title>
             <StyledInfo>
               <p>{topic.author}</p>
-              <p>{`${topic.comments.length ?? 0} comments`}</p>
+              <p>{`${topic.Comments?.length ?? 0} comments`}</p>
             </StyledInfo>
           </StyledPost>
         ))
@@ -50,9 +67,16 @@ export const ForumPage = () => {
       {showModal &&
         createPortal(
           <Modal open={showModal}>
-            <Form>
-              <Input type="text" placeholder="Название поста" />
-              <StyledText placeholder="Добавить описание..." />
+            <Form onSubmit={handleSubmit}>
+              <Input
+                name="topicName"
+                type="text"
+                placeholder="Название поста"
+              />
+              <StyledText
+                name="topicDescription"
+                placeholder="Добавить описание..."
+              />
               <StyledFlex>
                 <Button onClick={toggleShowModal}>Отмена</Button>
                 <Button type="submit" $primary={true}>
