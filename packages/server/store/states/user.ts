@@ -4,7 +4,7 @@ export const getUserState = async (): Promise<Partial<RootState>> =>
   Promise.resolve({
     userState: {
       user: {
-        id: 15,
+        id: 1,
         avatar: '',
         display_name: 'rick',
         email: 'rick@raft.nl',

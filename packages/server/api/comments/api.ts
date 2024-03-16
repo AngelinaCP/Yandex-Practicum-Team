@@ -4,13 +4,15 @@ import { commentsService } from './service'
 
 export class CommentsApi {
   static getComments = async (
-    request: Request<{ topicId?: string }>,
+    request: Request<{ topicIndex?: string }>,
     response: Response,
     next: NextFunction
   ) => {
     try {
-      const { topicId } = request.params
-      const topic = await commentsService.find(topicId ? +topicId : undefined)
+      const { topicIndex } = request.params
+      const topic = await commentsService.find(
+        topicIndex ? +topicIndex : undefined
+      )
       response.json(topic)
     } catch (error) {
       console.error('CommentsApi.getComments Error')
@@ -30,8 +32,7 @@ export class CommentsApi {
     try {
       const { commentIndex = undefined, message, authorIndex } = request.body
       const { topicIndex } = request.params
-      const data = { topicIndex, authorIndex, commentIndex, message }
-      console.log(data)
+      const data = { commentIndex, topicIndex, authorIndex, message }
       //@ts-ignore
       const user = await commentsService.create(data)
       response.json(user)

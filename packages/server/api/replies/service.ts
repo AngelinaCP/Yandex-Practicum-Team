@@ -8,9 +8,9 @@ class RepliesService {
     return Replies.create(data)
   }
 
-  find(parentCommentId: CommentsAttributes['commentIndex']) {
+  find(parentCommentIndex: CommentsAttributes['commentIndex']) {
     const params: FindOptions = {
-      where: parentCommentId ? { parentCommentId } : {},
+      where: parentCommentIndex ? { parentCommentIndex } : {},
       // raw: true,
       include: [
         { association: 'Users', attributes: [] },
@@ -22,7 +22,7 @@ class RepliesService {
         [col('"ReplyComment"."comment_text"'), 'message'],
         [col('"ReplyComment"."createdAt'), 'time'],
         [col('"Users"."user_display_name"'), 'author'],
-        'parentCommentId',
+        'parentCommentIndex',
       ],
     }
     return Replies.findAll(params)

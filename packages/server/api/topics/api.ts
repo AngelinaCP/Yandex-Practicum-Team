@@ -4,13 +4,15 @@ import { topicsService } from './service'
 
 export class TopicsApi {
   static getTopic = async (
-    request: Request<{ topicId?: string }>,
+    request: Request<{ topicIndex?: string }>,
     response: Response,
     next: NextFunction
   ) => {
     try {
-      const { topicId } = request.params
-      const topic = await topicsService.find(topicId ? +topicId : undefined)
+      const { topicIndex } = request.params
+      const topic = await topicsService.find(
+        topicIndex ? +topicIndex : undefined
+      )
       response.json(topic)
     } catch (error) {
       console.error('TopicsApi.getTopic Error')

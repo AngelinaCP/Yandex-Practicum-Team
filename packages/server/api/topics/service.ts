@@ -10,9 +10,9 @@ class TopicsService {
     return Topics.create(data)
   }
 
-  find(topicId?: TopicsAttributes['topicIndex']) {
+  find(topicIndex?: TopicsAttributes['topicIndex']) {
     const params: FindOptions = {
-      where: topicId ? { topicId } : {},
+      where: topicIndex ? { topicIndex } : {},
       // raw: true,
       include: [
         { association: 'Users', attributes: [] },
@@ -26,7 +26,7 @@ class TopicsService {
         [col('"Users"."user_display_name"'), 'author'],
       ],
     }
-    return topicId ? Topics.findOne(params) : Topics.findAll(params)
+    return topicIndex ? Topics.findOne(params) : Topics.findAll(params)
   }
 }
 
