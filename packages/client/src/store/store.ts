@@ -5,11 +5,13 @@ import { userApi } from './api/userApi'
 import userReducer from './features/userSlice'
 import { gameReducer } from '@/game/gameSlice'
 import { leaderboardApi } from '@/store/api/leaderboardApi'
+import { forumApi } from './api/forum'
 
 const appReducers = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [leaderboardApi.reducerPath]: leaderboardApi.reducer,
+  [forumApi.reducerPath]: forumApi.reducer,
   userState: userReducer,
   game: gameReducer,
 })
@@ -25,6 +27,7 @@ export const createStoreWithInitial = (
         authApi.middleware,
         userApi.middleware,
         leaderboardApi.middleware,
+        forumApi.middleware,
       ]),
     preloadedState,
   })
