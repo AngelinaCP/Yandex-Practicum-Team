@@ -7,7 +7,6 @@ import { CurrentSelection } from './components/CurrentSelection'
 import styled from 'styled-components'
 import {
   backgroundSelector,
-  gameSlice,
   playerSelector,
   setBackground,
   setPlayer,
