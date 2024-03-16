@@ -37,7 +37,7 @@ export const ForumPostPage = () => {
     addComment({
       id: data?.index,
       message: topicDescription.value,
-      authorId: userId,
+      authorIndex: userId,
     })
   }
 

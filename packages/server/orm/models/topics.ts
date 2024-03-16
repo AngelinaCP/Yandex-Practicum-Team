@@ -39,8 +39,8 @@ class Topics extends Model<
   })
   declare authorIndex: Users
 
-  @HasMany(() => Comments, { foreignKey: 'commentIndex', as: 'Comments' })
-  declare commentIndex?: NonAttribute<Comments[]>
+  @HasMany(() => Comments, { foreignKey: 'topicIndex' })
+  declare Comments?: NonAttribute<Comments[]>
 }
 
 export default Topics
