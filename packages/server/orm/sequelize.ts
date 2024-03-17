@@ -7,6 +7,7 @@ const {
   POSTGRES_DB: database,
   POSTGRES_USER: username,
   POSTGRES_PASSWORD: password,
+  POSTGRES_SERVICE_NAME: host,
 } = process.env
 
 const models = resolveModelsPaths(['models/**'])
@@ -18,6 +19,7 @@ const sequelizeOptions: SequelizeOptions = {
   database,
   username,
   password,
+  host,
 }
 
 export const sequelize = new Sequelize(sequelizeOptions)

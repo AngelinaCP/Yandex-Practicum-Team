@@ -7,24 +7,8 @@ const LinkStyled = styled(Link)`
   &:visited,
   &:hover,
   &:active {
-    color: ${props => props.theme.color};
-  }
-
-  @media (prefers-color-scheme: dark) {
-    &:link,
-    &:visited,
-    &:hover,
-    &:active {
-      color: ${props => props.theme.dark.color};
-    }
+    color: ${props => props.theme.linkColor};
   }
 `
-
-LinkStyled.defaultProps = {
-  theme: {
-    dark: { color: '#acbdd8' },
-    color: '#281768',
-  },
-}
 
 export default LinkStyled
