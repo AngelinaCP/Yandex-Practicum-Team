@@ -17,10 +17,10 @@ class Users extends Model<UsersAttributes, UsersCreateAttributes> {
   @PrimaryKey
   @AutoIncrement
   @Column({ type: DataType.INTEGER, field: 'user_id' })
-  declare userId: CreationOptional<number>
+  declare authorIndex: CreationOptional<number>
 
   @Column({ type: DataType.STRING, field: 'user_display_name' })
-  declare userDisplayName: string
+  declare author: string
 
   @Column({ type: DataType.INTEGER, field: 'user_yandex_id' })
   declare userYandexId: number

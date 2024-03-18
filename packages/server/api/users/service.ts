@@ -1,19 +1,18 @@
-import UsersTable, {
+import Users, {
   UsersAttributes,
   UsersCreateAttributes,
 } from '../../orm/models/users'
 
 class UsersService {
   create(data: UsersCreateAttributes) {
-    return UsersTable.create(data)
+    return Users.create(data)
   }
 
-  find(userId?: UsersAttributes['userId']) {
-    return userId
-      ? UsersTable.findOne({
-          where: { userId },
-        })
-      : UsersTable.findAll()
+  find(authorIndex?: UsersAttributes['authorIndex']) {
+    const params = {
+      where: authorIndex ? { authorIndex } : {},
+    }
+    return authorIndex ? Users.findOne(params) : Users.findAll(params)
   }
 }
 

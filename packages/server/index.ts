@@ -109,6 +109,7 @@ async function startServer() {
 
   try {
     await sequelize.sync({ force: true })
+    // await sequelize.sync()
   } catch (e) {
     console.error('failed to connect to db')
     console.error(e)

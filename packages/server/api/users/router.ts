@@ -4,21 +4,15 @@ import { UsersApi } from './api'
 const enum ENDPOINTS {
   API = '/users',
   ROOT = '/',
-  USER_ID = '/:userId',
+  USER_ID = '/:authorIndex',
 }
 
 const usersApiRouter = Router()
 
 usersApiRouter
-  .get(ENDPOINTS.USER_ID, (req, res) => {
-    UsersApi.getUserById(req, res)
-  })
-  .get(ENDPOINTS.ROOT, (req, res) => {
-    UsersApi.getUsers(req, res)
-  })
-  .post(ENDPOINTS.ROOT, (req, res) => {
-    UsersApi.createUser(req, res)
-  })
+  .get(ENDPOINTS.USER_ID, UsersApi.getUser)
+  .get(ENDPOINTS.ROOT, UsersApi.getUser)
+  .post(ENDPOINTS.ROOT, UsersApi.createUser)
 
 export function addUsersApiRoutes(router: Router) {
   router.use(ENDPOINTS.API, usersApiRouter)

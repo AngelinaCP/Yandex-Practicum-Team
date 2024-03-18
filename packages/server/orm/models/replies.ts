@@ -7,15 +7,17 @@ import {
   PrimaryKey,
   AutoIncrement,
 } from 'sequelize-typescript'
-import {
+import type {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
   NonAttribute,
 } from 'sequelize'
-import CommentsTable from '../comments'
+// import Commentss from '../aggregators/topicComments'
+import Comments from './comments'
+import Users from './users'
 
-@Table({ tableName: 'replies' })
+@Table({ tableName: 'replies', timestamps: false })
 class Replies extends Model<
   InferAttributes<Replies>,
   InferCreationAttributes<Replies>
@@ -23,19 +25,28 @@ class Replies extends Model<
   @PrimaryKey
   @AutoIncrement
   @Column({ type: DataType.INTEGER, field: 'reply_id' })
-  declare replyId: CreationOptional<number>
+  declare replyIndex: CreationOptional<number>
 
-  @BelongsTo(() => CommentsTable, { foreignKey: 'commentId', as: 'comment' })
-  declare comment?: NonAttribute<CommentsTable>
+  @BelongsTo(() => Comments, { foreignKey: 'commentIndex', as: 'ReplyComment' })
+  declare message?: NonAttribute<Comments>
 
-  @BelongsTo(() => CommentsTable, 'parentCommentId')
-  declare parentComment?: NonAttribute<CommentsTable>
+  @BelongsTo(() => Comments, {
+    foreignKey: 'commentIndex',
+    as: 'ParentComment',
+  })
+  declare parentCommentIndex?: NonAttribute<Comments>
 
   @Column({ type: DataType.INTEGER, field: 'comment_id' })
-  declare commentId: number
+  declare commentIndex: number
 
   @Column({ type: DataType.INTEGER, field: 'parent_comment_id' })
   declare parentCommentId: number
+
+  @BelongsTo(() => Users, {
+    foreignKey: 'authorId',
+    as: 'author',
+  })
+  declare authorIndex: Users
 }
 
 export default Replies

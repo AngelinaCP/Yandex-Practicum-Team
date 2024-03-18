@@ -1,18 +1,20 @@
 import { Router } from 'express'
-import { addForumsApiRoutes } from './forums/router'
-import { addForumApiRoutes } from './forum/router'
+// import { addForumApiRoutes } from './forum/router'
 import { addUsersApiRoutes } from './users/router'
+import { addTopicsApiRoutes } from './topics/router'
+import { addCommentsApiRoutes } from './comments/router'
 import { addRepliesApiRoutes } from './replies/router'
-import { addTopicApiRoutes } from './topic/router'
+// import { addRepliesApiRoutes } from './replies/router'
 
 const API_ENDPOINT = '/api'
 
 const routeAdders = [
   addUsersApiRoutes,
-  addForumsApiRoutes,
-  addForumApiRoutes,
-  addTopicApiRoutes,
+  addTopicsApiRoutes,
+  addCommentsApiRoutes,
   addRepliesApiRoutes,
+  // addForumApiRoutes,
+  // addTopicApiRoutes,
 ]
 
 export const apiRouter = Router()
