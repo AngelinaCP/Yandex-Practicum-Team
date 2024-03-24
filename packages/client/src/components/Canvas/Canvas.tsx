@@ -1,14 +1,13 @@
 import React, { useEffect, useRef } from 'react'
 import { Game } from '@/game'
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '@/store/store'
-import {
-  playerSelector,
-  backgroundSelector,
-  gameSlice,
-  setScore,
-} from '@/game/gameSlice'
+import { playerSelector, backgroundSelector, setScore } from '@/game/gameSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { useFullScreen } from '@/hooks/useFullScreen'
+import {
+  FullScreenEnterButton,
+  FullScreenEnterButtonWrapper,
+} from '@/components/FullScreenButton/style'
 
 export const Canvas = () => {
   const canvasRef = useRef(null)
@@ -16,6 +15,7 @@ export const Canvas = () => {
   const player = useSelector(playerSelector)
   const background = useSelector(backgroundSelector)
   const dispatch = useDispatch()
+  const toggleFullScreen = useFullScreen(canvasRef, ['Alt', 'Enter'])
 
   useEffect(() => {
     const canvas: HTMLCanvasElement | null = canvasRef.current
@@ -48,5 +48,15 @@ export const Canvas = () => {
     }
   }, [])
 
-  return <canvas ref={canvasRef} id="canvas" width="800" height="400" />
+  return (
+    <>
+      <canvas ref={canvasRef} id="canvas" width="800" height="400" />
+      <FullScreenEnterButtonWrapper>
+        <FullScreenEnterButton
+          onClick={toggleFullScreen}
+          about="Переключить полноэкранный режим"
+        />
+      </FullScreenEnterButtonWrapper>
+    </>
+  )
 }
