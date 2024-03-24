@@ -8,6 +8,6 @@ export const StyledForm = styled.form`
 
 export const StyledFormGroup = styled.div`
   display: flex;
-  flex-direction: row;
-  gap: 80px;
+  flex-flow: row wrap;
+  justify-content: space-around;
 `

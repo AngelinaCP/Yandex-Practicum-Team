@@ -43,9 +43,9 @@ export const InputStyle = styled.input`
       position: absolute;
       top: -8px;
       display: block;
-      font-size: 22px;
+      font-size: 1em;
       font-weight: 700;
-      letter-spacing: 3px;
+      letter-spacing: 1px;
       color: #81ecec;
       transition: 0.2s;
     }

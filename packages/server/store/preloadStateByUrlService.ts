@@ -1,4 +1,6 @@
-import { stateSelector, Routes, isRoute, RootState } from './states'
+import { stateSelector, Routes, isRoute } from './states'
+
+export type RootState = Record<string, unknown>
 
 export class PreloadStateByUrlService {
   private state: Partial<RootState> = {}

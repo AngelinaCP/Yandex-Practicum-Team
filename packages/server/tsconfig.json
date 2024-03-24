@@ -20,6 +20,8 @@
     "forceConsistentCasingInFileNames": true,
     "importsNotUsedAsValues": "error",
     "lib": ["es2019", "esnext.asynciterable", "DOM"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "types": ["node", "jest"],
     "baseUrl": ".",
     "paths": {

@@ -1,62 +1,72 @@
 import React, { useEffect } from 'react'
 import Card from '@/components/Card'
-import Input from '@/components/Input'
+import {
+  InputEmail,
+  InputFirstName,
+  InputLogin,
+  InputPassword,
+  InputPasswordConfirm,
+  InputPhone,
+  InputSecondName,
+} from '@/components/Input'
 import Button from '@/components/Button'
 import Link from '@/components/Link'
 import { StyledForm, StyledFormGroup } from '@/pages/Signup/style'
 import { useRegisterUserMutation } from '@/store/api/authApi'
 import { useNavigate } from 'react-router-dom'
 import { LoaderSpinner } from '@/components/Loading'
+import { registerSchema } from './config'
+import { useFormValidate } from '@/hooks/useFormValid'
+import { z } from 'zod'
+
+type InputValuesType = z.infer<typeof registerSchema>
+type InputsTypeModifier<T> = {
+  [key in keyof InputValuesType]: T
+}
+type FormType = HTMLFormElement & {
+  elements: InputsTypeModifier<HTMLInputElement>
+}
 
 export const SignupPage = () => {
   const navigate = useNavigate()
   const [registerUser, { isLoading, isSuccess }] = useRegisterUserMutation()
+  const [errors, validateForm] = useFormValidate(registerSchema)
 
   useEffect(() => {
     if (isSuccess) return navigate('/login')
   }, [isSuccess])
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<FormType>) => {
     event.preventDefault()
-    const { first_name, second_name, phone, email, login, password } =
-      event.target as typeof event.target & {
-        first_name: { value: string }
-        second_name: { value: string }
-        phone: { value: string }
-        email: { value: string }
-        login: { value: string }
-        password: { value: string }
-      }
-    registerUser({
-      first_name: first_name.value,
-      second_name: second_name.value,
-      phone: phone.value,
-      email: email.value,
-      login: login.value,
-      password: password.value,
-    })
+
+    const form = event.currentTarget
+    const values = Object.fromEntries(
+      [...form.elements].map(e =>
+        isInput(e) ? [e.name, e.value] : [null, null]
+      )
+    )
+
+    const isFormValid = validateForm(values)
+    if (isFormValid) {
+      console.log('register')
+      registerUser(values)
+    } else {
+      console.warn('not register')
+    }
   }
 
   return (
-    <Card width="580px" height="440px">
+    <Card width="580px" height="auto">
       {isLoading && <LoaderSpinner />}
       <StyledForm onSubmit={handleSubmit}>
         <StyledFormGroup>
-          <Input name="first_name" label="Имя" required={true} />
-          <Input name="second_name" label="Фамилия" required={true} />
-        </StyledFormGroup>
-        <StyledFormGroup>
-          <Input name="email" label="E-mail" required={true} />
-          <Input name="phone" label="Телефон" required={true} />
-        </StyledFormGroup>
-        <StyledFormGroup>
-          <Input name="login" label="Логин" required={true} />
-          <Input
-            name="password"
-            label="Пароль"
-            type="password"
-            required={true}
-          />
+          <InputFirstName errorMessages={errors.first_name ?? []} />
+          <InputSecondName errorMessages={errors.second_name ?? []} />
+          <InputEmail errorMessages={errors.email ?? []} />
+          <InputPhone errorMessages={errors.phone ?? []} />
+          <InputPassword errorMessages={errors.password ?? []} />
+          <InputPasswordConfirm errorMessages={errors.passwordConfirm ?? []} />
+          <InputLogin errorMessages={errors.login ?? []} />
         </StyledFormGroup>
         <Button type="submit" $primary={true}>
           зарегистрироваться
@@ -65,4 +75,8 @@ export const SignupPage = () => {
       </StyledForm>
     </Card>
   )
+}
+
+function isInput(e: Element): e is HTMLInputElement {
+  return e.tagName === 'INPUT'
 }
