@@ -69,6 +69,9 @@ export const themes = [
         ', 0px 4px 8px 0px ' +
         'rgba(255, 255, 255, 0.3)',
       activeBoxShadow: '0px 3px 7px 0px ' + '#B5B5D8' + ' inset',
+      headerColor: '#ffffff',
+      modalBackgroundColor: '#37363F',
+      gameSelectorArrowFill: '#acaa9e',
     },
   },
   {
@@ -140,6 +143,9 @@ export const themes = [
         ', 0px 4px 8px 0px ' +
         'rgba(45, 35, 66, 0.3)',
       activeBoxShadow: '0px 3px 7px 0px ' + '#D6D6E7' + ' inset',
+      headerColor: '#37363F',
+      modalBackgroundColor: '#ffffff',
+      gameSelectorArrowFill: '#6d6c6c',
     },
   },
 ]

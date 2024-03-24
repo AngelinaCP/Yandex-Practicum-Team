@@ -9,19 +9,11 @@ import { selectUser } from '@/store/features/userSlice'
 const Header = styled(Header2)`
   margin-bottom: 1.5em;
   font-size: 2em;
-  color: ${props => props.theme.color};
-
-  @media (prefers-color-scheme: dark) {
-    color: ${props => props.theme.dark.color};
-  }
+  color: ${props => props.theme.headerColor};
 `
-
 Header.defaultProps = {
   theme: {
-    dark: {
-      color: '#ffffff',
-    },
-    color: '#37363F',
+    headerColor: '37363F',
   },
 }
 
