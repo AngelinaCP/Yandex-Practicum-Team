@@ -4,8 +4,6 @@ import { GameSelector, GameSelectorProps } from './GameSelector'
 import { FC } from 'react'
 
 export const PlayerSelector: FC<Partial<GameSelectorProps>> = () => {
-  const storeSetter = setPlayer
-
   const playerSelectorData = {
     title: 'Персонаж',
     content: players,

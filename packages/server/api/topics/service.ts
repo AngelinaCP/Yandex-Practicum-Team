@@ -21,6 +21,7 @@ class TopicsService {
       attributes: [
         ['topic_id', 'index'],
         ['topic_title', 'title'],
+        ['topic_description', 'description'],
         ['createdAt', 'time'],
         [col('"Users"."user_display_name"'), 'author'],
       ],

@@ -27,8 +27,13 @@ export class TopicsApi {
     next: NextFunction
   ) => {
     try {
-      const { topicIndex = undefined, authorIndex, title } = request.body
-      const data = { topicIndex, authorIndex, title }
+      const {
+        topicIndex = undefined,
+        authorIndex,
+        title,
+        description,
+      } = request.body
+      const data = { topicIndex, authorIndex, title, description }
       const user = await topicsService.create(data)
       response.json(user)
     } catch (error) {
