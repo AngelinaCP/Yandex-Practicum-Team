@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   postgres:
-    container_name: postgresql
+    container_name: ${POSTGRES_SERVICE_NAME}
     image: postgres:14
     env_file:
       - .env
@@ -17,7 +17,11 @@ services:
 
       POSTGRES_HOST_AUTH_METHOD: trust
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}']
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}'
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -60,6 +64,19 @@ services:
         condition: service_healthy
     networks:
       - local
+
+    client:
+      env_file:
+        - .env
+      build:
+        context: .
+        dockerfile: Dockerfile.client
+      restart: always
+      ports:
+        - "${CLIENT_PORT}:80"
+      networks:
+        - local
+
 networks:
   local:
     driver: bridge
