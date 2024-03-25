@@ -14,7 +14,7 @@ export const ModalStyled = styled.div<{
 
 export const ModalContentStyled = styled.div`
   position: fixed;
-  background: ${props => props.theme.backgroundColor};
+  background: ${props => props.theme.modalBackgroundColor};
   width: 50%;
   height: auto;
   top: 50%;
@@ -22,17 +22,10 @@ export const ModalContentStyled = styled.div`
   padding: 0.5rem 1rem;
   transform: translate(-50%, -50%);
   border-radius: 5px;
-
-  @media (prefers-color-scheme: dark) {
-    background-color: ${props => props.theme.dark.backgroundColor};
-  }
 `
 
 ModalContentStyled.defaultProps = {
   theme: {
-    dark: {
-      backgroundColor: '#37363F',
-    },
-    backgroundColor: '#ffffff',
+    modalBackgroundColor: '#ffffff',
   },
 }
