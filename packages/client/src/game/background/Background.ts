@@ -1,6 +1,9 @@
 import { Game } from '@/game/Game'
 import { Layer } from './Layer'
 
+const backgroundLayerPath = (imagePath: string) =>
+  `/game_backgrounds/${imagePath}.png`
+
 export class Background {
   game: Game
   backgroundLayers: Layer[]
@@ -19,7 +22,7 @@ export class Background {
     this.backgroundLayers = Object.entries(images).map(
       ([imagePath, speedModifier]) => {
         const image = new Image()
-        image.src = imagePath
+        image.src = backgroundLayerPath(imagePath)
         return new Layer(
           this.game,
           this.imageWidth,
