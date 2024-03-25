@@ -14,6 +14,12 @@ import {
 import { errorMessage } from '@/store/api/types'
 import { getYandexUrl } from '@/services/OAuth'
 import ButtonLink from '@/components/ButtonLink'
+import {
+  loginSchema,
+  inputLoginZodSchema,
+  inputPasswordZodSchema,
+} from './config'
+import { useFormValidate } from '@/hooks/useFormValid'
 
 export const LoginPage: FC = () => {
   const navigate = useNavigate()
@@ -28,6 +34,7 @@ export const LoginPage: FC = () => {
   const uri = window.location.href.split('?')[0]
   const code = window.location.search.split('code=')[1]
   const loginError = error || oAuthError_
+  const [errors, validateForm] = useFormValidate(loginSchema)
 
   useEffect(() => {
     if (!data) service_id({ redirect_uri: uri })
@@ -52,15 +59,32 @@ export const LoginPage: FC = () => {
       login: { value: string }
       password: { value: string }
     }
-    loginUser({ login: login.value, password: password.value })
+    const isFormValid = validateForm({
+      login: login.value,
+      password: password.value,
+    })
+    if (isFormValid) loginUser({ login: login.value, password: password.value })
   }
 
   return (
     <Card width="300px" height="auto">
       {isLoading && <LoaderSpinner />}
       <StyledForm onSubmit={handleSubmit}>
-        <Input label="Логин" name="login" required={true} />
-        <Input label="Пароль" name="password" type="password" required={true} />
+        <Input
+          label="Логин"
+          name="login"
+          required={true}
+          zodValidate={inputLoginZodSchema}
+          errorMessages={errors.login ?? []}
+        />
+        <Input
+          label="Пароль"
+          name="password"
+          type="password"
+          required={true}
+          zodValidate={inputPasswordZodSchema}
+          errorMessages={errors.password ?? []}
+        />
         <Button type="submit" $primary={true}>
           войти
         </Button>

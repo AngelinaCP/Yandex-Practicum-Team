@@ -20,6 +20,17 @@ import { Avatar } from '@/components/Avatar'
 import { Modal } from '@/components/Modal'
 import { FileInput } from '@/pages/Profile/fileInput'
 import { StyledForm, StyledFormGroup } from '@/pages/Profile/style'
+import { useFormValidate } from '@/hooks/useFormValid'
+import {
+  profileSchema,
+  profileInputSchemas,
+  RegisterInput,
+} from './formProfileSchema'
+import {
+  passwordChangeSchema,
+  inputPasswordZodSchema,
+  PasswordChange,
+} from './formPasswordChangeSchema'
 
 interface IProfileFormFields<T> {
   first_name: T
@@ -68,6 +79,9 @@ export const ProfilePage = () => {
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState<IUser | null>(currentUser)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [errors, validateForm] = useFormValidate(profileSchema)
+  const [errorPasswordChange, validateFormPasswordChange] =
+    useFormValidate(passwordChangeSchema)
 
   const handleFileChange = (file: File | null) => {
     setSelectedFile(file)
@@ -76,8 +90,11 @@ export const ProfilePage = () => {
   const handleSubmitPassword = (event: FormEvent<IPasswordForm>) => {
     event.preventDefault()
     const form = event.currentTarget
-    const values = Object.fromEntries(new FormData(form).entries())
-    changePassword(values)
+    const values = Object.fromEntries(
+      new FormData(form).entries()
+    ) as PasswordChange
+    const isFormValid = validateFormPasswordChange(values)
+    if (isFormValid) changePassword(values)
   }
 
   const handleSubmitAvatar = (event: FormEvent) => {
@@ -90,8 +107,11 @@ export const ProfilePage = () => {
   const handleSubmitProfile = (event: FormEvent<IProfileForm>) => {
     event.preventDefault()
     const form = event.currentTarget
-    const values = Object.fromEntries(new FormData(form).entries())
-    changeProfile(values)
+    const values = Object.fromEntries(
+      new FormData(form).entries()
+    ) as RegisterInput
+    const isFormValid = validateForm(values)
+    if (isFormValid) changeProfile(values)
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,6 +142,8 @@ export const ProfilePage = () => {
             value={userInfo?.first_name ?? ''}
             disabled={!isEdit}
             onChange={handleInputChange}
+            zodValidate={profileInputSchemas.first_name}
+            errorMessages={errors.first_name ?? []}
           />
           <Input
             name="second_name"
@@ -130,6 +152,8 @@ export const ProfilePage = () => {
             value={userInfo?.second_name ?? ''}
             disabled={!isEdit}
             onChange={handleInputChange}
+            zodValidate={profileInputSchemas.second_name}
+            errorMessages={errors.second_name ?? []}
           />
         </StyledFormGroup>
         <StyledFormGroup>
@@ -139,7 +163,9 @@ export const ProfilePage = () => {
             required={true}
             value={userInfo?.email ?? ''}
             disabled={!isEdit}
+            zodValidate={profileInputSchemas.email}
             onChange={handleInputChange}
+            errorMessages={errors.email ?? []}
           />
           <Input
             name="phone"
@@ -148,6 +174,8 @@ export const ProfilePage = () => {
             value={userInfo?.phone ?? ''}
             disabled={!isEdit}
             onChange={handleInputChange}
+            zodValidate={profileInputSchemas.phone}
+            errorMessages={errors.phone ?? []}
           />
         </StyledFormGroup>
         <StyledFormGroup>
@@ -158,6 +186,8 @@ export const ProfilePage = () => {
             value={userInfo?.login ?? ''}
             disabled={!isEdit}
             onChange={handleInputChange}
+            zodValidate={profileInputSchemas.login}
+            errorMessages={errors.login ?? []}
           />
           <Input
             name="display_name"
@@ -166,6 +196,8 @@ export const ProfilePage = () => {
             value={userInfo?.display_name ?? ''}
             disabled={!isEdit}
             onChange={handleInputChange}
+            zodValidate={profileInputSchemas.display_name}
+            errorMessages={errors.display_name ?? []}
           />
         </StyledFormGroup>
         <StyledFormGroup>
@@ -196,12 +228,16 @@ export const ProfilePage = () => {
                 name="old_password"
                 label="Старый пароль"
                 required={true}
+                zodValidate={inputPasswordZodSchema}
+                errorMessages={errorPasswordChange.password ?? []}
               />
               <Input
                 type="password"
                 name="new_password"
                 label="Новый пароль"
                 required={true}
+                zodValidate={inputPasswordZodSchema}
+                errorMessages={errorPasswordChange.passwordNew ?? []}
               />
               <StyledFormGroup>
                 <Button onClick={toggleShowModal}>Отмена</Button>
