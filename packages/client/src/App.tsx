@@ -44,7 +44,7 @@ function App() {
       <GlobalWrapper className={'global-wrapper'}>
         <ToggleTheme />
         <ErrorBoundary>
-          <Navigation />
+          {/* <Navigation /> */}
           <Routes>
             <Route element={<AuthRequired />}>
               <Route path="profile" element={<ProfilePage />} />
