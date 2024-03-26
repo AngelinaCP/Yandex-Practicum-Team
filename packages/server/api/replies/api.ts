@@ -6,16 +6,16 @@ import type { RepliesCreateAttributes } from '../../orm/models/replies'
 
 export class RepliesApi {
   static getReplies = async (
-    request: Request<{ commentId?: string }>,
+    request: Request<{ commentIndex?: string }>,
     response: Response,
     next: NextFunction
   ) => {
     try {
-      const { commentId } = request.params
-      if (!commentId) {
+      const { commentIndex } = request.params
+      if (!commentIndex) {
         next()
       } else {
-        const topic = await repliesService.find(+commentId)
+        const topic = await repliesService.find(+commentIndex)
         response.json(topic)
       }
     } catch (error) {

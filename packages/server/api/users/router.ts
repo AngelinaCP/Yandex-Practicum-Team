@@ -4,7 +4,7 @@ import { UsersApi } from './api'
 const enum ENDPOINTS {
   API = '/users',
   ROOT = '/',
-  USER_ID = '/:userId',
+  USER_ID = '/:authorIndex',
 }
 
 const usersApiRouter = Router()

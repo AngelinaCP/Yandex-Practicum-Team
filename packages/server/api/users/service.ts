@@ -8,11 +8,11 @@ class UsersService {
     return Users.create(data)
   }
 
-  find(userId?: UsersAttributes['authorIndex']) {
+  find(authorIndex?: UsersAttributes['authorIndex']) {
     const params = {
-      where: userId ? { userId } : {},
+      where: authorIndex ? { authorIndex } : {},
     }
-    return userId ? Users.findOne(params) : Users.findAll(params)
+    return authorIndex ? Users.findOne(params) : Users.findAll(params)
   }
 }
 

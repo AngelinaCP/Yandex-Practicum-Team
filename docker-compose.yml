@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   postgres:
-    container_name: postgresql
+    container_name: ${POSTGRES_SERVICE_NAME}
     image: postgres:14
     env_file:
       - .env

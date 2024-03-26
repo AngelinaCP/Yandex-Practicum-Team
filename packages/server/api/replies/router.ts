@@ -4,7 +4,7 @@ import { RepliesApi } from './api'
 const enum ENDPOINTS {
   API = '/replies',
   ROOT = '/',
-  COMMENT_ID = '/:commentId',
+  COMMENT_ID = '/:commentIndex',
 }
 
 const topicsApiRouter = Router()

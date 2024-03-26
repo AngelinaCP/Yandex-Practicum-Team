@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 import { Game } from '@/game'
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '@/store/store'
 import { playerSelector, backgroundSelector, setScore } from '@/game/gameSlice'
+import { useAppDispatch, useAppSelector } from '@/store/store'
 import { useFullScreen } from '@/hooks/useFullScreen'
 import {
   FullScreenEnterButton,

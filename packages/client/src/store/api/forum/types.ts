@@ -3,10 +3,11 @@ type Typestamped<T> = T & {
 }
 
 export type TTopic = Typestamped<{
-  topicIndex: number
+  index: number
   title: string
+  description: string
   author: string
-  comments: TComment[]
+  Comments: TComment[]
 }>
 
 export type TUser = Typestamped<{
@@ -18,4 +19,5 @@ export type TUser = Typestamped<{
 export type TComment = Typestamped<{
   author: number
   message: string
+  createdAt: string
 }>

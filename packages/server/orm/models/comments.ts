@@ -9,11 +9,12 @@ import {
   BelongsTo,
   HasMany,
 } from 'sequelize-typescript'
-import type {
-  InferAttributes,
-  InferCreationAttributes,
-  CreationOptional,
-  NonAttribute,
+import {
+  type InferAttributes,
+  type InferCreationAttributes,
+  type CreationOptional,
+  type NonAttribute,
+  DataTypes,
 } from 'sequelize'
 import Users from './users'
 import Replies from './replies'
@@ -33,7 +34,7 @@ class Comments extends Model<
   @Column({ type: DataType.CHAR, field: 'comment_text' })
   declare message: string
 
-  @BelongsTo(() => Topics, { foreignKey: 'topicIndex', as: 'Topics' })
+  @Column(DataTypes.INTEGER)
   declare topicIndex: Topics
 
   @BelongsTo(() => Users, { foreignKey: 'authorIndex', as: 'Users' })

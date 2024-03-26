@@ -4,12 +4,14 @@ import { usersService } from './service'
 
 export class UsersApi {
   static getUser = async (
-    request: Request<{ userId?: string }>,
+    request: Request<{ authorIndex?: string }>,
     response: Response
   ) => {
     try {
-      const { userId } = request.params
-      const user = await usersService.find(userId ? +userId : undefined)
+      const { authorIndex } = request.params
+      const user = await usersService.find(
+        authorIndex ? +authorIndex : undefined
+      )
       response.json(user)
     } catch (error) {
       console.error('UsersApi.getUser Error')

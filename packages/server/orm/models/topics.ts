@@ -30,14 +30,17 @@ class Topics extends Model<
   @Column({ type: DataType.STRING, field: 'topic_title' })
   declare title: string
 
+  @Column({ type: DataType.STRING, field: 'topic_description' })
+  declare description: string
+
   @BelongsTo(() => Users, {
     foreignKey: 'authorIndex',
-    as: 'author',
+    as: 'Users',
   })
   declare authorIndex: Users
 
-  @HasMany(() => Comments, { foreignKey: 'commentIndex', as: 'Comments' })
-  declare commentIndex?: NonAttribute<Comments[]>
+  @HasMany(() => Comments, { foreignKey: 'topicIndex' })
+  declare Comments?: NonAttribute<Comments[]>
 }
 
 export default Topics
