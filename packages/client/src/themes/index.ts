@@ -12,7 +12,7 @@ export const themes = [
       primaryColor: '#FFFFFF',
       buttonColor: '#36395a',
       inputColor: '#c8fff0',
-      linkColor: '#281768',
+      linkColor: '#c92c51',
       primaryBoxShadow:
         '0px -3px 0px 0px ' +
         '#128EB5' +

@@ -16,6 +16,7 @@ import {
 } from '@/pages/Forum/style'
 import { useCreateTopicMutation, useGetTopicsQuery } from '@/store/api/forum'
 import { RootState, useAppSelector } from '@/store/store'
+import Link from '@/components/Link'
 
 export const ForumPage = () => {
   const selectUser = (state: RootState) => state.userState.user
@@ -64,6 +65,7 @@ export const ForumPage = () => {
           </StyledPost>
         ))
       )}
+      <Link to="/">вернуться на главную</Link>
       {showModal &&
         createPortal(
           <Modal open={showModal}>

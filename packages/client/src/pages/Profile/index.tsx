@@ -213,7 +213,7 @@ export const ProfilePage = () => {
       <Button
         onClick={() => {
           logoutUser()
-          navigate('/')
+          navigate('/login')
         }}>
         Выход
       </Button>
