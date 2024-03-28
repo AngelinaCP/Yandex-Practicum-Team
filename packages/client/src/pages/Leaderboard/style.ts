@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
 export const StyledLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
   width: 50%;
 `
 
@@ -23,6 +27,7 @@ export const StyledTd = styled.div`
 
 export const StyledGrid = styled.div`
   display: grid;
+  width: 100%;
   grid-template-columns: 1fr 1fr 1fr;
   color: #ffffff;
   text-align: center;

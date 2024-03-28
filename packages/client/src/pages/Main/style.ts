@@ -20,6 +20,7 @@ export const StyledInnerWrapper = styled.div`
   & p {
     position: absolute;
     bottom: 30px;
+    color: ${props => props.theme.color};
   }
 `
 

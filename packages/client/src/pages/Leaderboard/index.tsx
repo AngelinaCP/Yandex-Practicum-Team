@@ -8,6 +8,7 @@ import {
 } from '@/pages/Leaderboard/style'
 import { LoaderSpinner } from '@/components/Loading'
 import { Fragment } from 'react'
+import Link from '@/components/Link'
 
 export const LeaderboardPage = () => {
   const { data, isLoading } = useGetLeaderboardQuery(null)
@@ -34,6 +35,7 @@ export const LeaderboardPage = () => {
             </Fragment>
           ))}
       </StyledGrid>
+      <Link to="/">вернуться на главную</Link>
     </StyledLayout>
   )
 }
