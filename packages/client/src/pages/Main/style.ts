@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import girl from '../../assets/images/girl.webp'
 
 export const StyledMainWrapper = styled.div`
   display: flex;
@@ -27,6 +26,6 @@ export const StyledInnerWrapper = styled.div`
 export const StyledBG = styled.div`
   width: 50vw;
   height: 60vh;
-  background: url(${girl}) center no-repeat;
+  background: url('/images/girl.webp') center no-repeat;
   min-height: 500px;
 `

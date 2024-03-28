@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import default_img from '../../assets/images/default_img.svg'
 
 export const AvatarStyled = styled.div`
   position: relative;
@@ -7,7 +6,7 @@ export const AvatarStyled = styled.div`
   margin-bottom: 20px;
   width: 130px;
   height: 130px;
-  background: url(${default_img}) center / 45px no-repeat;
+  background: url('/images/default_avatar.svg') center / 45px no-repeat;
   border-radius: 65px;
 
   img {
