@@ -49,8 +49,6 @@ export const GameSelector: FC<GameSelectorProps> = ({ selector }) => {
     },
     [gameStore]
   )
-  console.log(content)
-  console.log(gameStore)
   return (
     <Layout>
       <Header>{title}</Header>

@@ -79,12 +79,6 @@ export class Game {
     )
   }
 
-  generateBlocks() {
-    const timeDelay = this.randomInterval(this.presetTime)
-    this.obstacles?.push(new Obstacle(this.gameSpeed, this.ctx, this))
-    setTimeout(() => this.generateBlocks(), timeDelay)
-  }
-
   shouldIncreaseSpeed() {
     //Check to see if game speed should be increased
     if (this.scoreIncrement + gameProperties.speedIncrement === this.score) {
@@ -141,7 +135,7 @@ export class Game {
     )
   }
 
-  start = (ctx: CanvasRenderingContext2D) => {
+  start = (ctx: CanvasRenderingContext2D, _deltaTime: number) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     this.background_.update()
@@ -152,6 +146,10 @@ export class Game {
 
     if (Math.random() < 0.1 && this.powerUps.length < 1) {
       this.powerUps.push(new PowerUpHeart(this))
+    }
+
+    if (Math.random() < 0.1 && this.obstacles.length < 3) {
+      this.obstacles.push(new Obstacle(this.gameSpeed, this.ctx, this))
     }
 
     this.powerUps.forEach(powerUp => {
@@ -202,9 +200,10 @@ export class Game {
 
   initGame() {
     this.addListener()
-    setTimeout(
-      () => this.generateBlocks(),
-      this.randomInterval(this.presetTime)
-    )
+  }
+
+  cleanGame() {
+    this.obstacles = []
+    this.powerUps = []
   }
 }

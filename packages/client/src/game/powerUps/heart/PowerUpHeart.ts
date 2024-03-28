@@ -1,13 +1,12 @@
 import { Game } from '@/game/Game'
 import { SpriteAnimation } from '@/game/SpriteAnimation'
-import heart from './heart.png'
 
 const heartSpriteInfo = {
   frameWidth: 64,
   frameHeight: 64,
   fps: 20,
   frameLimit: 7,
-  path: heart,
+  path: '/game_powerups/heart.png',
 }
 
 /* y: [yBase * h; (yBase + yRand) * h] */
